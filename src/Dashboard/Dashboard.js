@@ -8,63 +8,22 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState(Participants);
-
-  const nameFilterHandler = (name) => {
-    const filterData = Participants.filter((participant) => {
-      if (participant.Name.toLowerCase().includes(name.toLowerCase())) {
-        return participant;
-      }
-    });
-
-    setData(filterData);
+  const schoolOrgOptions = () => {
+    return [
+      ...new Set(
+        Participants.map((participant) => participant["School/Organisation"])
+      ),
+    ];
   };
 
-  const eventFilterHandler = (event) => {
-    const filterData = Participants.filter((participant) => {
-      if (participant.Event.toLowerCase().includes(event.toLowerCase())) {
-        return participant;
-      }
-    });
-
-    setData(filterData);
-  };
-
-  const icFilterHandler = (ic) => {
-    const filterData = Participants.filter((participant) => {
-      if (participant["IC Number"].toString().includes(ic)) {
-        return participant;
-      }
-    });
-
-    setData(filterData);
-  };
-
-  const schoolOrgFilterHandler = (schoolOrg) => {
-    const filterData = Participants.filter((participant) => {
-      if (
-        participant["School/Organisation"]
-          .toLowerCase()
-          .includes(schoolOrg.toLowerCase())
-      ) {
-        return participant;
-      }
-    });
-
-    setData(filterData);
-  };
-
-  const ageFilterHandler = (age) => {
-    console.log(age);
-    const filterData = Participants.filter((participant) => {
-      if (age == 0) {
-        return participant.age < 10;
-      }
-      if (participant.age >= age && participant.age <= parseInt(age) + 9) {
-        return participant;
-      }
-    });
-
-    setData(filterData);
+  const eventOptions = () => {
+    return [
+      ...new Set(
+        Participants.map((participant) =>
+          participant.Event.split(" ").slice(0, -1).join(" ")
+        )
+      ),
+    ];
   };
 
   // useEffect(() => {
@@ -76,22 +35,20 @@ const Dashboard = () => {
   //   fetchParticipants();
   // }, []);
 
-  console.log(data);
+  // console.log(data);
   return (
-    <div className="min-h-[100vh] border-4 border-yellow-400 bg-white p-12">
-      <div className="flex justify-center">
-        <Filter
-          onNameFilter={nameFilterHandler}
-          onEventFilter={eventFilterHandler}
-          onSchoolOrgFilter={schoolOrgFilterHandler}
-          onIcFilter={icFilterHandler}
-          onAgeFilter={ageFilterHandler}
-        />
-      </div>
+    <div className="min-h-[100vh]  border-yellow-400 bg-[#cfd6e8] p-12">
+      <Filter
+        schoolOrgs={schoolOrgOptions()}
+        eventOptions={eventOptions()}
+        setData={setData}
+      />
+
       {/* {isLoading ? <Table data={data} /> : null} */}
-      <Table data={data} />
+      <Table data={data} s />
     </div>
   );
 };
 
 export default Dashboard;
+

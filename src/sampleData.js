@@ -119,7 +119,7 @@ export const Participants = [
   {
     Event: "Glo Walk 2035",
     Name: "JOANNA KHOO PEI YI",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "080804-74-0016",
     Email: "m-9374621@moe-dl.edu.my",
     "Contact number": 125512523,
@@ -173,7 +173,7 @@ export const Participants = [
   {
     Event: "PLDC 2022",
     Name: "Hor Yu Jay",
-    "School/Organisation": "SKJC Kwang Hwa Sungai Nibong",
+    "School/Organisation": "SKJC KWANG HWA SUNGAI NIBONG",
     "IC Number": "110806-07-0647",
     Email: "leongwaihan@yahoo.com",
     "Contact number": 124208512,
@@ -182,7 +182,7 @@ export const Participants = [
   {
     Event: "PLDC 2023",
     Name: "Wong Yun Ning",
-    "School/Organisation": "SJKC Kwang Hwa Sungai Nibong",
+    "School/Organisation": "SJKC KWANG HWA SUNGAI NIBONG",
     "IC Number": 101005070378,
     Email: "guangyee@gmail.com",
     "Contact number": 124523977,
@@ -209,7 +209,7 @@ export const Participants = [
   {
     Event: "PLDC 2026",
     Name: "TIO HERNG",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": "090629-07-0359",
     Email: "tio.herng@gmail.com",
     "Contact number": "6011-23050075",
@@ -245,7 +245,7 @@ export const Participants = [
   {
     Event: "PLDC 2030",
     Name: "Koh Kai Tsin",
-    "School/Organisation": "SMJK Perempuan China Pulau Pinang",
+    "School/Organisation": "SMJK PEREMPUAN CHINA PULAU PINANG",
     "IC Number": 60113070182,
     Email: "kaitsin0113@gmail.com",
     "Contact number": 124837008,
@@ -272,7 +272,7 @@ export const Participants = [
   {
     Event: "PLDC 2033",
     Name: "Tan Jia Yong",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": 50412070597,
     Email: "tanjy2005@gmail.com",
     "Contact number": 147067345,
@@ -281,7 +281,7 @@ export const Participants = [
   {
     Event: "PLDC 2034",
     Name: "Chaw Wen Xuan",
-    "School/Organisation": "SJKC Kwang Hwa Sg. Nibong",
+    "School/Organisation": "SJKC KWANG HWA SG. NIBONG",
     "IC Number": 121129070167,
     Email: "chongchuiwai77@gmail.com",
     "Contact number": 165666087,
@@ -290,7 +290,7 @@ export const Participants = [
   {
     Event: "PLDC 2035",
     Name: "Ng Xin En",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": "080803-07-0452",
     Email: "ngxinen0308@gmail.com",
     "Contact number": "014-223 2585",
@@ -299,7 +299,7 @@ export const Participants = [
   {
     Event: "PLDC 2036",
     Name: "Leong Jun Wen",
-    "School/Organisation": "SMK Jalan Damai",
+    "School/Organisation": "SMK JALAN DAMAI",
     "IC Number": 60319070495,
     Email: "edmondleong06@gmail.com",
     "Contact number": 125803918,
@@ -308,7 +308,7 @@ export const Participants = [
   {
     Event: "PLDC 2037",
     Name: "YVETTE ONG CHINN WEN",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": 80419070482,
     Email: "m-9569682@moe-dl.edu.my",
     "Contact number": 174696625,
@@ -326,7 +326,7 @@ export const Participants = [
   {
     Event: "Robomania 2020",
     Name: "Aleyna Kow Min",
-    "School/Organisation": "Sekolah Menengah Kebangsaan Convent Green Lane",
+    "School/Organisation": "SEKOLAH MENENGAH KEBANGSAAN CONVENT GREEN LANE",
     "IC Number": 90518070030,
     Email: "hermankow@gmail.com",
     "Contact number": 124045104,
@@ -335,7 +335,7 @@ export const Participants = [
   {
     Event: "Robomania 2021",
     Name: "Yuu Jing Xin",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": "050828-07-0558",
     Email: "jxin779@gmail.com",
     "Contact number": 1113068327,
@@ -344,7 +344,7 @@ export const Participants = [
   {
     Event: "Robomania 2022",
     Name: "Samuel Goh Yu Siang",
-    "School/Organisation": "SJKC Kwang Hwa Sungai Nibong",
+    "School/Organisation": "SJKC KWANG HWA SUNGAI NIBONG",
     "IC Number": "131202-07-0219",
     Email: "fsng80@hotmail.com",
     "Contact number": "016-4150430",
@@ -353,7 +353,7 @@ export const Participants = [
   {
     Event: "Robomania 2023",
     Name: "Jocelyn Yap",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": 51028070124,
     Email: "jocelynyapearnthern@gmail.com",
     "Contact number": 164762892,
@@ -362,7 +362,7 @@ export const Participants = [
   {
     Event: "Robomania 2024",
     Name: "Cheow Zi Yi",
-    "School/Organisation": "SJK(C) Shang Wu",
+    "School/Organisation": "SJK(C) SHANG WU",
     "IC Number": 130422070611,
     Email: "cksnlc@gmail.com",
     "Contact number": 125392758,
@@ -384,7 +384,7 @@ export const Participants = [
     "IC Number": "140311-07-0597",
     Email: "kelisa7107@gmail.com",
     "Contact number": 122964030,
-    age: 8,
+    age: 11,
   },
   {
     Event: "Robomania 2025",
@@ -402,7 +402,7 @@ export const Participants = [
     "IC Number": "080907-07-0326",
     Email: "kelisa7107@gmail.com",
     "Contact number": 122964030,
-    age: 14,
+    age: 11,
   },
   {
     Event: "Robomania 2026",
@@ -425,7 +425,7 @@ export const Participants = [
   {
     Event: "Robomania 2028",
     Name: "Brandon Wee Ming Sheng",
-    "School/Organisation": "SJKC Li Hwa",
+    "School/Organisation": "SJKC LI HWA",
     "IC Number": "110317-10-2345",
     Email: "m-12127591@moe-dl.edu.my",
     "Contact number": 122897165,
@@ -434,7 +434,7 @@ export const Participants = [
   {
     Event: "Robomania 2029",
     Name: "Nicole Wee Zhen Lin",
-    "School/Organisation": "SMK Bagan Jaya",
+    "School/Organisation": "SMK BAGAN JAYA",
     "IC Number": "090208-10-0476",
     Email: "m-10247821@moe-dl.edu.my",
     "Contact number": 183698678,
@@ -515,7 +515,7 @@ export const Participants = [
   {
     Event: "Step Up 2026",
     Name: "AMIRAH QASDINA BINTI ABDUL MUTALIB",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "060308-07-0262",
     Email: "qasdinaamirah0@gmail.com",
     "Contact number": 194154643,
@@ -533,7 +533,7 @@ export const Participants = [
   {
     Event: "Step Up 2028",
     Name: "Tan Xue Geng",
-    "School/Organisation": "Penang Free School",
+    "School/Organisation": "PENANG FREE SCHOOL",
     "IC Number": "091014-07-0429",
     Email: "ruyigirl@gmail.com",
     "Contact number": "016-4140533",
@@ -542,7 +542,7 @@ export const Participants = [
   {
     Event: "Step Up 2029",
     Name: "Ethan chuah jun jie",
-    "School/Organisation": "SMJK Phor Tay",
+    "School/Organisation": "SMJK PHOR TAY",
     "IC Number": 80421070561,
     Email: "christinatanmh@yahoo.com",
     "Contact number": 124996438,
@@ -614,7 +614,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2023",
     Name: "JESSEBEL LOH JO YIN",
-    "School/Organisation": "S.M.K Convent Pulau Tikus",
+    "School/Organisation": "S.M.K CONVENT PULAU TIKUS",
     "IC Number": 51123070050,
     Email: "m-6075181@moe-dl.edu.my",
     "Contact number": 126170885,
@@ -645,7 +645,7 @@ export const Participants = [
     "IC Number": "110622070968",
     Email: "tanchengchoon@yahoo.com",
     "Contact number": 165593286,
-    age: 11,
+    age: 44,
   },
   {
     Event: "CNY 3D Workshop 2024",
@@ -654,12 +654,12 @@ export const Participants = [
     "IC Number": "130107071171",
     Email: "tanchengchoon@yahoo.com",
     "Contact number": 165593286,
-    age: 9,
+    age: 44,
   },
   {
     Event: "CNY 3D Workshop 2025",
     Name: "Valerie Lau Xuan Ling",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "051025-07-0700",
     Email: "vlxl051025@gmail.com",
     "Contact number": 167549131,
@@ -668,7 +668,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2025",
     Name: "Reshika Rajarathinam",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "050105-07-0714",
     Email: "vlxl051025@gmail.com",
     "Contact number": 167549131,
@@ -677,7 +677,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2025",
     Name: " Rachel Teh",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "050604-07-0022",
     Email: "vlxl051025@gmail.com",
     "Contact number": 167549131,
@@ -686,7 +686,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2025",
     Name: "Teoh Yii Ling",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "050310-07-0692,",
     Email: "vlxl051025@gmail.com",
     "Contact number": 167549131,
@@ -704,7 +704,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2027",
     Name: "Kam Qin Ning",
-    "School/Organisation": "SMJK Heng EE Cawangan Bayan Baru",
+    "School/Organisation": "SMJK HENG EE CAWANGAN BAYAN BARU",
     "IC Number": 60111070146,
     Email: "kamqinning100@gmail.com",
     "Contact number": 1157763368,
@@ -740,7 +740,7 @@ export const Participants = [
   {
     Event: "CNY 3D Workshop 2031",
     Name: "Tan Ling Yin",
-    "School/Organisation": "SMK Convent Pulau Tikus",
+    "School/Organisation": "SMK CONVENT PULAU TIKUS",
     "IC Number": "050603-07-0354",
     Email: "tying9940@gmail.com",
     "Contact number": 164001313,
@@ -767,7 +767,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2021",
     Name: "TAN WEI CHI",
-    "School/Organisation": "Methodist Boys' School, Penang",
+    "School/Organisation": "METHODIST BOYS' SCHOOL, PENANG",
     "IC Number": 30326070082,
     Email: "weichi0082@gmail.com",
     "Contact number": 164189438,
@@ -794,7 +794,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2024",
     Name: "CHUAN YE LUN",
-    "School/Organisation": "SMJK Chung Ling",
+    "School/Organisation": "SMJK CHUNG LING",
     "IC Number": 70218070217,
     Email: "ahlun0121@gmail.com",
     "Contact number": "6017-5769681",
@@ -830,7 +830,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2028",
     Name: "Carolyn Cheah Yu Lynn",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": 60723070374,
     Email: "cheahcarolyn076@gmail.com",
     "Contact number": 164112045,
@@ -839,7 +839,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2029",
     Name: "Ooi Xu Hong",
-    "School/Organisation": "SMJK Jit Sin",
+    "School/Organisation": "SMJK JIT SIN",
     "IC Number": 712250707111,
     Email: "m-9277404@moe-dl.edu.my",
     "Contact number": 124818121,
@@ -848,7 +848,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2030",
     Name: "Emily Huang Li Wen",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": "060530-07-0562",
     Email: "emilyyhuanggg@gmail.com",
     "Contact number": "011-65563118",
@@ -884,7 +884,7 @@ export const Participants = [
   {
     Event: "Junior Scientist 2034",
     Name: "Nurul Nazatul Farishaa",
-    "School/Organisation": "SMK Convent Green Lane",
+    "School/Organisation": "SMK CONVENT GREEN LANE",
     "IC Number": 50307070202,
     Email: "nnrlfarishaa@gmail.com",
     "Contact number": 1116596518,
@@ -898,14 +898,5 @@ export const Participants = [
     Email: "nurulqistinashahira06@gmail.com",
     "Contact number": "019-4298465",
     age: 62,
-  },
-  {
-    Event: "Junior Scientist 2036",
-    Name: "Christabel Ooi Shan Mei",
-    "School/Organisation": "SMK Convent Green Lane",
-    "IC Number": 81215070020,
-    Email: "ooichristabel@gmail.com",
-    "Contact number": "018 403 5166",
-    age: 41,
   },
 ];
