@@ -1,157 +1,68 @@
 import { useState } from "react";
-import { Participants } from "../sampleData";
-const Filter = ({ schoolOrgs, eventOptions, setData }) => {
+import {
+  filterByEvent,
+  filterBySchoolOrg,
+  filterByAge,
+  filterByName,
+  filterByIC,
+} from "../api/participants";
+
+const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
   const [filter, setFilter] = useState({
-    event: "",
+    event: "all",
     name: "",
-    schoolOrg: "",
+    schoolOrg: "all",
     age: "all",
     ic: "",
   });
 
-
-  const eventFilterHandler = (event) => {
-    const filterData = Participants.filter((participant) => {
-      if (event == "")
-        return (
-          Participants &&
-          (filter.schoolOrg.length > 0
-            ? participant["School/Organisation"] == filter.schoolOrg
-            : true) &&
-          (filter.age == 0 ? participant.age < 10 : true) &&
-          (filter.age > 0
-            ? participant.age >= parseInt(filter.age) &&
-              participant.age <= parseInt(filter.age) + 9
-            : true) && (filter.age == "all" ? participant: true)
-        );
-      else
-        return (
-          participant.Event.toLowerCase().includes(event.toLowerCase()) &&
-          (filter.schoolOrg.length > 0
-            ? participant["School/Organisation"] == filter.schoolOrg
-            : true) &&
-          (filter.age == 0 ? participant.age < 10 : true) &&
-          (filter.age > 0
-            ? participant.age >= parseInt(filter.age) &&
-              participant.age <= parseInt(filter.age) + 9
-            : true)  && (filter.age == "all" ? participant: true)
-        );
-    });
-
-    setData(filterData);
+  console.log(filter)
+  const eventFilterHandler = async (event) => {
+    const filteredData = await filterByEvent(
+      event,
+      filter.schoolOrg,
+      filter.age
+    );
+    setData(filteredData);
+    setClearChecked(true);
   };
 
-  const schoolOrgFilterHandler = (schoolOrg) => {
-    const filterData = Participants.filter((participant) => {
-      if (schoolOrg == "")
-        return (
-          Participants &&
-          (filter.event.length > 0
-            ? participant.Event.toLowerCase().includes(
-                filter.event.toLowerCase()
-              )
-            : true) &&
-          (filter.age == 0 ? participant.age < 10 : true) &&
-          (filter.age > 0
-            ? participant.age >= parseInt(filter.age) &&
-              participant.age <= parseInt(filter.age) + 9
-            : true) && (filter.age == "all" ? participant: true)
-        );
-      else
-        return (
-          participant["School/Organisation"] == schoolOrg &&
-          (filter.event.length > 0
-            ? participant.Event.toLowerCase().includes(
-                filter.event.toLowerCase()
-              )
-            : true) &&
-          (filter.age == 0 ? participant.age < 10 : true) &&
-          (filter.age > 0
-            ? participant.age >= parseInt(filter.age) &&
-              participant.age <= parseInt(filter.age) + 9
-            : true) && (filter.age == "all" ? participant: true)
-        );
-    });
-
-    setData(filterData);
+  const schoolOrgFilterHandler = async (schoolOrg) => {
+    const filteredData = await filterBySchoolOrg(
+      schoolOrg,
+      filter.event,
+      filter.age
+    );
+    setData(filteredData);
+    setClearChecked(true);
   };
 
-  const ageFilterHandler = (age) => {
-    const filterData = Participants.filter((participant) => {
-      if (age == "all")
-        return (
-          Participants &&
-          (filter.event.length > 0
-            ? participant.Event.toLowerCase().includes(
-                filter.event.toLowerCase()
-              )
-            : true) &&
-          (filter.schoolOrg.length > 0
-            ? participant["School/Organisation"] == filter.schoolOrg
-            : true)
-        );
-      if (age == 0)
-        return (
-          participant.age < 10 &&
-          (filter.event.length > 0
-            ? participant.Event.toLowerCase().includes(
-                filter.event.toLowerCase()
-              )
-            : true) &&
-          (filter.schoolOrg.length > 0
-            ? participant["School/Organisation"] == filter.schoolOrg
-            : true)
-        );
-      else
-        return (
-          participant.age >= parseInt(age) &&
-          participant.age <= parseInt(age) + 9 &&
-          (filter.event.length > 0
-            ? participant.Event.toLowerCase().includes(
-                filter.event.toLowerCase()
-              )
-            : true) &&
-          (filter.schoolOrg.length > 0
-            ? participant["School/Organisation"] == filter.schoolOrg
-            : true)
-        );
-    });
-
-    setData(filterData);
+  const ageFilterHandler = async (age) => {
+    const filteredData = await filterByAge(age, filter.event, filter.schoolOrg);
+    setData(filteredData);
+    setClearChecked(true);
   };
 
-  const nameFilterHandler = (name) => {
-    const filterData = Participants.filter((participant) => {
-      if (participant.Name.toLowerCase().includes(name.toLowerCase())) {
-        return participant &&  (filter.event.length > 0
-          ? participant.Event.toLowerCase().includes(
-              filter.event.toLowerCase()
-            )
-          : true) &&
-        (filter.schoolOrg.length > 0
-          ? participant["School/Organisation"] == filter.schoolOrg
-          : true)
-      }
-    });
-
-    setData(filterData);
+  const nameFilterHandler = async (name) => {
+    const filteredData = await filterByName(
+      name,
+      filter.event,
+      filter.schoolOrg,
+      filter.age
+    );
+    setData(filteredData);
+    setClearChecked(true);
   };
 
-  const icFilterHandler = (ic) => {
-    const filterData = Participants.filter((participant) => {
-      if (participant["IC Number"].toString().includes(ic)) {
-        return participant &&  (filter.event.length > 0
-          ? participant.Event.toLowerCase().includes(
-              filter.event.toLowerCase()
-            )
-          : true) &&
-        (filter.schoolOrg.length > 0
-          ? participant["School/Organisation"] == filter.schoolOrg
-          : true)
-      }
-    });
-
-    setData(filterData);
+  const icFilterHandler = async (ic) => {
+    const filteredData = await filterByIC(
+      ic,
+      filter.event,
+      filter.schoolOrg,
+      filter.age
+    );
+    setData(filteredData);
+    setClearChecked(true);
   };
 
   const onChangeHandler = (field) => (e) => {
@@ -189,7 +100,7 @@ const Filter = ({ schoolOrgs, eventOptions, setData }) => {
           value={filter.event}
           className="rounded-md"
         >
-          <option value="">All</option>
+          <option value="all">All</option>
           {eventOptions.map((eventOption, i) => (
             <option value={eventOption} key={i}>
               {eventOption}
@@ -200,8 +111,13 @@ const Filter = ({ schoolOrgs, eventOptions, setData }) => {
 
       <div className="flex flex-col">
         <label>School / Organization</label>
-        <select name="schoolOrg" onChange={onChangeHandler("schoolOrg")} className="rounded-md">
-          <option value="">All </option>
+        <select
+          name="schoolOrg"
+          value={filter.schoolOrg}
+          onChange={onChangeHandler("schoolOrg")}
+          className="rounded-md"
+        >
+          <option value="all">All</option>
           {schoolOrgs.map((schoolOrg, i) => (
             <option value={schoolOrg} key={i}>
               {schoolOrg}
@@ -211,7 +127,12 @@ const Filter = ({ schoolOrgs, eventOptions, setData }) => {
       </div>
       <div className="flex flex-col">
         <label>Age</label>
-        <select name="age" onChange={onChangeHandler("age")} value={filter.age} className="rounded-md">
+        <select
+          name="age"
+          onChange={onChangeHandler("age")}
+          value={filter.age}
+          className="rounded-md"
+        >
           <option value="all">All</option>
           <option value="0">Below 10</option>
           <option value="10">10-19</option>
