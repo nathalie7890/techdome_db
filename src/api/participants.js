@@ -1,5 +1,25 @@
+export const getAllParticipants = async () => {
+  const res = await fetch("http://localhost:5000/participants");
+  if (!res.ok) throw new Error("Cannot get all participants");
+  const data = await res.json();
+  return data;
+};
+
+export const getAll = async (filters) => {
+  const res = await fetch("http://localhost:5000/participants/all", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(filters),
+  });
+
+  if (!res.ok) throw new Error("Cannot fetch participants");
+  const data = await res.json();
+  return data;
+};
+
 export const filterByEvent = async (event, schoolOrg, age) => {
-console.log('school',schoolOrg)
   const res = await fetch(`http://localhost:5000/participants/event/${event}`, {
     method: "POST",
     headers: {
@@ -81,7 +101,7 @@ export const deleteParticipant = async (id) => {
   return data;
 };
 
-export const editParticipant = async (participant , id) => {
+export const editParticipant = async (participant, id) => {
   const res = await fetch(`http://localhost:5000/participants/${id}`, {
     method: "PUT",
     headers: {
@@ -95,17 +115,16 @@ export const editParticipant = async (participant , id) => {
   return data;
 };
 
-
 export const deleteMany = async (participants) => {
-  const res = await fetch('http://localhost:5000/participants', {
-    method: 'DELETE',
+  const res = await fetch("http://localhost:5000/participants", {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({id: participants}),
-  })
+    body: JSON.stringify({ id: participants }),
+  });
 
-  if (!res.ok) console.error('Failed to delete participants');
+  if (!res.ok) console.error("Failed to delete participants");
   const data = res.json();
   return data;
-}
+};

@@ -7,7 +7,7 @@ import {
   filterByIC,
 } from "../api/participants";
 
-const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
+const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked, setFiltered }) => {
   const [filter, setFilter] = useState({
     event: "all",
     name: "",
@@ -16,7 +16,7 @@ const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
     ic: "",
   });
 
-  console.log(filter)
+  //onsole.log(filter)
   const eventFilterHandler = async (event) => {
     const filteredData = await filterByEvent(
       event,
@@ -24,6 +24,7 @@ const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
       filter.age
     );
     setData(filteredData);
+    setFiltered(filteredData)
     setClearChecked(true);
   };
 
@@ -34,12 +35,14 @@ const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
       filter.age
     );
     setData(filteredData);
+    setFiltered(filteredData)
     setClearChecked(true);
   };
 
   const ageFilterHandler = async (age) => {
     const filteredData = await filterByAge(age, filter.event, filter.schoolOrg);
     setData(filteredData);
+    setFiltered(filteredData)
     setClearChecked(true);
   };
 
@@ -51,6 +54,7 @@ const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
       filter.age
     );
     setData(filteredData);
+    setFiltered(filteredData)
     setClearChecked(true);
   };
 
@@ -62,6 +66,7 @@ const Filter = ({ schoolOrgs, eventOptions, setData, setClearChecked }) => {
       filter.age
     );
     setData(filteredData);
+    setFiltered(filteredData)
     setClearChecked(true);
   };
 

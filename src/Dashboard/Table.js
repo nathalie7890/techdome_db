@@ -4,12 +4,13 @@ import EditParticipant from "./EditParticipant";
 import DeleteManyModal from "../components/DeleteManyModal";
 import { deleteParticipant, deleteMany } from "../api/participants";
 
-const Table = ({ data, clearChecked }) => {
+const Table = ({ data, clearChecked, filtered, setData}) => {
   let [checked, setChecked] = useState([]);
   const [modal, setModal] = useState({
     open: false,
     id: "",
   });
+
   const [editPart, setEditPart] = useState({
     Event: "",
     Name: "",
@@ -38,6 +39,7 @@ const Table = ({ data, clearChecked }) => {
       addHandler(id);
     }
   };
+
   const removeHandler = (id) => {
     setChecked(checked.filter((participant) => participant.id !== id));
     return;
@@ -47,22 +49,10 @@ const Table = ({ data, clearChecked }) => {
     setChecked([...checked, { id }]);
   };
 
-  const deleteHandler = (id, name) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: `You're about to delete ${name}`,
-      showCancelButton: true,
-      confirmButtonColor: "#0a0af7",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteParticipant(id);
-        Swal.fire("Deleted!", `${name} has been deleted.`, "success", {
-          confirmButtonColor: "#6186c2",
-        });
-      }
-    });
+  const deleteHandler = async (id) => {
+    await deleteParticipant(id);
+    alert("deleted");
+    setData(filtered);
   };
 
   const deleteManyHandler = () => {
@@ -78,23 +68,22 @@ const Table = ({ data, clearChecked }) => {
         const array = [];
         checked.map((check) => array.push(Object.values(check).toString()));
         deleteMany(array);
-        setChecked([])
-        Swal.fire("Deleted!", `${checked.length}} has been deleted.`, "success", {
-          confirmButtonColor: "#6186c2",
-        });
+        setChecked([]);
+        Swal.fire(
+          "Deleted!",
+          `${checked.length} has been deleted.`,
+          "success",
+          {
+            confirmButtonColor: "#6186c2",
+          }
+        );
       }
     });
-    
-    // const array = [];
-    // checked.map((check) => array.push(Object.values(check).toString()));
-    // await deleteMany(array);
-    // setChecked([])
-    // setDeleteManyModal(true);
   };
 
-  // useEffect(() => {
-  //   console.log(checked);
-  // }, [checked]);
+  useEffect(() => {
+    console.log(checked);
+  }, [checked]);
 
   useEffect(() => {
     if (clearChecked) setChecked([]);
@@ -216,9 +205,7 @@ const Table = ({ data, clearChecked }) => {
                             </button>
                             <button
                               className="text-pink-600"
-                              onClick={() =>
-                                deleteHandler(participant._id, participant.Name)
-                              }
+                              onClick={() => deleteHandler(participant._id)}
                             >
                               Delete
                             </button>
