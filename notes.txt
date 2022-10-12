@@ -1,0 +1,6 @@
+add icons to edit, warning and success sidenav
+capital age in addpart form
+only show schoolorgs that match the events
+filter through events
+mailing list
+import data

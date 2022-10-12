@@ -3,9 +3,9 @@ import { useQuery } from "react-query";
 import Table from "./Table/Table";
 import LoadingBar from "./LoadingBar";
 import { getAllParticipants, getAll } from "../api/participants";
+import { Modal, Button } from "flowbite-react";
 
 const Main = () => {
-
   const [filters, setFilters] = useState({
     event: "all",
     schoolOrg: "all",
@@ -14,7 +14,7 @@ const Main = () => {
     ic: "all",
   });
 
-  const { data, isLoading } = useQuery( 
+  const { data, isLoading } = useQuery(
     ["participants", filters],
     async () => await getAll(filters)
   );
@@ -25,17 +25,22 @@ const Main = () => {
   );
 
   return (
-    <div className="min-h-screen p-24 bg-white">
-      {isLoading || rawDataLoading ? (
-        <LoadingBar />
-      ) : (
-        <Table
-          data={data}
-          rawData={rawData}
-          setFilters={setFilters}
-          filters={filters}
-        />
-      )}
+    <div className="relative flex min-h-screen bg-lightBlue">
+      <div className="sticky top-0 w-20 h-screen bg-darkBlue">
+        <h1 className="font-bold text-center text-gray-100">fuck</h1>
+      </div>
+      <div>
+        {isLoading || rawDataLoading ? (
+          <LoadingBar />
+        ) : (
+          <Table
+            data={data}
+            rawData={rawData}
+            setFilters={setFilters}
+            filters={filters}
+          />
+        )}
+      </div>
     </div>
   );
 };

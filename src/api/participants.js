@@ -92,6 +92,19 @@ export const filterByIC = async (ic, event, schoolOrg, age) => {
   return data;
 };
 
+export const AddParticipant = async (participant) => {
+  const res = await fetch("http://localhost:5000/participants", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(participant),
+  });
+  if (!res.ok) throw new Error("Cannot add participant");
+  const data = await res.json();
+  return data;
+};
+
 export const deleteParticipant = async (id) => {
   const res = await fetch(`http://localhost:5000/participants/${id}`, {
     method: "DELETE",

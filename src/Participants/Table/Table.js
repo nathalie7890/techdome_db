@@ -1,12 +1,32 @@
 import { useState } from "react";
-import { deleteParticipant } from "../../api/participants";
-import { useMutation, useQueryClient } from "react-query";
+import { CSVLink } from "react-csv";
 import Filter from "../Filter/Filter";
-import SelectEvent from "../Filter/Inputs/SelectEvent";
+import DeleteMany from "./DeleteMany";
+import EditParticipant from "../EditParticipant";
+import Add from "../AddParticipant";
 
 const Table = ({ data, rawData, setFilters, filters }) => {
   const [selected, setSelected] = useState([]);
-  console.log(selected);
+  const [fileName, setFileName] = useState("participants.csv");
+
+  const [deleteMany, setDeleteMany] = useState({
+    visible: false,
+    selected: [],
+  });
+
+  const [edit, setEdit] = useState({
+    visible: false,
+    id: "",
+    event: "",
+    schoolOrg: "",
+    name: "",
+    age: "",
+    ic: "",
+  });
+
+  const [add, setAdd] = useState({
+    visible: false,
+  });
 
   const handleChange = (e, person) => {
     const { name, checked } = e.target;
@@ -28,109 +48,189 @@ const Table = ({ data, rawData, setFilters, filters }) => {
     }
   };
 
-  const queryClient = useQueryClient();
-  const mutation = useMutation(
-    async (id) => {
-      await deleteParticipant(id);
-    },
-    {
-      onSuccess: () => {
-        alert("deleted");
-        queryClient.invalidateQueries("participants");
-      },
-    }
-  );
+  const downloadHandler = async (e, done) => {
+    let filename = await prompt("Please enter file name:");
+    await setFileName(filename);
+    done();
+  };
 
-  const deleteHandler = (id) => {
-    if (window.confirm()) {
-      mutation.mutate(id);
-    } else return;
+  const editOnChange = (e) => {
+    setEdit({ ...edit, [e.target.name]: e.target.value });
   };
   return (
-    <div>
-      <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
-      <h1>Showing {data.length} result</h1>
-      <h1>{selected.length} is selected</h1>
-
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                <input
-                  type="checkbox"
-                  name="allSelect"
-                  checked={selected.length === data.length}
-                  onChange={(e) => handleChange(e, data)}
-                />
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Event
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                School/Organisation
-              </th>
-              <th scope="col" className="px-6 py-3">
-                IC Number
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Email
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Conact Number
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Age
-              </th>
-              <th scope="col" className="px-6 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((person) => {
-              console.log(
-                selected.some((item) => item.id == "63416aacee00b9ad58ce8ab3")
-              );
-              return (
-                <tr
-                  className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
-                  key={person._id}
+    <div className="flex flex-row w-[calc(100vw-80px)]">
+      <div
+        className={`px-12 py-12 bg-lightBlue ${
+          edit.visible ? "w-3/4" : "w-full"
+        }`}
+      >
+        <h1 className="text-5xl font-semibold">Dashboard</h1>
+        <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
+        <div className="flex justify-between px-6 pt-6 pb-2 bg-white">
+          <div className="flex">
+            <h1>Showing {data.length} result</h1>
+            <h1 className="mx-4 italic font-medium text-blue-600">
+              {selected.length > 0 ? `${selected.length} is selected` : null}
+            </h1>
+          </div>
+          <div className="flex gap-2">
+            {selected.length > 0 ? (
+              <>
+                <button
+                  onClick={() => setDeleteMany({ visible: true, selected })}
+                  className="px-4 py-1 text-white bg-red-500 rounded-md"
                 >
-                  <td className="px-6 py-4">
+                  Delete
+                </button>
+                <CSVLink
+                  data={data}
+                  separator={";"}
+                  onClick={(e, done) => downloadHandler(e, done)}
+                  asyncOnClick={true}
+                  filename={`${fileName}`}
+                  className="px-4 py-1.5 text-white bg-yellow-400 rounded-md"
+                >
+                  Download
+                </CSVLink>{" "}
+              </>
+            ) : null}
+            <button
+              onClick={() => setAdd({ visible: true })}
+              className="px-4 py-1.5 text-white bg-darkBlue rounded-md"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+        <div className="relative overflow-x-auto shadow-md rounded-b-xl">
+          <table className="w-full text-sm text-left text-gray-500 bg-white">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  {data.length > 0 ? (
                     <input
-                      key={person._id}
                       type="checkbox"
-                      name={person._id}
-                      checked={selected.some((item) => item?.id == person._id)}
-                      onChange={(e) => handleChange(e, person._id)}
+                      name="allSelect"
+                      checked={selected.length === data.length}
+                      onChange={(e) => handleChange(e, data)}
                     />
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {person.Event}
-                  </th>
-                  <td className="px-6 py-4">{person.Name}</td>
-                  <td className="px-6 py-4">{person["School/Organisation"]}</td>
-                  <td className="px-6 py-4">{person["IC Number"]}</td>
-                  <td className="px-6 py-4">{person["Contact number"]}</td>
-                  <td className="px-6 py-4">{person["Email"]}</td>
-                  <td className="px-6 py-4">{person["age"]}</td>
-                  <td className="px-6 py-4">
-                    <button>Edit</button>
-                    <button onClick={() => deleteHandler(person._id)}>
-                      Delete
-                    </button>
+                  ) : null}
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Event
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  School/Organisation
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  IC Number
+                </th>
+                {!edit.visible ? (
+                  <>
+                    <th scope="col" className="px-6 py-3">
+                      Email
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Conact Number
+                    </th>
+                  </>
+                ) : null}
+                <th scope="col" className="px-6 py-3">
+                  Age
+                </th>
+                <th scope="col" className="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {data.length <= 0 ? (
+                <tr>
+                  <td></td>
+                  <td>
+                    <h1 className="w-full py-4 text-3xl">No Participant</h1>
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ) : (
+                <>
+                  {data.map((person) => {
+                    return (
+                      <tr
+                        className="bg-white border-b hover:bg-gray-300"
+                        key={person._id}
+                      >
+                        <td className="px-6 py-4">
+                          <input
+                            key={person._id}
+                            type="checkbox"
+                            name={person._id}
+                            checked={selected.some(
+                              (item) => item?.id == person._id
+                            )}
+                            onChange={(e) => handleChange(e, person._id)}
+                          />
+                        </td>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                        >
+                          {person.Event}
+                        </th>
+                        <td className="px-6 py-4">{person.Name}</td>
+                        <td className="px-6 py-4">
+                          {person["School/Organisation"]}
+                        </td>
+                        <td className="px-6 py-4">{person["IC Number"]}</td>
+                        {!edit.visible ? (
+                          <>
+                            <td className="px-6 py-4">{person["Email"]}</td>
+                            <td className="px-6 py-4">
+                              {person["Contact number"]}
+                            </td>
+                          </>
+                        ) : null}
+                        <td className="px-6 py-4">{person["age"]}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() =>
+                              setEdit({
+                                visible: true,
+                                id: person._id,
+                                event: person.Event,
+                                schoolOrg: person["School/Organisation"],
+                                age: person.age,
+                                name: person.Name,
+                                ic: person["IC Number"],
+                              })
+                            }
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
+            </tbody>
+          </table>
+
+          <DeleteMany
+            data={deleteMany}
+            setState={setDeleteMany}
+            setSelected={setSelected}
+          />
+        </div>
       </div>
+      {edit.visible ? (
+        <EditParticipant
+          edit={edit}
+          editOnChange={editOnChange}
+          setEdit={setEdit}
+        />
+      ) : null}
+      <Add add={add} setAdd={setAdd} />
     </div>
   );
 };

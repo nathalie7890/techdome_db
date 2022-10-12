@@ -1,6 +1,8 @@
-import React from "react";
+import {useState} from "react";
 
 export default function SearchName({ onChange, filters }) {
+const [name, setName] = useState(filters.name)
+console.log(name)
   return (
     <div className="flex flex-col w-1/5">
       <label className="text-sm text-zinc-600">Name</label>
@@ -8,8 +10,8 @@ export default function SearchName({ onChange, filters }) {
         type="text"
         name="name"
         className="rounded-md"
-        onChange={onChange}
-      value={filters.name}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
     </div>
   );
