@@ -27,7 +27,7 @@ const Main = () => {
   return (
     <div className="relative flex min-h-screen bg-lightBlue">
       <div className="sticky top-0 w-20 h-screen bg-darkBlue">
-        <h1 className="font-bold text-center text-gray-100">fuck</h1>
+        <h1 className="font-bold text-center text-gray-100">Hi</h1>
       </div>
       <div>
         {isLoading || rawDataLoading ? (
