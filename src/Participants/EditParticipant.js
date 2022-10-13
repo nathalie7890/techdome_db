@@ -31,10 +31,11 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
   return (
     <div className="sticky top-0 w-1/4 h-screen p-12 shadow-xl bg-mediumBlue shadow-darkBlue">
       <button
-        className="flex justify-end w-full text-xl font-medium text-white"
+        className="flex justify-end w-full text-xl font-medium"
         onClick={() => setEdit({ visible: false })}
       >
-        X
+          <span className="text-gray-300 material-symbols-outlined">close</span>
+        
       </button>
       <div className="flex flex-col justify-center h-full">
         <form
@@ -62,7 +63,7 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
             onChange={editOnChange}
             value={event}
           />
-          <textarea
+          <input
             type="text"
             name="schoolOrg"
             className="h-fit editParticipantInput"
@@ -101,7 +102,7 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
           </button>
           <div className="flex justify-end w-full space-x-2">
             <button
-              className="px-6 py-1.5 text-white rounded-md bg-darkBlue hover:shadow-lg"
+              className="px-6 py-1.5 text-white rounded-md bg-darkBlue hover:bg-blue-500"
               type="submit"
             >
               Save

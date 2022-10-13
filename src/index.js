@@ -6,6 +6,7 @@ import App from "./App";
 import "tailwindcss/tailwind.css";
 import "./index.css";
 import "flowbite";
+import 'material-symbols';
 
 const queryClient = new QueryClient();
 let root = ReactDOM.createRoot(document.getElementById("root"));

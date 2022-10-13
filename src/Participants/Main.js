@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import Table from "./Table/Table";
 import LoadingBar from "./LoadingBar";
 import { getAllParticipants, getAll } from "../api/participants";
-import { Modal, Button } from "flowbite-react";
 
 const Main = () => {
   const [filters, setFilters] = useState({
@@ -26,8 +25,13 @@ const Main = () => {
 
   return (
     <div className="relative flex min-h-screen bg-lightBlue">
-      <div className="sticky top-0 w-20 h-screen bg-darkBlue">
-        <h1 className="font-bold text-center text-gray-100">Hi</h1>
+      <div className="sticky top-0 flex flex-col justify-between w-20 h-screen p-4 py-12 bg-darkBlue">
+        <div className="flex flex-col items-center justify-center">
+         
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-gray-300 material-symbols-outlined">logout</span>
+        </div>
       </div>
       <div>
         {isLoading || rawDataLoading ? (

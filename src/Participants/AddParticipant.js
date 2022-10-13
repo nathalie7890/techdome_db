@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { AddParticipant } from "../api/participants";
-import { Modal, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 
 export default function Add({ add, setAdd }) {
   const { visible } = add;
@@ -54,20 +54,23 @@ export default function Add({ add, setAdd }) {
         size="2xl"
         popup={true}
         onClose={() => {
-          setAdded(false);
           setData({});
+          setAdded(false);
           setAdd({ visible: false });
         }}
       >
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            <h1 className="mb-12 text-3xl font-semibold text-left text-mediumBlue">
+            <h1 className="mb-10 text-3xl font-semibold text-left text-mediumBlue">
               Add Participant
             </h1>
+
             {added ? (
               <>
-                <h1 className="mb-12 text-2xl font-semibold text-black">Participant added</h1>
+                <h1 className="mb-12 text-2xl font-semibold text-black">
+                  Participant added
+                </h1>
                 <button
                   color="gray"
                   type="button"
@@ -151,10 +154,13 @@ export default function Add({ add, setAdd }) {
                     onChange={addOnChange}
                   />
                 </div>
+                <p className="my-6 font-medium text-left text-blue-500">
+                  Please ensure all details are correct before submitting.
+                </p>
                 <div className="flex justify-end gap-4">
                   <button
                     type="submit"
-                    className="px-4 py-2 text-white rounded-md bg-darkBlue"
+                    className="px-4 py-2 text-white rounded-md bg-darkBlue hover:bg-blue-700"
                   >
                     Confirm
                   </button>
@@ -166,7 +172,7 @@ export default function Add({ add, setAdd }) {
                       setData({});
                       setAdd({ visible: false });
                     }}
-                    className="px-4 py-2 border rounded-md border-darkBlue text-darkBlue"
+                    className="px-4 py-2 border rounded-md border-darkBlue text-darkBlue hover:bg-red-500 hover:text-white"
                   >
                     Cancel
                   </button>

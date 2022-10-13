@@ -70,7 +70,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
           <div className="flex">
             <h1>Showing {data.length} result</h1>
             <h1 className="mx-4 italic font-medium text-blue-600">
-              {selected.length > 0 ? `${selected.length} is selected` : null}
+              {selected.length > 0 ? `${selected.length} selected` : null}
             </h1>
           </div>
           <div className="flex gap-2">
@@ -96,7 +96,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
             ) : null}
             <button
               onClick={() => setAdd({ visible: true })}
-              className="px-4 py-1.5 text-white bg-darkBlue rounded-md"
+              className="px-4 py-1.5 text-white bg-darkBlue rounded-md hover:bg-blue-600"
             >
               Add
             </button>
@@ -205,7 +205,9 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                               })
                             }
                           >
-                            Edit
+                            <span className="text-gray-500 material-symbols-outlined hover:text-white">
+                              chevron_right
+                            </span>
                           </button>
                         </td>
                       </tr>

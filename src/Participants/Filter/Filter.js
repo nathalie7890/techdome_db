@@ -2,8 +2,6 @@ import { useState } from "react";
 import SelectEvent from "./Inputs/SelectEvent";
 import SelectSO from "./Inputs/SelectSO";
 import SelectAge from "./Inputs/SelectAge";
-import SearchName from "./Inputs/SearchName";
-import SearchIc from "./Inputs/SearchIc";
 
 const Filter = ({ rawData, setFilters, filters }) => {
   const onChangeHandler = (field) => (e) => {
@@ -22,7 +20,6 @@ const Filter = ({ rawData, setFilters, filters }) => {
     });
   };
 
-  const [more, setMore] = useState(false);
   const [name, setName] = useState(filters.name);
   const [ic, setIc] = useState(filters.ic);
 
@@ -65,13 +62,13 @@ const Filter = ({ rawData, setFilters, filters }) => {
       <div className="space-x-2">
         <button
           onClick={() => clearFilter()}
-          className="px-4 py-1 border rounded-md border-darkBlue hover:shadow-md hover:shadow-gray-100"
+          className="px-4 py-1 border rounded-md border-darkBlue hover:shadow-md hover:bg-blue-500 hover:text-white"
         >
           Clear
         </button>
         <button
           onClick={() => setFilters({ ...filters, name, ic })}
-          className="px-4 py-1 text-white border rounded-md bg-mediumBlue hover:shadow-md border-darkBlue"
+          className="px-4 py-1 text-white border rounded-md bg-mediumBlue hover:shadow-md border-darkBlue hover:bg-blue-500"
         >
           Search
         </button>
