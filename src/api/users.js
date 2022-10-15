@@ -1,5 +1,5 @@
 export const Login = async (user) => {
-  const res = await fetch("http://localhost:5000/users/login", {
+  const res = await fetch("https://techdome-test-server.vercel.app", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
