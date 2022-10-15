@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { CSVLink } from "react-csv";
+import Add from "../AddParticipant";
 import Filter from "../Filter/Filter";
 import DeleteMany from "./DeleteMany";
 import EditParticipant from "../EditParticipant";
-import Add from "../AddParticipant";
+import { AiOutlineEdit } from "react-icons/ai";
 
 const Table = ({ data, rawData, setFilters, filters }) => {
+  const [displayData, setDisplayData] = useState(data);
   const [selected, setSelected] = useState([]);
   const [fileName, setFileName] = useState("participants.csv");
 
@@ -48,10 +50,14 @@ const Table = ({ data, rawData, setFilters, filters }) => {
     }
   };
 
-  const downloadHandler = async (e, done) => {
-    let filename = await prompt("Please enter file name:");
-    await setFileName(filename);
-    done();
+  const downloadHandler = (e, done) => {
+    let filename = prompt("Please enter file name:");
+    if (filename === null) {
+      done(false);
+    } else {
+      setFileName(filename);
+      done();
+    }
   };
 
   const editOnChange = (e) => {
@@ -65,7 +71,13 @@ const Table = ({ data, rawData, setFilters, filters }) => {
         }`}
       >
         <h1 className="text-5xl font-semibold">Dashboard</h1>
-        <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
+        <Filter
+          rawData={rawData}
+          setFilters={setFilters}
+          filters={filters}
+          displayData={displayData}
+          setDisplayData={setDisplayData}
+        />
         <div className="flex justify-between px-6 pt-6 pb-2 bg-white">
           <div className="flex">
             <h1>Showing {data.length} result</h1>
@@ -85,7 +97,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                 <CSVLink
                   data={data}
                   separator={";"}
-                  onClick={(e, done) => downloadHandler(e, done)}
+                  onClick={downloadHandler}
                   asyncOnClick={true}
                   filename={`${fileName}`}
                   className="px-4 py-1.5 text-white bg-yellow-400 rounded-md"
@@ -94,12 +106,12 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                 </CSVLink>{" "}
               </>
             ) : null}
-            <button
+            {/* <button
               onClick={() => setAdd({ visible: true })}
               className="px-4 py-1.5 text-white bg-darkBlue rounded-md hover:bg-blue-600"
             >
               Add
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="relative overflow-x-auto shadow-md rounded-b-xl">
@@ -141,7 +153,9 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                 <th scope="col" className="px-6 py-3">
                   Age
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3">
+                  Edit
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white">
@@ -154,7 +168,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                 </tr>
               ) : (
                 <>
-                  {data.map((person) => {
+                  {displayData.map((person) => {
                     return (
                       <tr
                         className="bg-white border-b hover:bg-gray-300"
@@ -166,7 +180,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                             type="checkbox"
                             name={person._id}
                             checked={selected.some(
-                              (item) => item?.id == person._id
+                              (item) => item?.id === person._id
                             )}
                             onChange={(e) => handleChange(e, person._id)}
                           />
@@ -205,9 +219,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                               })
                             }
                           >
-                            <span className="text-gray-500 material-symbols-outlined hover:text-white">
-                              chevron_right
-                            </span>
+                            <AiOutlineEdit />
                           </button>
                         </td>
                       </tr>
@@ -230,6 +242,8 @@ const Table = ({ data, rawData, setFilters, filters }) => {
           edit={edit}
           editOnChange={editOnChange}
           setEdit={setEdit}
+          data={data}
+          setDisplayData={setDisplayData}
         />
       ) : null}
       <Add add={add} setAdd={setAdd} />

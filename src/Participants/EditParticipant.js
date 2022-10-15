@@ -3,7 +3,13 @@ import { useMutation, useQueryClient } from "react-query";
 import DeleteOne from "./DeleteOne";
 import { editParticipant } from "../api/participants";
 
-export default function EditParticipant({ edit, editOnChange, setEdit }) {
+export default function EditParticipant({
+  edit,
+  editOnChange,
+  setEdit,
+  data,
+  setDisplayData,
+}) {
   const { event, schoolOrg, age, name, ic } = edit;
   const [deleteOne, setDeleteOne] = useState({
     visible: false,
@@ -17,8 +23,9 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
       await editParticipant(data, id);
     },
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries("participants");
+      onSuccess: async() => {
+        await queryClient.invalidateQueries("participants");
+        await setDisplayData(data);
         setEdit({ visible: false });
       },
     }
@@ -34,8 +41,7 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
         className="flex justify-end w-full text-xl font-medium"
         onClick={() => setEdit({ visible: false })}
       >
-          <span className="text-gray-300 material-symbols-outlined">close</span>
-        
+        <span className="text-gray-300 material-symbols-outlined">close</span>
       </button>
       <div className="flex flex-col justify-center h-full">
         <form

@@ -4,3 +4,9 @@ only show schoolorgs that match the events
 filter through events
 mailing list
 import data
+
+
+age range, age oldest, youngest
+event, schoolOrg text input
+event sory by alphabetically
+sort by year

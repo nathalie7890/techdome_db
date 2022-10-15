@@ -8,7 +8,7 @@ const SelectEvent = ({ data, onChange, filters }) => {
 
   return (
     <div className="flex flex-col w-1/6">
-      <label className="text-sm text-zinc-600">EVENT</label>
+      <label className="text-sm text-zinc-600">Event</label>
       <select
         name="event"
         className="filterInput"
