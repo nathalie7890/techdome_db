@@ -6,7 +6,7 @@ export const getAllParticipants = async () => {
 };
 
 export const getAll = async (filters) => {
-  const res = await fetch("https://techdome-test-server.vercel.app", {
+  const res = await fetch("http://localhost:5000/participants/all", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -106,7 +106,7 @@ export const AddParticipant = async (participant) => {
 };
 
 export const deleteParticipant = async (id) => {
-  const res = await fetch(`https://techdome-test-server.vercel.app/${id}`, {
+  const res = await fetch(`http://localhost:5000/participants/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) console.error(`Failed to delete participant ${id}`);
@@ -115,7 +115,7 @@ export const deleteParticipant = async (id) => {
 };
 
 export const editParticipant = async (participant, id) => {
-  const res = await fetch(`https://techdome-test-server.vercel.app/${id}`, {
+  const res = await fetch(`http://localhost:5000/participants/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -129,7 +129,7 @@ export const editParticipant = async (participant, id) => {
 };
 
 export const deleteMany = async (participants) => {
-  const res = await fetch("https://techdome-test-server.vercel.app", {
+  const res = await fetch("http://localhost:5000/participants", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

@@ -6,7 +6,7 @@ import Main from "./Participants/Main";
 function App() {
   return (
     <div className="min-h-[100vh] ">
-      {!localStorage.getItem("token") ? <Login /> : <Main />}
+      <Main />
     </div>
   );
 }

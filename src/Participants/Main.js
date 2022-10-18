@@ -20,7 +20,9 @@ const Main = () => {
 
   const { data, isLoading } = useQuery(
     ["participants", filters],
-    async () => await getAll(filters)
+    async () => await getAll(filters), {
+      select: (data) => data.sort((a, b) => (a.Event > b.Event ? 1 : -1))
+    }
   );
 
   const { data: rawData, isLoading: rawDataLoading } = useQuery(
