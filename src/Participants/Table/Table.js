@@ -6,8 +6,7 @@ import DeleteMany from "./DeleteMany";
 import EditParticipant from "../EditParticipant";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const Table = ({ data, rawData, setFilters, filters }) => {
-  const [displayData, setDisplayData] = useState(data);
+const Table = ({ data, rawData, setFilters, filters, event }) => {
   const [selected, setSelected] = useState([]);
   const [fileName, setFileName] = useState("participants.csv");
 
@@ -70,14 +69,8 @@ const Table = ({ data, rawData, setFilters, filters }) => {
           edit.visible ? "w-3/4" : "w-full"
         }`}
       >
-        <h1 className="text-5xl font-semibold">Dashboard</h1>
-        <Filter
-          rawData={rawData}
-          setFilters={setFilters}
-          filters={filters}
-          displayData={displayData}
-          setDisplayData={setDisplayData}
-        />
+        <h1 className="text-5xl font-semibold">{event}</h1>
+        <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
         <div className="flex justify-between px-6 pt-6 pb-2 bg-white">
           <div className="flex">
             <h1>Showing {data.length} result</h1>
@@ -168,7 +161,7 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                 </tr>
               ) : (
                 <>
-                  {displayData.map((person) => {
+                  {data.map((person) => {
                     return (
                       <tr
                         className="bg-white border-b hover:bg-gray-300"
@@ -189,22 +182,18 @@ const Table = ({ data, rawData, setFilters, filters }) => {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                         >
-                          {person.Event}
+                          {event}
                         </th>
-                        <td className="px-6 py-4">{person.Name}</td>
-                        <td className="px-6 py-4">
-                          {person["School/Organisation"]}
-                        </td>
-                        <td className="px-6 py-4">{person["IC Number"]}</td>
+                        <td className="px-6 py-4">{person.name}</td>
+                        <td className="px-6 py-4">{person.schoolOrg}</td>
+                        <td className="px-6 py-4">{person.ic}</td>
                         {!edit.visible ? (
                           <>
-                            <td className="px-6 py-4">{person["Email"]}</td>
-                            <td className="px-6 py-4">
-                              {person["Contact number"]}
-                            </td>
+                            <td className="px-6 py-4">{person.email}</td>
+                            <td className="px-6 py-4">{person.contact}</td>
                           </>
                         ) : null}
-                        <td className="px-6 py-4">{person["age"]}</td>
+                        <td className="px-6 py-4">{person.age}</td>
                         <td className="px-6 py-4">
                           <button
                             onClick={() =>
@@ -243,7 +232,6 @@ const Table = ({ data, rawData, setFilters, filters }) => {
           editOnChange={editOnChange}
           setEdit={setEdit}
           data={data}
-          setDisplayData={setDisplayData}
         />
       ) : null}
       <Add add={add} setAdd={setAdd} />

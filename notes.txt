@@ -1,12 +1,12 @@
-add icons to edit, warning and success sidenav
-capital age in addpart form
-only show schoolorgs that match the events
-filter through events
-mailing list
-import data
-
-
-age range, age oldest, youngest
-event, schoolOrg text input
-event sory by alphabetically
-sort by year
+fix the server folder, try to deploy
+edit, delete many  participants
+delete many events
+filter events
+download events
+fix upload by event
+if there's no event, display 'no event'
+prevent event from uploading if any field is missing
+what is event csv already have age field
+game developement have studentA and studentB, separate them?
+one of the participant from game developement has "UXXXXX" as ic and it wouldn't upload
+what is user wants to find participants from other event?

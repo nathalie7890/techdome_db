@@ -5,31 +5,29 @@ import LoadingBar from "./LoadingBar";
 import { Logout } from "../api/users";
 import { FiLogOut } from "react-icons/fi";
 import { Tooltip } from "flowbite-react";
-import { getAllParticipants, getAll } from "../api/participants";
+import { getAll } from "../api/participants";
+import { useLocation } from "react-router-dom";
 
 const Main = () => {
+  const location = useLocation();
+  const { event } = location.state;
   const [filters, setFilters] = useState({
-    event: "all",
-    schoolOrg: "all",
-    // age: "all",
+    event: event,
+    schoolOrg: "",
     ageFrom: 0,
-    ageTo: 100,
-    name: "all",
-    ic: "all",
+    ageTo: 200,
+    name: "",
+    ic: "",
+    eventAlpha: "",
+    eventYear: "",
+    ageSort: "",
   });
 
   const { data, isLoading } = useQuery(
     ["participants", filters],
-    async () => await getAll(filters), {
-      select: (data) => data.sort((a, b) => (a.Event > b.Event ? 1 : -1))
-    }
+    async () => await getAll(filters)
   );
-
-  const { data: rawData, isLoading: rawDataLoading } = useQuery(
-    ["rawData"],
-    async () => await getAllParticipants()
-  );
-
+if(!isLoading) console.log(data)
   const LogoutHandler = () => {
     Logout();
     window.location.reload();
@@ -51,15 +49,10 @@ const Main = () => {
         </div>
       </div>
       <div>
-        {isLoading || rawDataLoading ? (
+        {isLoading ? (
           <LoadingBar />
         ) : (
-          <Table
-            data={data}
-            rawData={rawData}
-            setFilters={setFilters}
-            filters={filters}
-          />
+          <Table data={data} setFilters={setFilters} filters={filters} event={event}/>
         )}
       </div>
     </div>

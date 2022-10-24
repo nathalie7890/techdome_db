@@ -1,71 +1,76 @@
 import { useState } from "react";
-import { Tooltip } from "flowbite-react";
 
-const Filter = ({
-  rawData,
-  setFilters,
-  filters,
-  displayData,
-  setDisplayData,
-}) => {
-  const onChangeHandler = (field) => (e) => {
-    const { value } = e.target;
-    setFilters({ ...filters, [field]: value });
+const Filter = ({ setFilters, filters }) => {
+  const [filter, setFilter] = useState({
+    event: filters.event,
+    schoolOrg: filters.schoolOrg,
+    ageFrom: filters.ageFrom,
+    ageTo: filters.ageTo,
+    name: filters.name,
+    ic: filters.ic,
+  });
+
+  const { eventAlpha, eventYear, ageSort } = filters;
+  const { event, schoolOrg, ageFrom, ageTo, name, ic } = filter;
+
+  const onChangeHandler = (e) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value.toLowerCase() });
   };
 
-
-  const [event, setEvent] = useState(filters.event);
-  const [schoolOrg, setSchoolOrg] = useState(filters.schoolOrg);
-  const [ageFrom, setAgeFrom] = useState(filters.ageFrom);
-  const [ageTo, setAgeTo] = useState(filters.ageTo);
-  const [name, setName] = useState(filters.name);
-  const [ic, setIc] = useState(filters.ic);
-  const [eventAlpha, setEventAlpha] = useState("");
-  const [eventYear, setEventYear] = useState("");
-  const [ageSort, setAgeSort] = useState("");
-
-  const sortEvent = (e) => {
-    const { value } = e.target;
-    if (value === "a") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => (a.Event > b.Event ? -1 : 1)),
-      ]);
-      setEventAlpha(value);
+  const sortOnChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "eventAlpha") {
+      if (value === "asc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "asc",
+          eventYear: "",
+          ageSort: "",
+        });
+      } else if (value === "dsc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "dsc",
+          eventYear: "",
+          ageSort: "",
+        });
+      }
     }
 
-    if (value === "z") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => (a.Event > b.Event ? 1 : -1)),
-      ]);
-      setEventAlpha(value);
+    if (name === "eventYear") {
+      if (value === "asc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "",
+          eventYear: "asc",
+          ageSort: "",
+        });
+      } else if (value === "dsc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "",
+          eventYear: "dsc",
+          ageSort: "",
+        });
+      }
     }
 
-    if (value === "latest") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => a.Event.slice(-4) - b.Event.slice(-4)),
-      ]);
-      setEventYear(value);
-    }
-    if (value === "oldest") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => b.Event.slice(-4) - a.Event.slice(-4)),
-      ]);
-      setEventYear(value);
-    }
-  };
-  const sortAge = (e) => {
-    const { value } = e.target;
-    if (value === "youngest") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => a.age - b.age),
-      ]);
-      setAgeSort(value);
-    }
-    if (value === "oldest") {
-      setDisplayData((displayData) => [
-        ...displayData.sort((a, b) => b.age - a.age),
-      ]);
-      setAgeSort(value);
+    if (name === "ageSort") {
+      if (value === "asc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "",
+          eventYear: "",
+          ageSort: "asc",
+        });
+      } else if (value === "dsc") {
+        setFilters({
+          ...filters,
+          eventAlpha: "",
+          eventYear: "",
+          ageSort: "dsc",
+        });
+      }
     }
   };
 
@@ -76,33 +81,33 @@ const Filter = ({
           e.preventDefault();
           setFilters({
             ...filters,
-            name,
-            ic,
             event,
             schoolOrg,
             ageFrom,
             ageTo,
+            name,
+            ic,
           });
         }}
       >
-        <div className="flex space-x-1">
-          <div className="flex flex-col w-1/6">
+        <div className="flex mb-4 space-x-1">
+          {/* <div className="flex flex-col w-1/6">
             <label className="text-sm text-zinc-600">Event</label>
             <input
               type="text"
               name="event"
               value={event}
-              onChange={(e) => setEvent(e.target.value)}
+              onChange={onChangeHandler}
               className="capitalize filterInput"
             />
-          </div>
+          </div> */}
           <div className="flex flex-col w-1/6">
             <label className="text-sm text-zinc-600">School/Organisation</label>
             <input
               type="text"
-              name="school/org"
+              name="schoolOrg"
               value={schoolOrg}
-              onChange={(e) => setSchoolOrg(e.target.value)}
+              onChange={onChangeHandler}
               className="capitalize filterInput"
             />
           </div>
@@ -113,7 +118,7 @@ const Filter = ({
               min="0"
               name="ageFrom"
               value={ageFrom}
-              onChange={(e) => setAgeFrom(e.target.value)}
+              onChange={onChangeHandler}
               className="capitalize filterInput"
             />
           </div>
@@ -121,12 +126,27 @@ const Filter = ({
             <label className="text-sm text-zinc-600">Age To:</label>
             <input
               type="number"
-              max="100"
+              max="200"
               name="ageTo"
               value={ageTo}
-              onChange={(e) => setAgeTo(e.target.value)}
+              onChange={onChangeHandler}
               className="capitalize filterInput"
             />
+          </div>
+          <div className="flex flex-col w-1/6">
+            <label className="text-sm text-zinc-600">
+              Sort Participant By Age
+            </label>
+            <select
+              name="ageSort"
+              value={ageSort}
+              onChange={sortOnChange}
+              className="filterInput"
+            >
+              <option value="">Select</option>
+              <option value="asc">Youngest</option>
+              <option value="dsc">Oldest</option>
+            </select>
           </div>
           <div className="flex flex-col w-1/6">
             <label className="text-sm text-zinc-600">Name</label>
@@ -135,7 +155,7 @@ const Filter = ({
               name="name"
               className="capitalize filterInput"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={onChangeHandler}
             />
           </div>
           <div className="flex flex-col w-1/6">
@@ -145,20 +165,12 @@ const Filter = ({
               name="ic"
               className="capitalize filterInput"
               value={ic}
-              onChange={(e) => setIc(e.target.value)}
+              onChange={onChangeHandler}
             />
           </div>
         </div>
-        <div>
-          <p className="italic text-blue-500">
-            Do include space in your filters to ensure consistent result. E.g.
-            "glo walk" instead of "glowalk". Letter case do not matter.
-            <br />
-            Hit "Enter" or click the "Search" button to filter data and "Clear"
-            to reset filters.
-          </p>
-        </div>
-        <div className="my-4">
+
+        {/* <div className="my-4">
           <div className="flex space-x-1 w-6/6">
             <div className="flex flex-col w-1/6">
               <label className="text-sm text-zinc-600">
@@ -167,12 +179,12 @@ const Filter = ({
               <select
                 name="eventAlpha"
                 value={eventAlpha}
-                onChange={sortEvent}
+                onChange={sortOnChange}
                 className="bg-gray-100 border-gray-600 filterInput"
               >
                 <option value="">Select</option>
-                <option value="a">A-Z</option>
-                <option value="z">Z-A</option>
+                <option value="asc">A-Z</option>
+                <option value="dsc">Z-A</option>
               </select>
             </div>
             <div className="flex flex-col w-1/6">
@@ -182,12 +194,12 @@ const Filter = ({
               <select
                 name="eventYear"
                 value={eventYear}
-                onChange={sortEvent}
+                onChange={sortOnChange}
                 className="bg-gray-100 border-gray-600 filterInput"
               >
                 <option value="">Select</option>
-                <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option>
+                <option value="asc">Latest</option>
+                <option value="dsc">Oldest</option>
               </select>
             </div>
             <div className="flex flex-col w-1/6">
@@ -195,25 +207,18 @@ const Filter = ({
                 Sort Participant By Age
               </label>
               <select
-                name="eventYear"
+                name="ageSort"
                 value={ageSort}
-                onChange={sortAge}
+                onChange={sortOnChange}
                 className="bg-gray-100 border-gray-600 filterInput"
               >
                 <option value="">Select</option>
-                <option value="youngest">Youngest</option>
-                <option value="oldest">Oldest</option>
+                <option value="asc">Youngest</option>
+                <option value="dsc">Oldest</option>
               </select>
             </div>
           </div>
-          <div>
-            <p className="italic text-blue-500">
-              Please note that these 3 filters correlate with the filters above.
-              Data is filtered and displayed by clicking any option from the dropdown.
-              <br />
-            </p>
-          </div>
-        </div>
+        </div> */}
         <div className="space-x-2">
           <button
             type="button"
