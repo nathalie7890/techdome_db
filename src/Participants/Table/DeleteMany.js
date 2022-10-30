@@ -4,19 +4,19 @@ import { deleteMany } from "../../api/participants";
 import { Modal, Button } from "flowbite-react";
 
 export default function DeleteMany({ data, setState, setSelected }) {
-  const { visible, selected } = data;
+  const { visible, selected, event } = data;
   const [deleted, setDeleted] = useState(false);
 
   const queryClient = useQueryClient();
   const deleteManyMutation = useMutation(
     async (array) => {
-      await deleteMany(array);
+      await deleteMany(event, array);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("participants");
         setDeleted(true);
-        setSelected([])
+        setSelected([]);
       },
     }
   );

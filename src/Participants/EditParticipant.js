@@ -3,14 +3,9 @@ import { useMutation, useQueryClient } from "react-query";
 import DeleteOne from "./DeleteOne";
 import { editParticipant } from "../api/participants";
 
-export default function EditParticipant({
-  edit,
-  editOnChange,
-  setEdit,
-  data,
-  setDisplayData,
-}) {
-  const { event, schoolOrg, age, name, ic } = edit;
+export default function EditParticipant({ edit, editOnChange, setEdit }) {
+  const { name, schoolOrg, age, ic, contact, email, address } = edit;
+
   const [deleteOne, setDeleteOne] = useState({
     visible: false,
     id: "",
@@ -23,9 +18,8 @@ export default function EditParticipant({
       await editParticipant(data, id);
     },
     {
-      onSuccess: async() => {
+      onSuccess: async () => {
         await queryClient.invalidateQueries("participants");
-        await setDisplayData(data);
         setEdit({ visible: false });
       },
     }
@@ -50,24 +44,25 @@ export default function EditParticipant({
             e.preventDefault();
             editSubmit(
               {
-                Event: event,
-                "School/Organisation": schoolOrg,
-                age: age,
-                Name: name,
-                "IC Number": ic,
+                name,
+                schoolOrg,
+                age,
+                ic,
+                contact,
+                email,
+                address,
               },
               edit.id
             );
           }}
         >
-          <h1 className="mb-8 text-3xl text-white">{edit.name}</h1>
-
+          <h1 className="mb-8 text-3xl font-semibold text-white">Edit</h1>
           <input
             type="text"
-            name="event"
-            className="editParticipantInput"
+            name="name"
+            className="h-fit editParticipantInput"
             onChange={editOnChange}
-            value={event}
+            value={name}
           />
           <input
             type="text"
@@ -77,18 +72,11 @@ export default function EditParticipant({
             value={schoolOrg}
           />
           <input
-            type="text"
+            type="number"
             name="age"
             className="editParticipantInput"
             onChange={editOnChange}
             value={age}
-          />
-          <input
-            type="text"
-            name="name"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={name}
           />
           <input
             type="text"
@@ -97,8 +85,29 @@ export default function EditParticipant({
             onChange={editOnChange}
             value={ic}
           />
+          <input
+            type="text"
+            name="email"
+            className="editParticipantInput"
+            onChange={editOnChange}
+            value={email}
+          />
+          <input
+            type="text"
+            name="contact"
+            className="editParticipantInput"
+            onChange={editOnChange}
+            value={contact}
+          />
+          <input
+            type="text"
+            name="address"
+            className="editParticipantInput"
+            onChange={editOnChange}
+            value={address}
+          />
           <button
-            className="flex justify-start font-semibold text-blue-300 hover:underline"
+            className="flex justify-start font-semibold text-blue-300 hover:text-yellow-200 w-fit"
             type="button"
             onClick={() =>
               setDeleteOne({ visible: true, id: edit.id, name: name })
@@ -108,7 +117,7 @@ export default function EditParticipant({
           </button>
           <div className="flex justify-end w-full space-x-2">
             <button
-              className="px-6 py-1.5 text-white rounded-md bg-darkBlue hover:bg-blue-500"
+              className="px-6 py-1 text-white rounded-md bg-darkBlue hover:bg-lightBlue hover:text-black"
               type="submit"
             >
               Save

@@ -109,6 +109,7 @@ export const deleteParticipant = async (id) => {
   const res = await fetch(`http://localhost:5000/participants/${id}`, {
     method: "DELETE",
   });
+
   if (!res.ok) console.error(`Failed to delete participant ${id}`);
   const data = res.json();
   return data;
@@ -123,18 +124,19 @@ export const editParticipant = async (participant, id) => {
     body: JSON.stringify(participant),
   });
 
-  if (!res.ok) console.error(`Failed to delete participant ${id}`);
+  if (!res.ok) console.error(`Failed to edit participant ${id}`);
   const data = res.json();
   return data;
 };
 
-export const deleteMany = async (participants) => {
+export const deleteMany = async (name, participants) => {
+  console.log(name, participants)
   const res = await fetch("http://localhost:5000/participants", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: participants }),
+    body: JSON.stringify({ name: name, id: participants }),
   });
 
   if (!res.ok) console.error("Failed to delete participants");

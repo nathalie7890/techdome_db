@@ -9,41 +9,44 @@ import { AiOutlineEdit } from "react-icons/ai";
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const [selected, setSelected] = useState([]);
   const [fileName, setFileName] = useState("participants.csv");
+ 
 
   const [deleteMany, setDeleteMany] = useState({
     visible: false,
     selected: [],
+    event: "",
   });
 
   const [edit, setEdit] = useState({
     visible: false,
     id: "",
-    event: "",
-    schoolOrg: "",
     name: "",
+    schoolOrg: "",
     age: "",
     ic: "",
+    contact: "",
+    email: "",
+    address: "",
   });
 
   const [add, setAdd] = useState({
     visible: false,
   });
 
-  const handleChange = (e, person) => {
+
+  const handleChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
       if (name === "allSelect") {
         setSelected([]);
-        data.map((item) =>
-          setSelected((selected) => [...selected, { id: item._id }])
-        );
+        data.map((person) => setSelected((selected) => [...selected, person]));
       } else {
-        setSelected([...selected, { id: person }]);
+        setSelected([...selected, data]);
       }
     } else {
       if (name === "allSelect") setSelected([]);
       else {
-        let tempuser = selected.filter((item) => item.id !== person);
+        let tempuser = selected.filter((person) => person._id !== data._id);
         setSelected(tempuser);
       }
     }
@@ -62,6 +65,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   const editOnChange = (e) => {
     setEdit({ ...edit, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="flex flex-row w-[calc(100vw-80px)]">
       <div
@@ -82,14 +86,15 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             {selected.length > 0 ? (
               <>
                 <button
-                  onClick={() => setDeleteMany({ visible: true, selected })}
+                  onClick={() =>
+                    setDeleteMany({ visible: true, selected, event })
+                  }
                   className="px-4 py-1 text-white bg-red-500 rounded-md"
                 >
                   Delete
                 </button>
                 <CSVLink
-                  data={data}
-                  separator={";"}
+                  data={selected}
                   onClick={downloadHandler}
                   asyncOnClick={true}
                   filename={`${fileName}`}
@@ -173,9 +178,9 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                             type="checkbox"
                             name={person._id}
                             checked={selected.some(
-                              (item) => item?.id === person._id
+                              (item) => item?._id === person._id
                             )}
-                            onChange={(e) => handleChange(e, person._id)}
+                            onChange={(e) => handleChange(e, person)}
                           />
                         </td>
                         <th
@@ -200,11 +205,13 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                               setEdit({
                                 visible: true,
                                 id: person._id,
-                                event: person.Event,
-                                schoolOrg: person["School/Organisation"],
+                                name: person.name,
+                                schoolOrg: person.schoolOrg,
                                 age: person.age,
-                                name: person.Name,
-                                ic: person["IC Number"],
+                                ic: person.ic,
+                                contact: person.contact,
+                                email: person.email,
+                                address: person.address,
                               })
                             }
                           >

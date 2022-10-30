@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Modal, Button } from "flowbite-react";
 import { uploadEvent } from "../api/events";
 
-export default function UploadEvent() {
+export default function UploadEvent({ upload, setUpload }) {
+  const { visible } = upload;
   const [newEvent, setNewEvent] = useState({
     name: "",
     uploadBy: "admin",
@@ -9,11 +11,12 @@ export default function UploadEvent() {
 
   const { name } = newEvent;
   const [uploadFile, setUploadFile] = useState([]);
-  const [hasUpload, setHasUpload] = useState(false);
 
+  const onClose = () => {
+    setUpload({ visible: false });
+  };
   const uploadOnChange = (e) => {
     setUploadFile(e.target.files[0]);
-    setHasUpload(true);
   };
 
   const uploadSubmit = async (e) => {
@@ -27,44 +30,87 @@ export default function UploadEvent() {
       return;
     }
 
-    setNewEvent({ ...newEvent, name, uploadBy: "admin" });
     const res = await uploadEvent(uploadFile, newEvent);
     if (res) {
       alert("File uploaded!");
       setUploadFile([]);
-      e.target.reset();
+      setNewEvent({ ...newEvent, name: "" });
+      setUpload({ visible: false });
     }
     return;
   };
 
   return (
-    <div>
-      <form encType="multipart/form-data" method="post" onSubmit={uploadSubmit}>
-        <input
-          type="text"
-          value={name}
-          name="name"
-          placeholder="Event Name"
-          className="rounded-md borded"
-          onChange={(e) => setNewEvent({ name: e.target.value })}
-        />
-        <input
-          type="file"
-          name="csv"
-          onChange={uploadOnChange}
-          className="border rounded-md"
-          accept=".csv"
-        />
-        <button type="submit" className="font-bold">
-          Upload
-        </button>
-      </form>
-      {hasUpload ? (
-        <>
-          <p>Filename: {uploadFile.name}</p>
-          <p>Filesize: {uploadFile.size}kb</p>
-        </>
-      ) : null}
-    </div>
+    <>
+      <Modal show={visible} size="xl" popup={true} onClose={onClose}>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="">
+            <h1 className="mb-6 text-2xl font-semibold text-mediumBlue">
+              Upload New Event
+            </h1>
+            <form
+              encType="multipart/form-data"
+              method="post"
+              onSubmit={uploadSubmit}
+              className="flex flex-col items-start w-full space-y-6"
+            >
+              <input
+                type="text"
+                value={name}
+                name="name"
+                placeholder="Event Name"
+                className="w-full rounded-md borded"
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, name: e.target.value })
+                }
+              />
+
+              <input
+                type="file"
+                name="csv"
+                onChange={uploadOnChange}
+                className="w-full border rounded-md"
+                accept=".csv"
+              />
+              <button
+                type="submit"
+                className="px-4 py-1 text-white rounded-md bg-mediumBlue"
+              >
+                Upload
+              </button>
+            </form>
+            <div className="flex justify-end">
+              <Button color="gray" onClick={onClose}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+    // <div>
+    //   <form encType="multipart/form-data" method="post" onSubmit={uploadSubmit}>
+    //     <input
+    //       type="text"
+    //       value={name}
+    //       name="name"
+    //       placeholder="Event Name"
+    //       className="rounded-md borded"
+    //       onChange={(e) => setNewEvent({ name: e.target.value })}
+    //     />
+    //     <input
+    //       type="file"
+    //       name="csv"
+    //       onChange={uploadOnChange}
+    //       className="border rounded-md"
+    //       accept=".csv"
+    //     />
+    //     <button type="submit" className="font-bold">
+    //       Upload
+    //     </button>
+    //   </form>
+
+    // </div>
   );
 }

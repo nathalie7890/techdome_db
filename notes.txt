@@ -1,12 +1,35 @@
 fix the server folder, try to deploy
-edit, delete many  participants
-delete many events
-filter events
 download events
-fix upload by event
-if there's no event, display 'no event'
-prevent event from uploading if any field is missing
-what is event csv already have age field
-game developement have studentA and studentB, separate them?
-one of the participant from game developement has "UXXXXX" as ic and it wouldn't upload
-what is user wants to find participants from other event?
+
+Event upload
+    - Drag and drop
+    - if csv file already have age field, use age from age field
+    - prevent event from uploading if any field is missing, or set a default value
+    - existing event name, regardless of casing
+    - check if ic is number, if not, set a default value
+    - Last four chars of event name have to be the year, show warning otherwise and prevent upload
+
+Api
+    - Display error message on frontend. eg. toast
+
+Frontend
+    - display no event 
+    - display no search result
+    - make sure columns are responsive
+    - fix sde nav
+    - edit event
+    - edit participant input label
+    - pagination
+
+Search on Event page
+    - When search for a name, return events that contain the name, when click inside, only show that one name
+    - Search and clear search button
+
+Edit Event
+    - Delete one event popup
+    - Delete many event popup
+    
+
+Questions for Tim
+    - game developement have studentA and studentB, separate them?
+

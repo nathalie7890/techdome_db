@@ -18,8 +18,6 @@ const Main = () => {
     ageTo: 200,
     name: "",
     ic: "",
-    eventAlpha: "",
-    eventYear: "",
     ageSort: "",
   });
 
@@ -27,7 +25,7 @@ const Main = () => {
     ["participants", filters],
     async () => await getAll(filters)
   );
-if(!isLoading) console.log(data)
+
   const LogoutHandler = () => {
     Logout();
     window.location.reload();
