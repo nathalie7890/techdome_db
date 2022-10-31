@@ -1,12 +1,12 @@
 export const getAllParticipants = async () => {
-  const res = await fetch("http://localhost:5000/participants");
+  const res = await fetch(`${process.env.REACT_APP_API_URI}`);
   if (!res.ok) throw new Error("Cannot get all participants");
   const data = await res.json();
   return data;
 };
 
 export const getAll = async (filters) => {
-  const res = await fetch("http://localhost:5000/participants/all", {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/all`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,81 +19,9 @@ export const getAll = async (filters) => {
   return data;
 };
 
-export const filterByEvent = async (event, schoolOrg, age) => {
-  const res = await fetch(`http://localhost:5000/participants/event/${event}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ schoolOrg, age }),
-  });
-
-  if (!res.ok) throw new Error("Cannot find participant from this event");
-  const data = await res.json();
-  return data;
-};
-
-export const filterBySchoolOrg = async (schoolOrg, event, age) => {
-  const res = await fetch(
-    `http://localhost:5000/participants/schoolOrg/${schoolOrg}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ event, age }),
-    }
-  );
-
-  if (!res.ok)
-    throw new Error("Cannot find participants from this school/organisation");
-  const data = await res.json();
-  return data;
-};
-
-export const filterByAge = async (age, event, schoolOrg) => {
-  const res = await fetch(`http://localhost:5000/participants/age/${age}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ event, schoolOrg }),
-  });
-  if (!res.ok) throw new Error("Cannot find participants form this age range");
-  const data = await res.json();
-  return data;
-};
-
-export const filterByName = async (name, event, schoolOrg, age) => {
-  const res = await fetch(`http://localhost:5000/participants/name/${name}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ event, schoolOrg, age }),
-  });
-
-  if (!res.ok) throw new Error("Cannot find participants with this name");
-  const data = await res.json();
-  return data;
-};
-
-export const filterByIC = async (ic, event, schoolOrg, age) => {
-  const res = await fetch(`http://localhost:5000/participants/ic/${ic}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ event, schoolOrg, age }),
-  });
-
-  if (!res.ok) throw new Error("Cannot find participants with this IC");
-  const data = await res.json();
-  return data;
-};
 
 export const AddParticipant = async (participant) => {
-  const res = await fetch("http://localhost:5000/participants", {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -106,7 +34,7 @@ export const AddParticipant = async (participant) => {
 };
 
 export const deleteParticipant = async (id) => {
-  const res = await fetch(`http://localhost:5000/participants/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/${id}`, {
     method: "DELETE",
   });
 
@@ -116,7 +44,7 @@ export const deleteParticipant = async (id) => {
 };
 
 export const editParticipant = async (participant, id) => {
-  const res = await fetch(`http://localhost:5000/participants/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -131,7 +59,7 @@ export const editParticipant = async (participant, id) => {
 
 export const deleteMany = async (name, participants) => {
   console.log(name, participants)
-  const res = await fetch("http://localhost:5000/participants", {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

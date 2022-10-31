@@ -1,5 +1,5 @@
 export const getEvents = async (filters) => {
-  const res = await fetch(`https://techdomeserver.vercel.app/events`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/events`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export const uploadEvent = async (file, newEvent) => {
   formData.append("uploadBy", uploadBy);
   formData.append("csv", file);
 
-  const res = await fetch(`http://localhost:5000/events/new`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/events/new`, {
     method: "POST",
     body: formData,
   });
@@ -28,7 +28,7 @@ export const uploadEvent = async (file, newEvent) => {
 };
 
 export const editEvent = async (id, name) => {
-  const res = await fetch(`http://localhost:5000/events/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/events/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const editEvent = async (id, name) => {
 };
 
 export const deleteEvent = async (id) => {
-  const res = await fetch(`http://localhost:5000/events/${id}`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/events/${id}`, {
     method: "DELETE",
   });
 
@@ -53,7 +53,7 @@ export const deleteEvent = async (id) => {
 };
 
 export const deleteManyEvent = async (events) => {
-  const res = await fetch("http://localhost:5000/events", {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/events`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

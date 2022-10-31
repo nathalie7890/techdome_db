@@ -10,7 +10,7 @@ const Filter = ({ setFilters, filters }) => {
     ic: filters.ic,
   });
 
-  const { eventAlpha, eventYear, ageSort } = filters;
+  const { ageSort } = filters;
   const { event, schoolOrg, ageFrom, ageTo, name, ic } = filter;
 
   const onChangeHandler = (e) => {
@@ -19,42 +19,7 @@ const Filter = ({ setFilters, filters }) => {
 
   const sortOnChange = (e) => {
     const { name, value } = e.target;
-    if (name === "eventAlpha") {
-      if (value === "asc") {
-        setFilters({
-          ...filters,
-          eventAlpha: "asc",
-          eventYear: "",
-          ageSort: "",
-        });
-      } else if (value === "dsc") {
-        setFilters({
-          ...filters,
-          eventAlpha: "dsc",
-          eventYear: "",
-          ageSort: "",
-        });
-      }
-    }
-
-    if (name === "eventYear") {
-      if (value === "asc") {
-        setFilters({
-          ...filters,
-          eventAlpha: "",
-          eventYear: "asc",
-          ageSort: "",
-        });
-      } else if (value === "dsc") {
-        setFilters({
-          ...filters,
-          eventAlpha: "",
-          eventYear: "dsc",
-          ageSort: "",
-        });
-      }
-    }
-
+   
     if (name === "ageSort") {
       if (value === "asc") {
         setFilters({
