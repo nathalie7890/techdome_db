@@ -1,18 +1,20 @@
 fix the server folder, try to deploy
-download events
+
 
 Event upload
-    - Drag and drop
-    - if csv file already have age field, use age from age field
-    - prevent event from uploading if any field is missing, or set a default value
-    - existing event name, regardless of casing
-    - check if ic is number, if not, set a default value
-    - Last four chars of event name have to be the year, show warning otherwise and prevent upload
+    - Drag and drop(done)
+    - if csv file already have age field, use age from age field(done)
+    - prevent event from uploading if any field is missing, or set a default value(done)
+    - existing event name, regardless of casing(done)
+    - check if ic is number, if not, set a default value(done)
+    - Last four chars of event name have to be the year, show warning otherwise and prevent upload(done)
+    - use Regex to match column name eg. contact = Contact Number, Tel., Contacts
 
 Api
     - Display error message on frontend. eg. toast
 
 Frontend
+    - Drag and Drop Change Text when there's a file
     - display no event 
     - display no search result
     - make sure columns are responsive
@@ -32,4 +34,7 @@ Edit Event
 
 Questions for Tim
     - game developement have studentA and studentB, separate them?
+
+Things to tell Tim
+    - Event name cannot be the same, regardless of casing
 

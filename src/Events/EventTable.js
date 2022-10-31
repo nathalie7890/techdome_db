@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import csvDownload from "json-to-csv-export";
 import Search from "./Search";
 import UploadEvent from "./UploadEvent";
 import EditEvent from "./EditEvent";
 import SortEvent from "./SortEvent";
 import DeleteMany from "./DeleteMany";
+import { AiOutlineEdit } from "react-icons/ai";
 import { convertArrayToCSV } from "convert-array-to-csv";
 
 export default function EventTable({
@@ -15,6 +15,7 @@ export default function EventTable({
   setEditOpen,
   filters,
 }) {
+
   const [selected, setSelected] = useState([]);
   const [editEvent, setEditEvent] = useState({ id: "", name: "" });
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
@@ -124,8 +125,8 @@ export default function EventTable({
                 <th scope="col" className="px-6 py-3">
                   Participants
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Edit</span>
+                <th scope="col" className="px-6 py-3 text-right">
+                  Edit
                 </th>
               </tr>
             </thead>
@@ -169,7 +170,7 @@ export default function EventTable({
                           });
                         }}
                       >
-                        Edit
+                        <AiOutlineEdit className="text-gray-500"/>
                       </button>
                     </td>
                   </tr>

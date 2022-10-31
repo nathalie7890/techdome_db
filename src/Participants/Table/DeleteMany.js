@@ -23,7 +23,7 @@ export default function DeleteMany({ data, setState, setSelected }) {
 
   const deleteHandler = (selected) => {
     const array = [];
-    selected.map((item) => array.push(Object.values(item).toString()));
+    selected.map((item) => array.push(item._id.toString()));
     deleteManyMutation.mutate(array);
   };
 

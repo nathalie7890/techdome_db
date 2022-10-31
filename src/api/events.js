@@ -12,6 +12,7 @@ export const getEvents = async (filters) => {
 };
 
 export const uploadEvent = async (file, newEvent) => {
+ 
   const { name, uploadBy } = newEvent;
   const formData = new FormData();
   formData.append("name", name);
