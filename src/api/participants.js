@@ -19,7 +19,6 @@ export const getAll = async (filters) => {
   return data;
 };
 
-
 export const AddParticipant = async (participant) => {
   const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
     method: "POST",
@@ -34,31 +33,37 @@ export const AddParticipant = async (participant) => {
 };
 
 export const deleteParticipant = async (id) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/${id}`, {
-    method: "DELETE",
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URI}/participants/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
 
   if (!res.ok) console.error(`Failed to delete participant ${id}`);
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
 export const editParticipant = async (participant, id) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(participant),
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URI}/participants/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(participant),
+    }
+  );
 
   if (!res.ok) console.error(`Failed to edit participant ${id}`);
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
 export const deleteMany = async (name, participants) => {
-  console.log(name, participants)
+  console.log(name, participants);
   const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
     method: "DELETE",
     headers: {
@@ -68,6 +73,6 @@ export const deleteMany = async (name, participants) => {
   });
 
   if (!res.ok) console.error("Failed to delete participants");
-  const data = res.json();
+  const data = await res.json();
   return data;
 };

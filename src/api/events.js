@@ -7,12 +7,11 @@ export const getEvents = async (filters) => {
     body: JSON.stringify(filters),
   });
 
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
 export const uploadEvent = async (file, newEvent) => {
- 
   const { name, uploadBy } = newEvent;
   const formData = new FormData();
   formData.append("name", name);
@@ -38,7 +37,7 @@ export const editEvent = async (id, name) => {
 
   if (!res.ok) throw new Error("Client: Failed to update event name.");
 
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
@@ -48,7 +47,7 @@ export const deleteEvent = async (id) => {
   });
 
   if (!res.ok) throw new Error("Client: Failed to delete event.");
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
