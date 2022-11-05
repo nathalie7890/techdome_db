@@ -55,7 +55,7 @@ const Filter = ({ setFilters, filters }) => {
           });
         }}
       >
-        <div className="flex mb-4 space-x-1">
+        <div className="flex w-5/6 mb-4 space-x-1">
           {/* <div className="flex flex-col w-1/6">
             <label className="text-sm text-zinc-600">Event</label>
             <input
@@ -100,7 +100,7 @@ const Filter = ({ setFilters, filters }) => {
           </div>
           <div className="flex flex-col w-1/6">
             <label className="text-sm text-zinc-600">
-              Sort Participant By Age
+              Sort By Age
             </label>
             <select
               name="ageSort"
@@ -190,7 +190,7 @@ const Filter = ({ setFilters, filters }) => {
             onClick={() => window.location.reload()}
             className="px-4 py-1 border rounded-md border-darkBlue hover:shadow-md hover:bg-blue-500 hover:text-white"
           >
-            Clear
+            Reset
           </button>
           <button
             type="submit"

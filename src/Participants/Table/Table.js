@@ -9,7 +9,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const [selected, setSelected] = useState([]);
   const [fileName, setFileName] = useState("participants.csv");
- console.log(data)
+
 
   const [deleteMany, setDeleteMany] = useState({
     visible: false,

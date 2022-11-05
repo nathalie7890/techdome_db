@@ -1,5 +1,3 @@
-fix the server folder, try to deploy
-
 
 Event upload
     - Drag and drop(done)
@@ -7,28 +5,32 @@ Event upload
     - prevent event from uploading if any field is missing, or set a default value(done)
     - existing event name, regardless of casing(done)
     - check if ic is number, if not, set a default value(done)
-    - Last four chars of event name have to be the year, show warning otherwise and prevent upload(done)
+    - Last four chars of event name have to be the year, show warning otherwise and prevent upload(done?!!)
     - use Regex to match column name eg. contact = Contact Number, Tel., Contacts
+    - Change multer path to ./public/upload
+    - Delete file from folder
+
+Update Event
+    - Cannot change year to 3 digits(done)
 
 Api
     - Display error message on frontend. eg. toast
 
 Frontend
-    - Drag and Drop Change Text when there's a file
-    - display no event 
-    - display no search result
-    - make sure columns are responsive
+    - Drag and Drop
+    - display no event(done)
+    - allSelect checkbox is checked when 3 events are selected(not sure)
+    - make sure columns are responsive(done)
     - fix sde nav
-    - edit event
-    - edit participant input label
-    - pagination
+    - edit event(done)
+    - edit participant input label(done)
 
 Search on Event page
     - When search for a name, return events that contain the name, when click inside, only show that one name
-    - Search and clear search button
+    - Search and clear search button (done)
 
 Edit Event
-    - Delete one event popup
+    - Delete one event popup(fix after delete)
     - Delete many event popup
     
 

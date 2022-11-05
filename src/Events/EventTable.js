@@ -7,6 +7,7 @@ import SortEvent from "./SortEvent";
 import DeleteMany from "./DeleteMany";
 import { AiOutlineEdit } from "react-icons/ai";
 import { convertArrayToCSV } from "convert-array-to-csv";
+import no_result from "../public/images/spaceguy.gif";
 
 export default function EventTable({
   data,
@@ -15,11 +16,11 @@ export default function EventTable({
   setEditOpen,
   filters,
 }) {
-
   const [selected, setSelected] = useState([]);
   const [editEvent, setEditEvent] = useState({ id: "", name: "" });
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
   const [upload, setUpload] = useState({ visible: false });
+
 
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
@@ -65,8 +66,8 @@ export default function EventTable({
   };
 
   return (
-    <div className="flex w-full">
-      <div className={`${editOpen ? "w-3/4" : "w-full"} p-8`}>
+    <div className="flex w-full min-h-screen">
+      <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
         <h1 className="my-6 text-5xl font-semibold">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
         <div className="p-6 space-y-6 bg-white rounded-t-lg">
@@ -75,7 +76,7 @@ export default function EventTable({
             <div className="space-x-2">
               <button
                 onClick={() => setUpload({ visible: true })}
-                className="px-4 py-1 text-white rounded-md bg-mediumBlue"
+                className="px-4 py-1 text-white rounded-md x-4 bg-mediumBlue"
               >
                 Upload
               </button>
@@ -102,86 +103,97 @@ export default function EventTable({
         <div
           className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white`}
         >
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  <input
-                    type="checkbox"
-                    name="allSelect"
-                    checked={selected.length === data.length}
-                    onChange={(e) => selectOnChange(e, data)}
-                  />
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Event
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Upload Date
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Upload By
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Participants
-                </th>
-                <th scope="col" className="px-6 py-3 text-right">
-                  Edit
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((event) => {
-                return (
-                  <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={event._id}
-                  >
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        name="singleSelect"
-                        checked={selected.some((e) => e?.id === event._id)}
-                        onChange={(e) => selectOnChange(e, event)}
-                      />
-                    </td>
-
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          {data.length <= 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center h-96">
+              <img src={no_result} alt="" className="h-80" />
+              <h1 className="text-xl text-blue-500">No result :( </h1>
+              <p>Maybe try searching with different keyword instead?</p>
+            </div>
+          ) : (
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase  bg-blue-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    <input
+                      type="checkbox"
+                      name="allSelect"
+                      checked={selected.length === data.length}
+                      onChange={(e) => selectOnChange(e, data)}
+                    />
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Event
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Upload Date
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Upload By
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Participants
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-right">
+                    Edit
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((event) => {
+                  return (
+                    <tr
+                      className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
+                      key={event._id}
                     >
-                      <Link to={"/participants"} state={{ event: event.name }}>
-                        {event.name}
-                      </Link>
-                    </th>
-                    <td className="px-6 py-4">
-                      {event.createdAt.slice(0, 10)}
-                    </td>
-                    <td className="px-6 py-4">{event.uploadBy}</td>
-                    <td className="px-6 py-4">{event.parts.length}</td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        onClick={() => {
-                          setEditOpen(!editOpen);
-                          setEditEvent({
-                            id: event._id,
-                            name: event.name,
-                          });
-                        }}
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          name="singleSelect"
+                          checked={selected.some((e) => e?.id === event._id)}
+                          onChange={(e) => selectOnChange(e, event)}
+                        />
+                      </td>
+
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        <AiOutlineEdit className="text-gray-500"/>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        <Link
+                          to={"/participants"}
+                          state={{ event: event.name }}
+                        >
+                          {event.name}
+                        </Link>
+                      </th>
+                      <td className="px-6 py-4">
+                        {event.createdAt.slice(0, 10)}
+                      </td>
+                      <td className="px-6 py-4">{event.uploadBy}</td>
+                      <td className="px-6 py-4">{event.parts.length}</td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          onClick={() => {
+                            setEditOpen({visible: true});
+                            setEditEvent({
+                              id: event._id,
+                              name: event.name,
+                            });
+                          }}
+                        >
+                          <AiOutlineEdit className="text-gray-500" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
       <div
-        className={`${editOpen ? "w-1/4" : "hidden"} bg-mediumBlue rounded-lg`}
+        className={`${editOpen.visible ? "w-1/4" : "hidden"} bg-mediumBlue shadow-lg shadow-darkBlue`}
       >
         <EditEvent
           editEvent={editEvent}

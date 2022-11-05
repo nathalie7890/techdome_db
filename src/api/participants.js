@@ -6,7 +6,7 @@ export const getAllParticipants = async () => {
 };
 
 export const getAll = async (filters) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/all`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/all`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

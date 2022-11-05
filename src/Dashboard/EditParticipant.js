@@ -24,6 +24,7 @@ const EditParticipant = ({ modal, editPart, setModal, setEditPart }) => {
           <h3 className="text-xl font-medium text-gray-900 dark:text-white">
             Edit Participant
           </h3>
+          
           <div>
             <div className="block mb-2">
               <Label htmlFor="event" value="Event" />

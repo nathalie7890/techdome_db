@@ -11,7 +11,9 @@ export default function EventList() {
     eventAlpha: "",
     eventYear: "dsc",
   });
-  const [editOpen, setEditOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState({
+    visible: false
+  });
 
   const { data, isLoading, isError, error } = useQuery(
     ["events", filters],
@@ -33,11 +35,11 @@ export default function EventList() {
     );
   } else
     return (
-      <div className="relative flex w-full max-h-screen min-h-screen p-2 bg-lightBlue">
-        <div className={`${editOpen ? "w-16" : "w-3/12"} bg-darkBlue rounded-lg`}>
+      <div className="relative flex w-full min-h-screen">
+        <div className={`${editOpen.visible ? "w-16" : "w-3/12"} bg-darkBlue sticky top-0`}>
           <SideNav editOpen={editOpen}/>
         </div>
-        <div className="w-full h-full bg-lightBlue">
+        <div className="w-full bg-white">
           <EventTable
             data={data}
             filters={filters}

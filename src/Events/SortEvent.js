@@ -2,16 +2,19 @@ import React from "react";
 
 export default function SortEvent({ filters, setFilters }) {
   const filterOnChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "eventAlpha")
+      setFilters({ ...filters, eventAlpha: value, eventYear: "" });
+    if (name === "eventYear")
+      setFilters({ ...filters, eventAlpha: "", eventYear: value });
   };
 
   return (
     <div className="flex space-x-4">
       <div className="flex flex-col">
-        {/* <label htmlFor="eventAlpha">Sort Alphabetically</label> */}
         <select
           name="eventAlpha"
-          className="rounded-md"
+          className="text-sm rounded-md"
           onChange={filterOnChange}
           value={filters.eventAlpha}
         >
@@ -21,15 +24,14 @@ export default function SortEvent({ filters, setFilters }) {
         </select>
       </div>
       <div className="flex flex-col">
-        {/* <label htmlFor="eventYear">Sort By Year</label> */}
         <select
           name="eventYear"
-          className="rounded-md"
+          className="text-sm rounded-md"
           onChange={filterOnChange}
           value={filters.eventYear}
         >
           <option value="dsc">By Year</option>
-          <option defaultValue="dsc">Latest</option>
+          <option value="dsc">Latest</option>
           <option value="asc">Oldest</option>
         </select>
       </div>

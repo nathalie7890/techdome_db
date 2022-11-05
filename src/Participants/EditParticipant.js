@@ -29,6 +29,13 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
     editMutation.mutate({ data, id });
   };
 
+  const floatingInput = {
+    input:
+      "block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-white-600 peer focus:border-white text-white",
+    label:
+      "absolute text-sm text-gray-200  duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-mediumBlue  px-2 peer-focus:px-2 peer-focus:text-yellow-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1",
+  };
+
   return (
     <div className="sticky top-0 w-1/4 h-screen p-12 shadow-xl bg-mediumBlue shadow-darkBlue">
       <button
@@ -57,55 +64,93 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
           }}
         >
           <h1 className="mb-8 text-3xl font-semibold text-white">Edit</h1>
-          <input
-            type="text"
-            name="name"
-            className="h-fit editParticipantInput"
-            onChange={editOnChange}
-            value={name}
-          />
-          <input
-            type="text"
-            name="schoolOrg"
-            className="h-fit editParticipantInput"
-            onChange={editOnChange}
-            value={schoolOrg}
-          />
-          <input
-            type="number"
-            name="age"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={age}
-          />
-          <input
-            type="text"
-            name="ic"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={ic}
-          />
-          <input
-            type="text"
-            name="email"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={email}
-          />
-          <input
-            type="text"
-            name="contact"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={contact}
-          />
-          <input
-            type="text"
-            name="address"
-            className="editParticipantInput"
-            onChange={editOnChange}
-            value={address}
-          />
+          <div className="space-y-6">
+          <div className="relative">
+            <input
+              type="text"
+              name="name"
+              className={floatingInput.input}
+              onChange={editOnChange}
+              value={name}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              Name
+            </label>
+          </div>
+          <div className="relative">
+            <textarea
+              type="text"
+              name="schoolOrg"
+              className={`${floatingInput.input} resize-none`}
+              onChange={editOnChange}
+              value={schoolOrg}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              School/Organisation
+            </label>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              name="age"
+              className={floatingInput.input}
+              onChange={editOnChange}
+              value={age}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              Age
+            </label>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              name="ic"
+              className={floatingInput.input}
+              onChange={editOnChange}
+              value={ic}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              IC Number
+            </label>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              name="email"
+              className={floatingInput.input}
+              onChange={editOnChange}
+              value={email}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              Email
+            </label>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              name="contact"
+              className={floatingInput.input}
+              onChange={editOnChange}
+              value={contact}
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              Contact Number
+            </label>
+          </div>
+          <div className="relative">
+            <textarea
+              type="text"
+              name="address"
+              className={`${floatingInput.input} resize-none`}
+              onChange={editOnChange}
+              value={address}
+              rows="3"
+            />
+            <label htmlFor="small_outlined" className={floatingInput.label}>
+              Address
+            </label>
+          </div>
+          </div>
           <button
             className="flex justify-start font-semibold text-blue-300 hover:text-yellow-200 w-fit"
             type="button"
