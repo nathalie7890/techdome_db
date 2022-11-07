@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Fab from "@mui/material/Fab";
-import Tooltip from "@mui/material/Tooltip";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRefresh } from "react-icons/io";
 
@@ -36,11 +34,13 @@ export default function Search({ filters, setFilters }) {
           <BsSearch />
         </button>
       </form>
-      <Tooltip title="Reset" placement="top" arrow>
-        <Fab color="primary" aria-label="add" size="small" onClick={reset}>
-          <IoIosRefresh />
-        </Fab>
-      </Tooltip>
+
+      <button
+        className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+        onClick={reset}
+      >
+        <IoIosRefresh className="text-white"/>
+      </button>
     </div>
   );
 }

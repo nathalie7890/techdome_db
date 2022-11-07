@@ -54,9 +54,9 @@ export default function EditEvent({
         />
       </div>
       <div>
-        <h1 className="text-4xl font-semibold text-white">{eventName}</h1>
+        <h1 className="my-24 text-4xl font-semibold text-white">{eventName}</h1>
       </div>
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex flex-col h-full">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -69,7 +69,7 @@ export default function EditEvent({
             <label className="text-sm text-white">Event Name</label>
             <input
               type="text"
-              className="mt-2 mb-6 text-white bg-transparent border-white rounded-full focus:border-white focus:ring-white"
+              className="mt-2 mb-6 text-white bg-transparent border-white rounded-md focus:border-white focus:ring-white"
               name="name"
               value={name}
               onChange={editOnChange}
@@ -77,7 +77,7 @@ export default function EditEvent({
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
-              className="flex justify-start font-semibold text-blue-300 w-fit hover:text-yellow-200"
+              className="flex justify-start font-semibold text-yellow-200 w-fit hover:text-red-400"
             >
               Delete Event
             </button>
@@ -85,7 +85,7 @@ export default function EditEvent({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-1 text-white rounded-md bg-darkBlue w-fit hover:bg-lightBlue hover:text-black"
+              className="px-6 py-2 text-white bg-blue-900 rounded-full w-fit hover:bg-blue-80 drop-shadow-[0_5px_8px_rgba(0,0,0,0.2)]"
             >
               Save
             </button>

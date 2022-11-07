@@ -5,16 +5,13 @@ import UploadEvent from "./UploadEvent";
 import EditEvent from "./EditEvent";
 import SortEvent from "./SortEvent";
 import DeleteMany from "./DeleteMany";
-import { AiOutlineEdit } from "react-icons/ai";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { convertArrayToCSV } from "convert-array-to-csv";
 import no_result from "../public/images/spaceguy.gif";
-import Fab from "@mui/material/Fab";
-import Tooltip from "@mui/material/Tooltip";
-import AddIcon from "@mui/icons-material/Add";
-import DownloadIcon from "@mui/icons-material/Download";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { red } from "@mui/material/colors";
+import { AiOutlineEdit } from "react-icons/ai";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { IoAdd } from "react-icons/io5";
+import { FiTrash2 } from "react-icons/fi";
+import { BsDownload } from "react-icons/bs";
 
 export default function EventTable({
   data,
@@ -27,7 +24,6 @@ export default function EventTable({
   const [editEvent, setEditEvent] = useState({ id: "", name: "" });
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
   const [upload, setUpload] = useState({ visible: false });
-  const red500 = red[500];
 
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
@@ -74,43 +70,36 @@ export default function EventTable({
 
   return (
     <div className="flex w-full min-h-screen">
+      
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
         <h1 className="my-6 text-5xl font-semibold text-blue-400">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <div className="flex items-end justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
-            <div className="space-x-2">
-              <Tooltip title="Upload" placement="bottom" arrow>
-                <Fab
-                  color="primary"
-                  size="small"
-                  onClick={() => setUpload({ visible: true })}
-                >
-                  <AddIcon />
-                </Fab>
-              </Tooltip>
+            <div className="space-x-4">
+              <button
+                className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+                onClick={() => setUpload({ visible: true })}
+              >
+                <IoAdd className="text-lg font-bold text-white" />
+              </button>
 
               {selected.length > 0 ? (
                 <>
-                  <Tooltip title="Download" placement="bottom" arrow>
-                    <Fab
-                      color="secondary"
-                      size="small"
-                      onClick={() => downloadHandler(selected)}
-                    >
-                      <DownloadIcon />
-                    </Fab>
-                  </Tooltip>
-                  <Tooltip title="Delete" placement="bottom" arrow>
-                    <Fab
-                      color="error"
-                      size="small"
-                      onClick={() => setDeleteMany({ visible: true })}
-                    >
-                      <DeleteOutlineIcon />
-                    </Fab>
-                  </Tooltip>
+                  <button
+                    className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
+                    onClick={() => downloadHandler(selected)}
+                  >
+                    <BsDownload className="text-white" />
+                  </button>
+
+                  <button
+                    className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                    onClick={() => setDeleteMany({ visible: true })}
+                  >
+                    <FiTrash2 className="text-white" />
+                  </button>
                 </>
               ) : null}
             </div>
@@ -121,7 +110,7 @@ export default function EventTable({
           className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white`}
         >
           {data.length <= 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center h-96">
+            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
               <img src={no_result} alt="" className="h-80" />
               <h1 className="text-xl text-blue-500">No result :( </h1>
               <p>Maybe try searching with different keyword instead?</p>
@@ -189,7 +178,7 @@ export default function EventTable({
                           {event.name}
                         </Link>
                       </th>
-                      <td className="px-6 py-4">{event.name.slice(-5)}</td>
+                      <td className="px-6 py-4">{event._id}</td>
                       <td className="px-6 py-4">
                         {event.createdAt.slice(0, 10)}
                       </td>
@@ -234,6 +223,7 @@ export default function EventTable({
         deleteMany={deleteMany}
         setDeleteMany={setDeleteMany}
         data={selected}
+        setSelected={setSelected}
       />
       <UploadEvent upload={upload} setUpload={setUpload} />
     </div>

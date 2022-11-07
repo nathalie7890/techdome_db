@@ -8,6 +8,7 @@ import "./index.css";
 import "flowbite";
 import 'material-symbols';
 
+
 const queryClient = new QueryClient();
 let root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

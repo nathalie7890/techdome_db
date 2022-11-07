@@ -3,6 +3,8 @@ import { Modal } from "flowbite-react";
 import { uploadEvent } from "../api/events";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { useQueryClient } from "react-query";
 
 export default function UploadEvent({ upload, setUpload }) {
   const { visible } = upload;
@@ -26,6 +28,7 @@ export default function UploadEvent({ upload, setUpload }) {
       setUploadFile(acceptedFiles[0]);
     },
   });
+
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
@@ -35,7 +38,7 @@ export default function UploadEvent({ upload, setUpload }) {
   // const uploadOnChange = (e) => {
   //   setUploadFile(e.target.files[0]);
   // };
-
+  const queryClient = useQueryClient();
   const uploadSubmit = async (e) => {
     e.preventDefault();
     if (name.trim().length <= 0) return alert("Event name cannot be empty");
@@ -50,10 +53,23 @@ export default function UploadEvent({ upload, setUpload }) {
 
     const res = await uploadEvent(uploadFile, newEvent);
     if (res) {
-      alert("File uploaded!");
+      alert('Event uploaded!')
       setUploadFile([]);
       setNewEvent({ ...newEvent, name: "" });
       setUpload({ visible: false });
+    }
+    if (!res) {
+      toast.error("Failed to upload event. Make sure the event name ends with the event year.", {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+       className:""
+      });
     }
     return;
   };
@@ -110,7 +126,11 @@ export default function UploadEvent({ upload, setUpload }) {
                 >
                   Upload
                 </button>
-                <button type="button" onClick={onClose} className="px-4 py-1 border rounded-md border-darkBlue hover:bg-blue-300">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-4 py-1 border rounded-md border-darkBlue hover:bg-blue-300"
+                >
                   Cancel
                 </button>
               </div>

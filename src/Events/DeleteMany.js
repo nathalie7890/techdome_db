@@ -1,8 +1,9 @@
 import { deleteManyEvent } from "../api/events";
 import { useMutation, useQueryClient } from "react-query";
 import { Modal, Button } from "flowbite-react";
+import { toast } from "react-toastify";
 
-export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
+export default function DeleteMany({ deleteMany, setDeleteMany, data, setSelected }) {
   const { visible } = deleteMany;
   const onClose = () => {
     setDeleteMany({ visible: false });
@@ -17,10 +18,26 @@ export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("events");
-        alert("Events deleted!");
+        // alert("Events deleted!");
+        setSelected([])
         setDeleteMany({ visible: false });
+        toast.success("Event upload fail", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       },
-    }
+    },
+    {
+      onError: () => {
+        alert("Cannot delete events");
+      },
+    },
   );
   const deleteHandler = (data) => {
     deleteMutation.mutate(data);

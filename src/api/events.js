@@ -12,18 +12,22 @@ export const getEvents = async (filters) => {
 };
 
 export const uploadEvent = async (file, newEvent) => {
-  const { name, uploadBy } = newEvent;
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("uploadBy", uploadBy);
-  formData.append("csv", file);
+  try {
+    const { name, uploadBy } = newEvent;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("uploadBy", uploadBy);
+    formData.append("csv", file);
 
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/events/new`, {
-    method: "POST",
-    body: formData,
-  });
-  if (!res.ok) throw new Error("Client: Failed to upload file");
-  else return res.ok;
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/events/new`, {
+      method: "POST",
+      body: formData,
+    });
+
+    return res.ok;
+  } catch (e) {
+    return e;
+  }
 };
 
 export const editEvent = async (id, name) => {
@@ -52,12 +56,17 @@ export const deleteEvent = async (id) => {
 };
 
 export const deleteManyEvent = async (events) => {
+  const id = [];
+  for (let i of events) {
+    id.push(i.id);
+  }
+
   const res = await fetch(`${process.env.REACT_APP_API_URI}/events`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: events }),
+    body: JSON.stringify({ id: id }),
   });
 
   if (!res.ok) throw new Error("Client: Events cannot be deleted.");
