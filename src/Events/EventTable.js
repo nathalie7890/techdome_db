@@ -6,8 +6,15 @@ import EditEvent from "./EditEvent";
 import SortEvent from "./SortEvent";
 import DeleteMany from "./DeleteMany";
 import { AiOutlineEdit } from "react-icons/ai";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { convertArrayToCSV } from "convert-array-to-csv";
 import no_result from "../public/images/spaceguy.gif";
+import Fab from "@mui/material/Fab";
+import Tooltip from "@mui/material/Tooltip";
+import AddIcon from "@mui/icons-material/Add";
+import DownloadIcon from "@mui/icons-material/Download";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { red } from "@mui/material/colors";
 
 export default function EventTable({
   data,
@@ -20,7 +27,7 @@ export default function EventTable({
   const [editEvent, setEditEvent] = useState({ id: "", name: "" });
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
   const [upload, setUpload] = useState({ visible: false });
-
+  const red500 = red[500];
 
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
@@ -68,32 +75,42 @@ export default function EventTable({
   return (
     <div className="flex w-full min-h-screen">
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className="my-6 text-5xl font-semibold">Events</h1>
+        <h1 className="my-6 text-5xl font-semibold text-blue-400">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
-        <div className="p-6 space-y-6 bg-white rounded-t-lg">
+        <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <div className="flex items-end justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
             <div className="space-x-2">
-              <button
-                onClick={() => setUpload({ visible: true })}
-                className="px-4 py-1 text-white rounded-md x-4 bg-mediumBlue"
-              >
-                Upload
-              </button>
+              <Tooltip title="Upload" placement="bottom" arrow>
+                <Fab
+                  color="primary"
+                  size="small"
+                  onClick={() => setUpload({ visible: true })}
+                >
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
+
               {selected.length > 0 ? (
                 <>
-                  <button
-                    onClick={() => downloadHandler(selected)}
-                    className="px-4 py-1 text-white bg-yellow-400 rounded-md"
-                  >
-                    Download
-                  </button>
-                  <button
-                    onClick={() => setDeleteMany({ visible: true })}
-                    className="px-4 py-1 text-white bg-red-500 rounded-md"
-                  >
-                    Delete
-                  </button>
+                  <Tooltip title="Download" placement="bottom" arrow>
+                    <Fab
+                      color="secondary"
+                      size="small"
+                      onClick={() => downloadHandler(selected)}
+                    >
+                      <DownloadIcon />
+                    </Fab>
+                  </Tooltip>
+                  <Tooltip title="Delete" placement="bottom" arrow>
+                    <Fab
+                      color="error"
+                      size="small"
+                      onClick={() => setDeleteMany({ visible: true })}
+                    >
+                      <DeleteOutlineIcon />
+                    </Fab>
+                  </Tooltip>
                 </>
               ) : null}
             </div>
@@ -111,7 +128,7 @@ export default function EventTable({
             </div>
           ) : (
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase  bg-blue-50">
+              <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     <input
@@ -121,8 +138,15 @@ export default function EventTable({
                       onChange={(e) => selectOnChange(e, data)}
                     />
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th
+                    scope="col"
+                    className="flex px-6 py-3 hover:text-blue-500"
+                  >
                     Event
+                    <IoMdArrowDropdown className="mx-1 text-lg text-gray-700 hover:text-blue-500" />
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Year
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Upload Date
@@ -165,6 +189,7 @@ export default function EventTable({
                           {event.name}
                         </Link>
                       </th>
+                      <td className="px-6 py-4">{event.name.slice(-5)}</td>
                       <td className="px-6 py-4">
                         {event.createdAt.slice(0, 10)}
                       </td>
@@ -172,9 +197,9 @@ export default function EventTable({
                       <td className="px-6 py-4">{event.parts.length}</td>
                       <td className="px-6 py-4 text-right">
                         <button
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          className="font-medium text-blue-600 hover:underline"
                           onClick={() => {
-                            setEditOpen({visible: true});
+                            setEditOpen({ visible: true });
                             setEditEvent({
                               id: event._id,
                               name: event.name,
@@ -193,7 +218,9 @@ export default function EventTable({
         </div>
       </div>
       <div
-        className={`${editOpen.visible ? "w-1/4" : "hidden"} bg-mediumBlue shadow-lg shadow-darkBlue`}
+        className={`${
+          editOpen.visible ? "w-1/4" : "hidden"
+        } bg-gradient-to-br from-[#3f51b5]  to-purple-500 shadow-lg `}
       >
         <EditEvent
           editEvent={editEvent}

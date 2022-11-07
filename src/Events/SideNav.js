@@ -16,11 +16,11 @@ export default function SideNav({ editOpen }) {
       <div>
         <div className="flex my-16">
           <div
-            className={`flex flex-col items-center justify-center bg-blue-400 rounded-md ${
+            className={`flex flex-col items-center justify-center bg-blue-300 rounded-md ${
               !editOpen.visible ? "w-12 h-12" : "w-full h-12"
             }`}
           >
-            <h1 className="text-2xl font-semibold text-gray-200">JD</h1>
+            <h1 className="text-2xl font-semibold text-white">JD</h1>
           </div>
           {!editOpen.visible ? (
             <div className="flex flex-col justify-end px-2 text-sm text-gray-400">
@@ -31,7 +31,7 @@ export default function SideNav({ editOpen }) {
         </div>
         <div className="flex flex-col space-y-4">
           <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white/50 hover:bg-white/10 ${
+            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
               !editOpen.visible ? "justify-start" : "justify-center"
             }`}
           >
@@ -41,7 +41,7 @@ export default function SideNav({ editOpen }) {
             ) : null}
           </div>
           <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white/50 hover:bg-white/10 ${
+            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
               !editOpen.visible ? "justify-start" : "justify-center"
             }`}
           >
@@ -51,7 +51,7 @@ export default function SideNav({ editOpen }) {
             ) : null}
           </div>
           <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white/50 hover:bg-white/10 ${
+            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
               !editOpen.visible ? "justify-start" : "justify-center"
             }`}
           >
@@ -61,7 +61,7 @@ export default function SideNav({ editOpen }) {
             ) : null}
           </div>
           <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white/50 hover:bg-white/10 ${
+            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
               !editOpen.visible ? "justify-start" : "justify-center"
             }`}
           >

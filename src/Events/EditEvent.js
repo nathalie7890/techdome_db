@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { editEvent as edit } from "../api/events";
 import DeleteOne from "./DeleteOne";
 import { AiOutlineClose } from "react-icons/ai";
+import { cyan} from '@mui/material/colors'
+
 
 export default function EditEvent({
   editEvent,
@@ -11,17 +13,16 @@ export default function EditEvent({
   setEditOpen,
 }) {
   const { id, name } = editEvent;
-  const [eventName, setEventName] = useState(name)
+  const [eventName, setEventName] = useState(name);
   const [deleteOne, setDeleteOne] = useState({ visible: false, id, name });
   const editOnChange = (e) => {
     setEditEvent({ ...editEvent, name: e.target.value });
   };
 
   useEffect(() => {
-    setEventName(name)
-  }, [id])
+    setEventName(name);
+  }, [id]);
 
-    
   const queryClient = useQueryClient();
   const editMutation = useMutation(
     async ({ id, name }) => {
@@ -64,10 +65,11 @@ export default function EditEvent({
           className="flex flex-col h-2/3"
         >
           <div className="flex flex-col mb-20">
-            <label className="text-white/60 text-md">Event Name</label>
+            
+            <label className="text-sm text-white">Event Name</label>
             <input
               type="text"
-              className="mt-2 mb-6 text-white bg-transparent border-white rounded-md focus:border-white focus:ring-white"
+              className="mt-2 mb-6 text-white bg-transparent border-white rounded-full focus:border-white focus:ring-white"
               name="name"
               value={name}
               onChange={editOnChange}

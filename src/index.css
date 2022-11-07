@@ -9,7 +9,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer utilities {
    .editParticipantInput {
     @apply  bg-transparent border-0 border-b border-gray-300 placeholder:text-white focus:ring-0 focus:outline-none focus:border-white text-white
    }

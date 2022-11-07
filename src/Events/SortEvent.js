@@ -14,7 +14,7 @@ export default function SortEvent({ filters, setFilters }) {
       <div className="flex flex-col">
         <select
           name="eventAlpha"
-          className="text-sm rounded-md"
+          className="text-sm rounded-full"
           onChange={filterOnChange}
           value={filters.eventAlpha}
         >
@@ -26,11 +26,11 @@ export default function SortEvent({ filters, setFilters }) {
       <div className="flex flex-col">
         <select
           name="eventYear"
-          className="text-sm rounded-md"
+          className="text-sm rounded-full"
           onChange={filterOnChange}
           value={filters.eventYear}
         >
-          <option value="dsc">By Year</option>
+          <option value="">By Year</option>
           <option value="dsc">Latest</option>
           <option value="asc">Oldest</option>
         </select>

@@ -65,7 +65,7 @@ export default function UploadEvent({ upload, setUpload }) {
         <Modal.Body>
           <div className="">
             <h1 className="mb-6 text-2xl font-semibold text-mediumBlue">
-              Upload New Event
+              Upload New Event 🚀
             </h1>
             <form
               encType="multipart/form-data"
