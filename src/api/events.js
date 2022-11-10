@@ -31,18 +31,21 @@ export const uploadEvent = async (file, newEvent) => {
 };
 
 export const editEvent = async (id, name) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/events/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name }),
-  });
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/events/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+    });
 
-  if (!res.ok) throw new Error("Client: Failed to update event name.");
-
-  const data = await res.json();
-  return data;
+    if (!res.ok) return res.status.toString();
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    return e;
+  }
 };
 
 export const deleteEvent = async (id) => {

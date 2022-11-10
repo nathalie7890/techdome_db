@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { editEvent as edit } from "../api/events";
 import DeleteOne from "./DeleteOne";
+import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
-import { cyan} from '@mui/material/colors'
-
 
 export default function EditEvent({
   editEvent,
@@ -14,8 +13,10 @@ export default function EditEvent({
 }) {
   const { id, name } = editEvent;
   const [eventName, setEventName] = useState(name);
+  const [invalid, setInvalid] = useState(false);
   const [deleteOne, setDeleteOne] = useState({ visible: false, id, name });
   const editOnChange = (e) => {
+    setInvalid(false)
     setEditEvent({ ...editEvent, name: e.target.value });
   };
 
@@ -26,23 +27,49 @@ export default function EditEvent({
   const queryClient = useQueryClient();
   const editMutation = useMutation(
     async ({ id, name }) => {
-      await edit(id, name);
-    },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries("events");
-        alert("Event name updated!");
-        setEditOpen(false);
-      },
+      const res = await edit(id, name);
+      if (res === "409") {
+        toast.error("Event name already exists.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        return;
+      }
+      await queryClient.invalidateQueries("events");
+      toast.success("Event name changed.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setEditOpen(false);
     }
+    // {
+    //   onSuccess: async () => {
+    //     await queryClient.invalidateQueries("events");
+    //     alert("Event name updated!");
+    //     setEditOpen(false);
+    //   },
+    // }
   );
 
   const editSubmit = (id, name) => {
     if (isNaN(name.slice(-5))) {
-      alert("Event name must end with 4 numbers");
+      setInvalid(true);
       return;
     }
     editMutation.mutate({ id, name });
+    setInvalid(false);
   };
 
   return (
@@ -65,19 +92,21 @@ export default function EditEvent({
           className="flex flex-col h-2/3"
         >
           <div className="flex flex-col mb-20">
-            
             <label className="text-sm text-white">Event Name</label>
             <input
               type="text"
-              className="mt-2 mb-6 text-white bg-transparent border-white rounded-md focus:border-white focus:ring-white"
+              className={`mt-2 text-white rounded-md focus:border-white focus:ring-white border-white ${
+                invalid ? "bg-red-400" : "bg-transparent"
+              }`}
               name="name"
               value={name}
               onChange={editOnChange}
             />
+            {invalid? <p className="text-sm font-semibold text-red-300">Event name must end with 4 numbers. E.g. event year</p>: null}
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
-              className="flex justify-start font-semibold text-yellow-200 w-fit hover:text-red-400"
+              className="flex justify-start mt-6 font-semibold text-yellow-200 w-fit hover:text-red-400"
             >
               Delete Event
             </button>

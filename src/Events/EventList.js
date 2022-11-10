@@ -51,6 +51,19 @@ export default function EventList() {
             setEditOpen={setEditOpen}
           />
         </div>
+      
       </div>
     );
 }
+
+
+/*
+ <div
+        className={`${
+          editOpen.visible ? "w-16" : "w-3/12"
+        } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0`}
+      >
+        <SideNav editOpen={editOpen} />
+      </div>
+
+*/

@@ -15,6 +15,7 @@ Update Event
 
 Api
     - Display error message on frontend. eg. toast
+    - add auth to backend api
 
 Frontend
     - Drag and Drop
@@ -33,6 +34,10 @@ Edit Event
     - Delete one event popup(fix after delete)
     - Delete many event popup
     
+Contacts
+    - forget password
+    - if search is empty display something
+    - toast error
 
 Questions for Tim
     - game developement have studentA and studentB, separate them?

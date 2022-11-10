@@ -1,22 +1,30 @@
 import { useState } from "react";
 import { Modal } from "flowbite-react";
+import { checkAuth } from "../api/users";
 import { uploadEvent } from "../api/events";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useQueryClient } from "react-query";
+import { Alert } from "flowbite-react";
 
 export default function UploadEvent({ upload, setUpload }) {
+  const { user } = checkAuth();
   const { visible } = upload;
+  const [invalid, setInvalid] = useState({
+    name: false,
+    file: false,
+  });
   const [newEvent, setNewEvent] = useState({
     name: "",
-    uploadBy: "admin",
+    uploadBy: user.data.username,
   });
 
   const { name } = newEvent;
   const [uploadFile, setUploadFile] = useState([]);
 
   const onClose = () => {
+    setNewEvent({ name: "", uploadBy: user.data.username });
     setUploadFile([]);
     setUpload({ visible: false });
   };
@@ -24,6 +32,7 @@ export default function UploadEvent({ upload, setUpload }) {
   //upload file
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     accept: { "text/csv": [] },
+    onDropAccepted: () => setInvalid({ ...invalid, file: false }),
     onDrop: (acceptedFiles) => {
       setUploadFile(acceptedFiles[0]);
     },
@@ -41,35 +50,42 @@ export default function UploadEvent({ upload, setUpload }) {
   const queryClient = useQueryClient();
   const uploadSubmit = async (e) => {
     e.preventDefault();
-    if (name.trim().length <= 0) return alert("Event name cannot be empty");
+    if (name.trim().length <= 0) {
+      setInvalid({ ...invalid, name: true });
+      return;
+    }
 
-    if (isNaN(name.slice(-5)))
-      return alert("Event name must end with year(4 digits).");
+    if (isNaN(name.slice(-5))) {
+      setInvalid({ ...invalid, name: true });
+      return;
+    }
 
     if (uploadFile.length <= 0) {
-      alert("Select a file to upload.");
+      setInvalid({ ...invalid, file: true });
       return;
     }
 
     const res = await uploadEvent(uploadFile, newEvent);
     if (res) {
-      alert('Event uploaded!')
+      alert("Event uploaded!");
       setUploadFile([]);
       setNewEvent({ ...newEvent, name: "" });
       setUpload({ visible: false });
-    }
+    } 
     if (!res) {
-      toast.error("Failed to upload event. Make sure the event name ends with the event year.", {
-        position: "top-center",
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-       className:""
-      });
+      toast.error(
+        "Event name already exist.",
+        {
+          position: "top-center",
+          autoClose: 7000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
     }
     return;
   };
@@ -78,31 +94,44 @@ export default function UploadEvent({ upload, setUpload }) {
     <>
       <Modal show={visible} size="2xl" popup={true} onClose={onClose}>
         <Modal.Header />
+
         <Modal.Body>
           <div className="">
-            <h1 className="mb-6 text-2xl font-semibold text-mediumBlue">
-              Upload New Event 🚀
+            <h1 className="mb-4 text-2xl font-semibold text-mediumBlue">
+              Upload New Event
             </h1>
+            <hr className="h-px mb-6 bg-gray-200 border-0 dark:bg-gray-700" />
             <form
               encType="multipart/form-data"
               method="post"
               onSubmit={uploadSubmit}
-              className="flex flex-col items-start w-full space-y-6"
+              className="flex flex-col items-start w-full"
             >
               <input
                 type="text"
                 value={name}
                 name="name"
                 placeholder="Event Name"
-                className="w-full rounded-md borded"
-                onChange={(e) =>
-                  setNewEvent({ ...newEvent, name: e.target.value })
-                }
+                className={`w-full rounded-md border ${
+                  invalid.name
+                    ? "bg-red-400 text-white placeholder:text-white"
+                    : ""
+                }`}
+                onChange={(e) => {
+                  setNewEvent({ ...newEvent, name: e.target.value });
+                  setInvalid({ ...invalid, name: false });
+                }}
               />
+              {invalid.name ? (
+                <p className="text-sm text-red-500">
+                  Event name must contain at least 3 character, one space and ends with 4
+                  numbers. <br/>E.g. Eve 2022.
+                </p>
+              ) : null}
               <div
                 {...getRootProps({
                   className:
-                    "dropzone w-full border-dashed border-2 border-blue-300 rounded-lg h-60 flex flex-col justify-center items-center space-y-4",
+                    "dropzone w-full border-dashed border-2 border-blue-300 rounded-lg h-60 flex flex-col justify-center items-center space-y-4 my-6",
                 })}
               >
                 <AiOutlineCloudUpload className="text-blue-500 text-7xl" />
@@ -119,6 +148,14 @@ export default function UploadEvent({ upload, setUpload }) {
                   )}
                 </div>
               </div>
+              {invalid.file ? (
+                <Alert color="failure">
+                  <span>
+                    <span className="font-medium">Info alert!</span> Change a
+                    few things up and try submitting again.
+                  </span>
+                </Alert>
+              ) : null}
               <div className="flex justify-end w-full space-x-2">
                 <button
                   type="submit"

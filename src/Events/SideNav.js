@@ -1,14 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
-import { FiUsers } from "react-icons/fi";
+import { FiUsers, FiLogOut, FiUser } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
-import { HiLocationMarker } from "react-icons/hi";
+import { checkAuth } from "../api/users";
 
 export default function SideNav({ editOpen }) {
+  const { user, isAdmin } = checkAuth();
+  const initials = (name) => {
+    name = name.split(" ");
+    if (name.length < 2) return name[0].slice(0, 2);
+    return name[0][0] + name[1][0];
+  };
+
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const inactiveStyle = `flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
+    !editOpen.visible ? "justify-start " : "justify-center"
+  }`;
+
+  const activeStyle = `bg-white/20 flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
+    !editOpen.visible ? "justify-start " : "justify-center"
+  } `;
+
+  const adminInactiveStyle = inactiveStyle + `${isAdmin ? "flex" : "hidden"}`;
+  const adminActiveStyle = activeStyle + `${isAdmin ? "flex" : "hidden"}`;
+
   return (
-    <div className={`w-full ${!editOpen.visible ? "p-4" : "p-2"} sticky top-0 right-0`}>
-      {!editOpen.visible ? (
+    <div
+      className={`w-full ${
+        !editOpen.visible ? "p-4" : "p-2"
+      } sticky top-0 right-0`}
+    >
+      {!editOpen.visible && isAdmin ? (
         <h1 className="flex justify-end w-full text-sm font-bold text-blue-300">
           Admin
         </h1>
@@ -16,58 +44,64 @@ export default function SideNav({ editOpen }) {
       <div>
         <div className="flex my-16">
           <div
-            className={`flex flex-col items-center justify-center bg-blue-300 rounded-md ${
+            className={`flex flex-col items-center justify-center bg-blue-900 rounded-md ${
               !editOpen.visible ? "w-12 h-12" : "w-full h-12"
             }`}
           >
-            <h1 className="text-2xl font-semibold text-white">JD</h1>
+            <h1 className="text-2xl font-semibold text-white uppercase">
+              {initials(user.data.name)}
+            </h1>
           </div>
           {!editOpen.visible ? (
-            <div className="flex flex-col justify-end px-2 text-sm text-gray-400">
-              <h1 className="font-semibold text-white">John Doe</h1>
-              <p>johndoe@gmail.com</p>
+            <div className="flex flex-col justify-end px-2 text-sm text-gray-100">
+              <h1 className="font-semibold text-white">{user.data.name}</h1>
+              <p>{user.data.email}</p>
             </div>
           ) : null}
         </div>
         <div className="flex flex-col space-y-4">
-          <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
-              !editOpen.visible ? "justify-start" : "justify-center"
-            }`}
-          >
-            <AiOutlineHome className="text-2xl text-white" />
-            {!editOpen.visible ? (
-              <h1 className="flex flex-col justify-end">Home</h1>
-            ) : null}
-          </div>
-          <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
-              !editOpen.visible ? "justify-start" : "justify-center"
-            }`}
-          >
-            <FiUsers className="text-2xl text-white" />
-            {!editOpen.visible ? (
-              <h1 className="flex flex-col justify-end">Contacts</h1>
-            ) : null}
-          </div>
-          <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
-              !editOpen.visible ? "justify-start" : "justify-center"
-            }`}
+          <NavLink
+            to="/events"
+            className={({ isActive }) =>
+              isActive ? activeStyle : inactiveStyle
+            }
           >
             <BsCalendar3 className="text-2xl text-white" />
             {!editOpen.visible ? (
-              <Link className="flex flex-col justify-end">Events</Link>
+              <h1 className="flex flex-col justify-end">Events</h1>
             ) : null}
-          </div>
+          </NavLink>
+          <NavLink
+            to="/contacts"
+            className={({ isActive }) =>
+              isActive ? adminActiveStyle : adminInactiveStyle
+            }
+          >
+            <FiUsers className={`text-2xl text-white`} />
+            {!editOpen.visible ? (
+              <h1 className="flex flex-col justify-end">Contacts</h1>
+            ) : null}
+          </NavLink>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive ? activeStyle : inactiveStyle
+            }
+          >
+            <FiUser className="text-2xl text-white" />
+            {!editOpen.visible ? (
+              <h1 className="flex flex-col justify-end">Profile</h1>
+            ) : null}
+          </NavLink>
           <div
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
+            onClick={logoutHandler}
+            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 cursor-pointer ${
               !editOpen.visible ? "justify-start" : "justify-center"
             }`}
           >
-            <HiLocationMarker className="text-2xl text-white" />
+            <FiLogOut className="text-2xl text-white" />
             {!editOpen.visible ? (
-              <Link className="flex flex-col justify-end">Events</Link>
+              <h1 className="flex flex-col justify-end">Logout</h1>
             ) : null}
           </div>
         </div>

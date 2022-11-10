@@ -13,11 +13,11 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'landing': "url(/public/blue_gradient.jpg)",
-        'landing2': "url(/public/2682640.jpg)",
-        "landing3": "url(/public/2664083.jpg)",
-        "landing4": "url(/public/gradient.jpg)"
-      }
+        landing: "url(/public/2682640.jpg)",
+        homepage: "url(/public/papercutbackground.png)",
+        profile: "url(/public/profile3.png)",
+        notFound: "url(/public/4043.gif)"
+      },
     },
   },
   plugins: [require("flowbite/plugin"), require("daisyui")],

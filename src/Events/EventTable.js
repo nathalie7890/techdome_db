@@ -12,6 +12,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { FiTrash2 } from "react-icons/fi";
 import { BsDownload } from "react-icons/bs";
+import { checkAuth } from "../api/users";
 
 export default function EventTable({
   data,
@@ -25,6 +26,7 @@ export default function EventTable({
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
   const [upload, setUpload] = useState({ visible: false });
 
+  const { isAdmin } = checkAuth();
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -70,42 +72,48 @@ export default function EventTable({
 
   return (
     <div className="flex w-full min-h-screen">
-      
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
         <h1 className="my-6 text-5xl font-semibold text-blue-400">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <div className="flex items-end justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
-            <div className="space-x-4">
-              <button
-                className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
-                onClick={() => setUpload({ visible: true })}
-              >
-                <IoAdd className="text-lg font-bold text-white" />
-              </button>
+            {isAdmin ? (
+              <div className="space-x-4">
+                <button
+                  className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+                  onClick={() => setUpload({ visible: true })}
+                >
+                  <IoAdd className="text-lg font-bold text-white" />
+                </button>
 
-              {selected.length > 0 ? (
-                <>
-                  <button
-                    className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
-                    onClick={() => downloadHandler(selected)}
-                  >
-                    <BsDownload className="text-white" />
-                  </button>
+                {selected.length > 0 ? (
+                  <>
+                    <button
+                      className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
+                      onClick={() => downloadHandler(selected)}
+                    >
+                      <BsDownload className="text-white" />
+                    </button>
 
-                  <button
-                    className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
-                    onClick={() => setDeleteMany({ visible: true })}
-                  >
-                    <FiTrash2 className="text-white" />
-                  </button>
-                </>
-              ) : null}
-            </div>
+                    <button
+                      className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                      onClick={() => setDeleteMany({ visible: true })}
+                    >
+                      <FiTrash2 className="text-white" />
+                    </button>
+                  </>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </div>
-
+        <div className="flex mb-2">
+            <h1>Showing {data.length} result</h1>
+            <h1 className="mx-4 italic font-medium text-blue-600">
+              {selected.length > 0 ? `${selected.length} selected` : null}
+            </h1>
+          </div>
         <div
           className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white`}
         >
@@ -116,17 +124,19 @@ export default function EventTable({
               <p>Maybe try searching with different keyword instead?</p>
             </div>
           ) : (
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
-                    <input
-                      type="checkbox"
-                      name="allSelect"
-                      checked={selected.length === data.length}
-                      onChange={(e) => selectOnChange(e, data)}
-                    />
-                  </th>
+                  {isAdmin ? (
+                    <th scope="col" className="px-6 py-3">
+                      <input
+                        type="checkbox"
+                        name="allSelect"
+                        checked={selected.length === data.length}
+                        onChange={(e) => selectOnChange(e, data)}
+                      />
+                    </th>
+                  ) : null}
                   <th
                     scope="col"
                     className="flex px-6 py-3 hover:text-blue-500"
@@ -146,9 +156,11 @@ export default function EventTable({
                   <th scope="col" className="px-6 py-3">
                     Participants
                   </th>
-                  <th scope="col" className="px-6 py-3 text-right">
-                    Edit
-                  </th>
+                  {isAdmin ? (
+                    <th scope="col" className="px-6 py-3 text-right">
+                      Edit
+                    </th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody>
@@ -158,14 +170,16 @@ export default function EventTable({
                       className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                       key={event._id}
                     >
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          name="singleSelect"
-                          checked={selected.some((e) => e?.id === event._id)}
-                          onChange={(e) => selectOnChange(e, event)}
-                        />
-                      </td>
+                      {isAdmin ? (
+                        <td className="px-6 py-4">
+                          <input
+                            type="checkbox"
+                            name="singleSelect"
+                            checked={selected.some((e) => e?.id === event._id)}
+                            onChange={(e) => selectOnChange(e, event)}
+                          />
+                        </td>
+                      ) : null}
 
                       <th
                         scope="row"
@@ -178,26 +192,28 @@ export default function EventTable({
                           {event.name}
                         </Link>
                       </th>
-                      <td className="px-6 py-4">{event._id}</td>
+                      <td className="px-6 py-4">{event.name.slice(-4)}</td>
                       <td className="px-6 py-4">
                         {event.createdAt.slice(0, 10)}
                       </td>
                       <td className="px-6 py-4">{event.uploadBy}</td>
                       <td className="px-6 py-4">{event.parts.length}</td>
-                      <td className="px-6 py-4 text-right">
-                        <button
-                          className="font-medium text-blue-600 hover:underline"
-                          onClick={() => {
-                            setEditOpen({ visible: true });
-                            setEditEvent({
-                              id: event._id,
-                              name: event.name,
-                            });
-                          }}
-                        >
-                          <AiOutlineEdit className="text-gray-500" />
-                        </button>
-                      </td>
+                      {isAdmin ? (
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            className="font-medium text-blue-600 hover:underline"
+                            onClick={() => {
+                              setEditOpen({ visible: true });
+                              setEditEvent({
+                                id: event._id,
+                                name: event.name,
+                              });
+                            }}
+                          >
+                            <AiOutlineEdit className="text-gray-500" />
+                          </button>
+                        </td>
+                      ) : null}
                     </tr>
                   );
                 })}
