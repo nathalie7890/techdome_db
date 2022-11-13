@@ -24,7 +24,8 @@ export const uploadEvent = async (file, newEvent) => {
       body: formData,
     });
 
-    return res.ok;
+    const data = await res.json();
+    return data;
   } catch (e) {
     return e;
   }

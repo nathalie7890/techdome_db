@@ -42,6 +42,7 @@ export default function EditEvent({
         return;
       }
       await queryClient.invalidateQueries("events");
+      setEditOpen(false);
       toast.success("Event name changed.", {
         position: "top-center",
         autoClose: 3000,
@@ -52,19 +53,14 @@ export default function EditEvent({
         progress: undefined,
         theme: "dark",
       });
-      setEditOpen(false);
     }
-    // {
-    //   onSuccess: async () => {
-    //     await queryClient.invalidateQueries("events");
-    //     alert("Event name updated!");
-    //     setEditOpen(false);
-    //   },
-    // }
+
   );
 
+
+
   const editSubmit = (id, name) => {
-    if (isNaN(name.slice(-5))) {
+    if (isNaN(name.slice(-5)) || name.split(" ").slice(-1).toString().length > 4) {
       setInvalid(true);
       return;
     }
@@ -95,14 +91,14 @@ export default function EditEvent({
             <label className="text-sm text-white">Event Name</label>
             <input
               type="text"
-              className={`mt-2 text-white rounded-md focus:border-white focus:ring-white border-white ${
-                invalid ? "bg-red-400" : "bg-transparent"
+              className={`mt-2 text-white rounded-md focus:border-white focus:ring-white border-white bg-transparent border-1 ${
+                invalid ? "border-red-300 border-2" : ""
               }`}
               name="name"
               value={name}
               onChange={editOnChange}
             />
-            {invalid? <p className="text-sm font-semibold text-red-300">Event name must end with 4 numbers. E.g. event year</p>: null}
+            {invalid? <p className="text-sm font-semibold text-red-300">Event name must end with 4 numbers. E.g. Event 2022</p>: null}
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
@@ -114,7 +110,7 @@ export default function EditEvent({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 text-white bg-blue-900 rounded-full w-fit hover:bg-blue-80 drop-shadow-[0_5px_8px_rgba(0,0,0,0.2)]"
+              className="px-6 py-2 text-white bg-blue-800 rounded-lg w-fit hover:bg-blue-900"
             >
               Save
             </button>

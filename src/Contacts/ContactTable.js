@@ -2,9 +2,11 @@ import { useState } from "react";
 import EditContact from "./EditContact";
 import ContactFilter from "./ContactFilter";
 import ContactSearch from "./ContactSearch";
+import AddContact from "./AddContact";
 import DeleteMany from "./DeleteMany";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
+import { IoAdd } from "react-icons/io5";
 
 export default function ContactTable({
   data,
@@ -14,6 +16,7 @@ export default function ContactTable({
   setFilters,
 }) {
   const [selected, setSelected] = useState([]);
+  const [addUser, setAddUser] = useState(false);
   const [deleteMany, setDeleteMany] = useState({ visible: false });
 
   const selectOnChange = (e, data) => {
@@ -52,13 +55,16 @@ export default function ContactTable({
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
         <h1 className="my-6 text-5xl font-semibold text-blue-400">Users</h1>
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
+          <ContactSearch filters={filters} setFilters={setFilters} />
           <div className="flex items-end justify-between">
             <ContactFilter filters={filters} setFilters={setFilters} />
             <div className="flex space-x-2">
-              <ContactSearch filters={filters} setFilters={setFilters} />
-              {/* <button className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400">
-                Search
-              </button> */}
+              <button
+                onClick={() => setAddUser(true)}
+                className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+              >
+                <IoAdd className="text-lg font-bold text-white" />
+              </button>
 
               {selected.length > 0 ? (
                 <button
@@ -173,6 +179,7 @@ export default function ContactTable({
           setDeleteMany={setDeleteMany}
           data={selected}
         />
+        <AddContact addUser={addUser} setAddUser={setAddUser} />
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ export default function DeleteMany({
     {
       onSuccess: () => {
         queryClient.invalidateQueries("events");
+        setSelected([]);
         setDeleted(true);
       },
     },
@@ -44,7 +45,7 @@ export default function DeleteMany({
       <Modal show={visible} size="md" popup={true} onClose={onClose}>
         <Modal.Header />
         <Modal.Body>
-        <div className="text-center">
+          <div className="text-center">
             {!deleted ? (
               <>
                 <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />

@@ -14,7 +14,7 @@ export default function Contacts() {
 
   const [editOpen, setEditOpen] = useState({
     visible: false,
-    name: ""
+    name: "",
   });
 
   const { data, isLoading, error, isError } = useQuery(

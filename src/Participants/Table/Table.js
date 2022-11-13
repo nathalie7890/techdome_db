@@ -106,8 +106,8 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             ) : null}
           </div>
         </div>
-        <div className="relative overflow-x-auto shadow-md rounded-b-xl">
-          <table className="w-full text-sm text-left text-gray-500 bg-white">
+        <div className="max-w-full overflow-x-auto rounded-b-lg shadow-md">
+          <table className="max-w-full text-sm text-left text-gray-500 bg-white">
             <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
               <tr>
                 {isAdmin ? (
@@ -233,6 +233,9 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             setState={setDeleteMany}
             setSelected={setSelected}
           />
+          {/* <EditPart part={edit}
+          editOnChange={editOnChange}
+          setEdit={setEdit} /> */}
         </div>
       </div>
       {edit.visible ? (
@@ -240,10 +243,10 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           edit={edit}
           editOnChange={editOnChange}
           setEdit={setEdit}
-          data={data}
+         
         />
       ) : null}
-      <Add add={add} setAdd={setAdd} />
+      <Add add={add} setAdd={setAdd} edit={edit} setEdit={setEdit} />
     </div>
   );
 };

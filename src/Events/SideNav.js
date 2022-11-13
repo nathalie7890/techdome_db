@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { AiOutlineHome } from "react-icons/ai";
 import { FiUsers, FiLogOut, FiUser } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
+import { CgUserList } from "react-icons/cg";
 import { checkAuth } from "../api/users";
 
 export default function SideNav({ editOpen }) {
@@ -77,7 +77,7 @@ export default function SideNav({ editOpen }) {
               isActive ? adminActiveStyle : adminInactiveStyle
             }
           >
-            <FiUsers className={`text-2xl text-white`} />
+            <CgUserList className={`text-2xl text-white`} />
             {!editOpen.visible ? (
               <h1 className="flex flex-col justify-end">Contacts</h1>
             ) : null}

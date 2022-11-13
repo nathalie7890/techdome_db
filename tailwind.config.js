@@ -15,8 +15,9 @@ module.exports = {
       backgroundImage: {
         landing: "url(/public/2682640.jpg)",
         homepage: "url(/public/papercutbackground.png)",
-        profile: "url(/public/profile3.png)",
-        notFound: "url(/public/4043.gif)"
+        profile: "url(/public/editprofile.png)",
+        notFound: "url(/public/4043.gif)",
+        resetPass: "url(/public/resetpass.png)"
       },
     },
   },

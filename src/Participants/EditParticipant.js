@@ -29,15 +29,8 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
     editMutation.mutate({ data, id });
   };
 
-  const floatingInput = {
-    input:
-      "block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-white-600 peer focus:border-white text-white",
-    label:
-      "absolute text-sm text-gray-200  duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-transparent  px-2 peer-focus:px-2 peer-focus:text-yellow-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1",
-  };
-
   return (
-    <div className="sticky top-0 w-1/4 h-screen p-12 bg-gradient-to-tr from-[#3f51b5]  to-purple-500">
+    <div className=" py-10 sticky top-0 w-1/4 h-screen px-12 bg-gradient-to-tr from-[#3f51b5]  to-purple-500">
       <button
         className="flex justify-end w-full text-xl font-medium"
         onClick={() => setEdit({ visible: false })}
@@ -63,12 +56,10 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
             );
           }}
         >
-          <h1 className="mb-4 text-3xl font-semibold text-white">Edit</h1>
-          <div className="space-y-2">
+          
+          <div className="space-y-2.5">
             <div className="flex flex-col">
-              <label className="text-sm text-white">
-                Name
-              </label>
+              <label className="text-sm text-white">Name</label>
               <input
                 type="text"
                 name="name"
@@ -147,25 +138,25 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
                 className="text-white bg-transparent border border-gray-300 rounded-md resize-none focus:border-white focus:ring-0"
                 onChange={editOnChange}
                 value={address}
-                rows="3"
+                rows="2"
               />
             </div>
           </div>
-          <button
-            className="flex justify-start font-semibold text-yellow-200 hover:text-red-300 w-fit"
-            type="button"
-            onClick={() =>
-              setDeleteOne({ visible: true, id: edit.id, name: name })
-            }
-          >
-            Delete Participant
-          </button>
-          <div className="flex justify-end w-full">
+          <div className="flex justify-end space-x-2">
             <button
-              className="px-6 py-2 text-white bg-blue-900 rounded-full w-fit hover:bg-blue-80 drop-shadow-[0_5px_8px_rgba(0,0,0,0.2)]"
+              className="px-6 py-1.5 text-white bg-blue-800 rounded-md w-fit hover:bg-blue-900 "
               type="submit"
             >
               Save
+            </button>
+            <button
+              className="px-6 py-1.5 text-white bg-red-400 rounded-md w-fit hover:bg-red-500"
+              type="button"
+              onClick={() =>
+                setDeleteOne({ visible: true, id: edit.id, name: name })
+              }
+            >
+              Delete
             </button>
           </div>
         </form>

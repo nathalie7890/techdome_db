@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Table from "./Table/Table";
 import LoadingBar from "./LoadingBar";
 import SideNav from "../Events/SideNav";
-import { FiLogOut } from "react-icons/fi";
-import { Tooltip } from "flowbite-react";
 import { getAll } from "../api/participants";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Main = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state === null) navigate("/");
+  }, []);
+
+  const event = location.state?.event;
   const [editOpen, setEditOpen] = useState({ visible: true });
-  const { event } = location.state;
   const [filters, setFilters] = useState({
     event: event,
     schoolOrg: "",
@@ -27,10 +31,6 @@ const Main = () => {
     ["participants", filters],
     async () => await getAll(filters)
   );
-
-  const LogoutHandler = () => {
-    window.location.reload();
-  };
 
   return (
     <div className="relative flex min-h-screen bg-white">

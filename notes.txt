@@ -1,4 +1,15 @@
 
+
+
+
+!!!!!!!! IMPORTANT!!!!!!!!
+remove register
+fix empty file upload alert
+display usernotfound or wrong password in login
+add loading when set rest pw email
+when register, make sure input dont have spaces
+
+
 Event upload
     - Drag and drop(done)
     - if csv file already have age field, use age from age field(done)

@@ -8,7 +8,6 @@ import DeleteMany from "./DeleteMany";
 import { convertArrayToCSV } from "convert-array-to-csv";
 import no_result from "../public/images/spaceguy.gif";
 import { AiOutlineEdit } from "react-icons/ai";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { FiTrash2 } from "react-icons/fi";
 import { BsDownload } from "react-icons/bs";
@@ -109,11 +108,11 @@ export default function EventTable({
           </div>
         </div>
         <div className="flex mb-2">
-            <h1>Showing {data.length} result</h1>
-            <h1 className="mx-4 italic font-medium text-blue-600">
-              {selected.length > 0 ? `${selected.length} selected` : null}
-            </h1>
-          </div>
+          <h1>Showing {data.length} result</h1>
+          <h1 className="mx-4 italic font-medium text-blue-600">
+            {selected.length > 0 ? `${selected.length} selected` : null}
+          </h1>
+        </div>
         <div
           className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white`}
         >
@@ -142,7 +141,6 @@ export default function EventTable({
                     className="flex px-6 py-3 hover:text-blue-500"
                   >
                     Event
-                    <IoMdArrowDropdown className="mx-1 text-lg text-gray-700 hover:text-blue-500" />
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Year

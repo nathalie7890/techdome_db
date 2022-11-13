@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login as loginFn } from "../api/users";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import logo from "../public/images/techdome_logo.png";
 
 export default function Login2() {
   const [hidePw, setHidePw] = useState(true);
+  const [loginFail, setLoginFail] = useState(false);
   const [user, setUser] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -15,12 +17,17 @@ export default function Login2() {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    await loginFn(user);
+    const res = await loginFn(user);
+    if (res.status === 400 || res.status === 228) {
+      setLoginFail(true);
+      return;
+    }
     navigate("/events");
   };
 
   const loginOnChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    setLoginFail(false);
   };
 
   return (
@@ -38,11 +45,14 @@ export default function Login2() {
               login to your account.
             </h1>
           </div>
-          <form onSubmit={loginSubmit} className="flex flex-col space-y-6 text-white">
+          <form
+            onSubmit={loginSubmit}
+            className="flex flex-col space-y-6 text-white"
+          >
             <input
-              type="email"
-              name="email"
-              value={user.email}
+              type="text"
+              name="username"
+              value={user.username}
               onChange={loginOnChange}
               className="bg-transparent border-white rounded-full placeholder:text-white focus:border-yellow-200 focus:ring-yellow-200"
               placeholder="Email"
@@ -70,17 +80,22 @@ export default function Login2() {
                 )}
               </div>
             </div>
+            {loginFail ? (
+              <div className="flex items-center space-x-1 text-red-300 rounded-full">
+                <AiOutlineExclamationCircle className="inline" />
+                <h1>Did you enter the correct username and password?</h1>
+              </div>
+            ) : null}
             <button
               type="submit"
-              className="rounded-full bg-gradient-to-r from-purple-500 to-blue-500 py-2.5 text-white "
+              className="rounded-full bg-gradient-to-r from-purple-500 to-blue-500 py-2.5 text-white"
             >
               Login
             </button>
           </form>
           <div className="my-6">
-            <Link to="/register" className="text-gray-400 text-start">
-              Don't have an account? Click here to{" "}
-              <span className="text-yellow-300">Register.</span>
+            <Link to="/reset" className="text-yellow-300 text-start">
+              Forgot Password?
             </Link>
           </div>
         </div>

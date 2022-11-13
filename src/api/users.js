@@ -5,17 +5,13 @@ export const register = async (user) => {
     const res = await fetch(`http://localhost:5000/users/register`, {
       method: "POST",
       headers: {
+        "x-auth-token": localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
     const data = await res.json();
-    if (res.ok) {
-      // localStorage.setItem("token", data.token);
-      return data;
-    } else {
-      throw new Error(data.message);
-    }
+    return data;
   } catch (err) {
     throw new Error(err.message);
   }
@@ -30,13 +26,13 @@ export const login = async (user) => {
       },
       body: JSON.stringify(user),
     });
+
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem("token", data.token);
       return data;
-    } else {
-      throw new Error(data.message);
     }
+    return data;
   } catch (err) {
     throw new Error(err.message);
   }
@@ -53,7 +49,7 @@ export const checkAuth = () => {
     ? jwt_decode(localStorage.getItem("token"))
     : null;
 
-  let isAdmin = user.data.isAdmin ? true : false;
+  let isAdmin = user && user.data.isAdmin ? true : false;
   return { isAuth, user, isAdmin };
 };
 
@@ -98,7 +94,6 @@ export const getUsers = async (filters) => {
 };
 
 export const changeRole = async (id, role) => {
-  console.log(role);
   try {
     const res = await fetch(`http://localhost:5000/users/role`, {
       method: "PUT",
@@ -162,7 +157,7 @@ export const deleteMany = async (users) => {
 };
 
 export const updateUser = async (user) => {
-  console.log(JSON.stringify(user))
+  console.log(JSON.stringify(user));
   try {
     const res = await fetch("http://localhost:5000/users/edit", {
       method: "PUT",
@@ -198,5 +193,65 @@ export const updatePassword = async (pass) => {
     else return data.message;
   } catch (e) {
     throw new Error();
+  }
+};
+
+export const getWithToken = async (token) => {
+  try {
+    const res = await fetch(`http://localhost:5000/users/token/${token}`);
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+export const sendResetEmail = async (email) => {
+  try {
+    const findUser = await fetch("http://localhost:5000/users/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (findUser.status === 404) return 404;
+
+    const res = await fetch("http://localhost:5000/users/reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+      }),
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+export const resetPassword = async (id, password) => {
+  try {
+    const res = await fetch(
+      `http://localhost:5000/users/resetpass/636e4a4f5863ebbd3b549583`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      }
+    );
+
+    if (!res.ok) return res.status;
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
   }
 };
