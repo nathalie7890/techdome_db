@@ -77,34 +77,36 @@ export default function EventTable({
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <div className="flex items-end justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
-            {isAdmin ? (
-              <div className="space-x-4">
+
+            <div className="space-x-4">
+              {isAdmin ? (
                 <button
                   className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
                   onClick={() => setUpload({ visible: true })}
                 >
                   <IoAdd className="text-lg font-bold text-white" />
                 </button>
+              ) : null}
 
-                {selected.length > 0 ? (
-                  <>
-                    <button
-                      className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
-                      onClick={() => downloadHandler(selected)}
-                    >
-                      <BsDownload className="text-white" />
-                    </button>
-
+              {selected.length > 0 ? (
+                <>
+                  <button
+                    className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
+                    onClick={() => downloadHandler(selected)}
+                  >
+                    <BsDownload className="text-white" />
+                  </button>
+                  {isAdmin ? (
                     <button
                       className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
                       onClick={() => setDeleteMany({ visible: true })}
                     >
                       <FiTrash2 className="text-white" />
                     </button>
-                  </>
-                ) : null}
-              </div>
-            ) : null}
+                  ) : null}
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
         <div className="flex mb-2">
@@ -114,7 +116,7 @@ export default function EventTable({
           </h1>
         </div>
         <div
-          className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white`}
+          className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white max-w-full`}
         >
           {data.length <= 0 ? (
             <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
@@ -126,7 +128,7 @@ export default function EventTable({
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
-                  {isAdmin ? (
+                 
                     <th scope="col" className="px-6 py-3">
                       <input
                         type="checkbox"
@@ -135,7 +137,7 @@ export default function EventTable({
                         onChange={(e) => selectOnChange(e, data)}
                       />
                     </th>
-                  ) : null}
+                 
                   <th
                     scope="col"
                     className="flex px-6 py-3 hover:text-blue-500"
@@ -168,7 +170,7 @@ export default function EventTable({
                       className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                       key={event._id}
                     >
-                      {isAdmin ? (
+                     
                         <td className="px-6 py-4">
                           <input
                             type="checkbox"
@@ -177,8 +179,7 @@ export default function EventTable({
                             onChange={(e) => selectOnChange(e, event)}
                           />
                         </td>
-                      ) : null}
-
+                    
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

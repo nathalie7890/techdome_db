@@ -73,7 +73,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
       <div
         className={`px-12 py-12 bg-white ${edit.visible ? "w-3/4" : "w-full"}`}
       >
-        <h1 className="text-5xl font-semibold text-blue-400">{event}</h1>
+        <h1 className="pageTitle">{event}</h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
         <div className="flex items-end justify-between pt-6 pb-2 bg-white">
           <div className="flex">
@@ -85,23 +85,26 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           <div className="flex gap-4">
             {selected.length > 0 ? (
               <>
-                <button
-                  onClick={() =>
-                    setDeleteMany({ visible: true, selected, event })
-                  }
-                  className="px-3.5 py-3.5 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
-                >
-                  <BsDownload className="text-white" />
-                </button>
                 <CSVLink
                   data={selected}
                   onClick={downloadHandler}
                   asyncOnClick={true}
                   filename={`${fileName}`}
-                  className="px-3.5 py-3.5 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                  className="px-3.5 py-3.5 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
                 >
-                  <FiTrash2 className="text-white" />
+                  {" "}
+                  <BsDownload className="text-white" />
                 </CSVLink>{" "}
+                {isAdmin ? (
+                  <button
+                    onClick={() =>
+                      setDeleteMany({ visible: true, selected, event })
+                    }
+                    className="px-3.5 py-3.5 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                  >
+                    <FiTrash2 className="text-white" />
+                  </button>
+                ) : null}
               </>
             ) : null}
           </div>
@@ -110,18 +113,17 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           <table className="max-w-full text-sm text-left text-gray-500 bg-white">
             <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
               <tr>
-                {isAdmin ? (
-                  <th scope="col" className="px-6 py-3">
-                    {data.length > 0 ? (
-                      <input
-                        type="checkbox"
-                        name="allSelect"
-                        checked={selected.length === data.length}
-                        onChange={(e) => handleChange(e, data)}
-                      />
-                    ) : null}
-                  </th>
-                ) : null}
+                <th scope="col" className="px-6 py-3">
+                  {data.length > 0 ? (
+                    <input
+                      type="checkbox"
+                      name="allSelect"
+                      checked={selected.length === data.length}
+                      onChange={(e) => handleChange(e, data)}
+                    />
+                  ) : null}
+                </th>
+
                 <th scope="col" className="px-6 py-3">
                   Event
                 </th>
@@ -140,7 +142,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                       Email
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Conact Number
+                      Contact Number
                     </th>
                   </>
                 ) : null}
@@ -170,19 +172,18 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                         className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                         key={person._id}
                       >
-                        {isAdmin ? (
-                          <td className="px-6 py-4">
-                            <input
-                              key={person._id}
-                              type="checkbox"
-                              name={person._id}
-                              checked={selected.some(
-                                (item) => item?._id === person._id
-                              )}
-                              onChange={(e) => handleChange(e, person)}
-                            />
-                          </td>
-                        ) : null}
+                        <td className="px-6 py-4">
+                          <input
+                            key={person._id}
+                            type="checkbox"
+                            name={person._id}
+                            checked={selected.some(
+                              (item) => item?._id === person._id
+                            )}
+                            onChange={(e) => handleChange(e, person)}
+                          />
+                        </td>
+
                         <th
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
@@ -243,7 +244,6 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           edit={edit}
           editOnChange={editOnChange}
           setEdit={setEdit}
-         
         />
       ) : null}
       <Add add={add} setAdd={setAdd} edit={edit} setEdit={setEdit} />

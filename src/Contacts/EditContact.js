@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { changeRole } from "../api/users";
 import DeleteOne from "./DeleteOne";
+import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function EditContact({
@@ -22,7 +23,16 @@ export default function EditContact({
     {
       onSuccess: async () => {
         await queryClient.invalidateQueries("users");
-        alert("User role changed.");
+        toast.success("User role changed", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         setEditOpen(false);
       },
     }
@@ -80,7 +90,7 @@ export default function EditContact({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 text-white bg-blue-900 rounded-full w-fit hover:bg-blue-80 drop-shadow-[0_5px_8px_rgba(0,0,0,0.2)]"
+              className="px-6 py-2 text-white bg-blue-800 rounded-md w-fit hover:bg-blue-900"
             >
               Save
             </button>

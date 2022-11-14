@@ -23,8 +23,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-end w-full h-screen bg-cover bg-homepage">
-      <div className="flex flex-col items-center justify-center w-1/2 h-full px-48">
+    <div className="flex justify-end w-full h-screen bg-center bg-cover bg-homepage">
+      <div className="flex flex-col items-center justify-center w-1/2 px-48 w-100">
         <div className="flex flex-col items-center justify-center w-full space-y-8">
           <form className="w-full space-y-8" onSubmit={loginSubmit}>
             <h1 className="text-2xl text-left text-white uppercase">login</h1>

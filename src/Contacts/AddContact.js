@@ -115,12 +115,12 @@ export default function AddContact({ addUser, setAddUser }) {
               <div className="flex flex-col items-center justify-center w-2/12">
                 {hidePw ? (
                   <FiEye
-                    className="text-xl text-gray-500 hover:text-white hover:cursor-pointer"
+                    className="text-xl text-gray-500 hover:text-black hover:cursor-pointer"
                     onClick={() => setHidePw(!hidePw)}
                   />
                 ) : (
                   <FiEyeOff
-                    className="text-xl text-gray-500 hover:text-white hover:cursor-pointer"
+                    className="text-xl text-gray-500 hover:text-black hover:cursor-pointer"
                     onClick={() => setHidePw(!hidePw)}
                   />
                 )}

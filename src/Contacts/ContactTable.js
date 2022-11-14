@@ -110,7 +110,7 @@ export default function ContactTable({
               </tr>
             </thead>
             <tbody>
-              {data.map((user) => {
+              {data.map((user, i) => {
                 return (
                   <tr
                     key={user._id}

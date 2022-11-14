@@ -16,7 +16,7 @@ export default function EditEvent({
   const [invalid, setInvalid] = useState(false);
   const [deleteOne, setDeleteOne] = useState({ visible: false, id, name });
   const editOnChange = (e) => {
-    setInvalid(false)
+    setInvalid(false);
     setEditEvent({ ...editEvent, name: e.target.value });
   };
 
@@ -24,28 +24,14 @@ export default function EditEvent({
     setEventName(name);
   }, [id]);
 
+
   const queryClient = useQueryClient();
-  const editMutation = useMutation(
-    async ({ id, name }) => {
-      const res = await edit(id, name);
-      if (res === "409") {
-        toast.error("Event name already exists.", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        return;
-      }
-      await queryClient.invalidateQueries("events");
-      setEditOpen(false);
-      toast.success("Event name changed.", {
+  const editMutation = useMutation(async ({ id, name }) => {
+    const res = await edit(id, name);
+    if (res === "409") {
+      toast.error("Event name already exists.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -53,14 +39,27 @@ export default function EditEvent({
         progress: undefined,
         theme: "dark",
       });
+      return;
     }
-
-  );
-
-
+    await queryClient.invalidateQueries("events");
+    setEditOpen(false);
+    toast.success("Event name changed.", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  });
 
   const editSubmit = (id, name) => {
-    if (isNaN(name.slice(-5)) || name.split(" ").slice(-1).toString().length > 4) {
+    if (
+      isNaN(name.slice(-5)) ||
+      name.split(" ").slice(-1).toString().length > 4
+    ) {
       setInvalid(true);
       return;
     }
@@ -98,7 +97,11 @@ export default function EditEvent({
               value={name}
               onChange={editOnChange}
             />
-            {invalid? <p className="text-sm font-semibold text-red-300">Event name must end with 4 numbers. E.g. Event 2022</p>: null}
+            {invalid ? (
+              <p className="text-sm font-semibold text-red-300">
+                Event name must end with 4 numbers. E.g. Event 2022
+              </p>
+            ) : null}
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}

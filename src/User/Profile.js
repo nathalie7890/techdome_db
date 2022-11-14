@@ -6,6 +6,7 @@ import { updatePassword } from "../api/users";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Alert } from "flowbite-react";
+import "./profile.css";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function Profile() {
   const [updated, setUpdated] = useState(false);
   const onChangeHandler = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
+    setUpdated(false);
   };
 
   const profileSubmit = async (e) => {
@@ -38,6 +40,17 @@ export default function Profile() {
 
     await updateUser(profile);
     setUpdated(true);
+    toast.success("Profile updated.", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "toast-message",
+      theme: "dark",
+    });
   };
 
   const passwordOnChange = (e) => {
@@ -54,7 +67,7 @@ export default function Profile() {
     }
     await updatePassword(password);
     setPassword({ oldPass: "", newPass: "" });
-    toast.success("Password changed.", {
+    toast.success("Password updated.", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: true,
@@ -72,9 +85,7 @@ export default function Profile() {
         <SideNav editOpen={editOpen} setEditOpen={setEditOpen} />
       </div>
       <div className="w-full p-8 px-12 space-y-4">
-        <h1 className="my-12 text-5xl font-semibold text-blue-400">
-          Edit Profile
-        </h1>
+        <h1 className="my-12 pageTitle">Edit Profile</h1>
         <div className="w-2/3">
           {updated ? (
             <Alert
@@ -147,10 +158,7 @@ export default function Profile() {
               />
             </div>
             <div className="">
-              <button
-                type="submit"
-                className="px-6 py-1.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-              >
+              <button type="submit" className="mediumBlueBtn">
                 Save
               </button>
             </div>

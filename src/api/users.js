@@ -157,7 +157,6 @@ export const deleteMany = async (users) => {
 };
 
 export const updateUser = async (user) => {
-  console.log(JSON.stringify(user));
   try {
     const res = await fetch("http://localhost:5000/users/edit", {
       method: "PUT",

@@ -1,15 +1,4 @@
 
-
-
-
-!!!!!!!! IMPORTANT!!!!!!!!
-remove register
-fix empty file upload alert
-display usernotfound or wrong password in login
-add loading when set rest pw email
-when register, make sure input dont have spaces
-
-
 Event upload
     - Drag and drop(done)
     - if csv file already have age field, use age from age field(done)
@@ -42,13 +31,16 @@ Search on Event page
     - Search and clear search button (done)
 
 Edit Event
-    - Delete one event popup(fix after delete)
-    - Delete many event popup
+    - Delete one event popup(done)
+    - Delete many event popup(done)
     
 Contacts
-    - forget password
+    - forget password(done)
     - if search is empty display something
-    - toast error
+    - toast error(done)
+
+Participants
+    - Display image when there's no Participants
 
 Questions for Tim
     - game developement have studentA and studentB, separate them?

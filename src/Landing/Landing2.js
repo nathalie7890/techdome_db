@@ -36,12 +36,12 @@ export default function Login2() {
         <img src={logo} alt="" className="w-8 h-8 animate-pulse" />
         <h1 className="text-lg text-blue-200 uppercase">Tech Dome Penang</h1>
       </div>
-      <div className="flex flex-col items-center justify-center w-1/2 h-screen">
-        <div className="w-2/3 px-12 py-16 shadow-xl rounded-xl h-fit bg-black/40 shadow-black/50">
-          <div className="mb-16 space-y-4">
-            <h1 className="text-6xl font-bold text-blue-200">Dashboard</h1>
+      <div className="flex flex-col items-center justify-center h-screen lg:w-1/2">
+        <div className="px-6 py-16 shadow-xl sm:px-8 xl:px-12 lg:w-2/3 rounded-xl h-fit bg-black/40 shadow-black/50">
+          <div className="mb-10 space-y-4 lg:mb-16">
+            <h1 className="text-4xl font-bold text-blue-500 md:text-5xl xl:text-6xl">Dashboard</h1>
             <h1 className="p-1 mb-10 text-2xl text-blue-100">
-              <span className="text-3xl font-bold text-yellow-200">Hello</span>,
+              <span className="text-xl font-bold text-yellow-200 xl:text-3xl">Hello</span>,
               login to your account.
             </h1>
           </div>

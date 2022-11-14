@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal } from "flowbite-react";
+import { Modal, Spinner } from "flowbite-react";
 import { checkAuth } from "../api/users";
 import { uploadEvent } from "../api/events";
 import { useDropzone } from "react-dropzone";
@@ -18,7 +18,7 @@ export default function UploadEvent({ upload, setUpload }) {
     name: "",
     uploadBy: user.data.username,
   });
-
+  const [isLoading, setLoading] = useState(false);
   const { name } = newEvent;
   const [uploadFile, setUploadFile] = useState([]);
 
@@ -29,7 +29,7 @@ export default function UploadEvent({ upload, setUpload }) {
     setUpload({ visible: false });
   };
 
-  //upload file
+  //drag and drop
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     accept: { "text/csv": [] },
     onDropAccepted: () => setInvalid({ ...invalid, file: false }),
@@ -47,10 +47,12 @@ export default function UploadEvent({ upload, setUpload }) {
   // const uploadOnChange = (e) => {
   //   setUploadFile(e.target.files[0]);
   // };
-  const queryClient = useQueryClient();
 
+  //upload file
+  const queryClient = useQueryClient();
   const uploadMutation = useMutation(
     async ({ uploadFile, newEvent }) => {
+      setLoading(true);
       const res = await uploadEvent(uploadFile, newEvent);
       await queryClient.invalidateQueries("events");
       if (res.status === 200) {
@@ -98,6 +100,7 @@ export default function UploadEvent({ upload, setUpload }) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("events");
+        setLoading(false);
       },
     }
   );
@@ -109,7 +112,10 @@ export default function UploadEvent({ upload, setUpload }) {
       return;
     }
 
-    if (isNaN(name.slice(-5)) || name.split(" ").slice(-1).toString().length > 4) {
+    if (
+      isNaN(name.slice(-5)) ||
+      name.split(" ").slice(-1).toString().length > 4
+    ) {
       setInvalid({ ...invalid, name: true });
       return;
     }
@@ -187,9 +193,18 @@ export default function UploadEvent({ upload, setUpload }) {
               <div className="flex justify-end w-full space-x-2">
                 <button
                   type="submit"
-                  className="px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500"
+                  className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
+                    isLoading ? "pointer-events-none" : ""
+                  }`}
                 >
-                  Upload
+                  {isLoading ? (
+                    <Spinner
+                      color="warning"
+                      aria-label="Warning spinner example"
+                    />
+                  ) : (
+                    "Upload"
+                  )}
                 </button>
                 <button
                   type="button"

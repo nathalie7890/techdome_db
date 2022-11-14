@@ -37,7 +37,7 @@ export default function SideNav({ editOpen }) {
       } sticky top-0 right-0`}
     >
       {!editOpen.visible && isAdmin ? (
-        <h1 className="flex justify-end w-full text-sm font-bold text-blue-300">
+        <h1 className="flex justify-end w-full text-sm font-bold text-blue-200">
           Admin
         </h1>
       ) : null}
@@ -49,13 +49,13 @@ export default function SideNav({ editOpen }) {
             }`}
           >
             <h1 className="text-2xl font-semibold text-white uppercase">
-              {initials(user.data.name)}
+              {initials(user?.data.name)}
             </h1>
           </div>
           {!editOpen.visible ? (
             <div className="flex flex-col justify-end px-2 text-sm text-gray-100">
-              <h1 className="font-semibold text-white">{user.data.name}</h1>
-              <p>{user.data.email}</p>
+              <h1 className="font-semibold text-white">{user?.data.name}</h1>
+              <p>{user?.data.email}</p>
             </div>
           ) : null}
         </div>
@@ -71,17 +71,19 @@ export default function SideNav({ editOpen }) {
               <h1 className="flex flex-col justify-end">Events</h1>
             ) : null}
           </NavLink>
-          <NavLink
-            to="/contacts"
-            className={({ isActive }) =>
-              isActive ? adminActiveStyle : adminInactiveStyle
-            }
-          >
-            <CgUserList className={`text-2xl text-white`} />
-            {!editOpen.visible ? (
-              <h1 className="flex flex-col justify-end">Contacts</h1>
-            ) : null}
-          </NavLink>
+          {isAdmin ? (
+            <NavLink
+              to="/contacts"
+              className={({ isActive }) =>
+                isActive ? activeStyle : inactiveStyle
+              }
+            >
+              <CgUserList className={`text-2xl text-white`} />
+              {!editOpen.visible ? (
+                <h1 className="flex flex-col justify-end">Contacts</h1>
+              ) : null}
+            </NavLink>
+          ) : null}
           <NavLink
             to="/profile"
             className={({ isActive }) =>

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Main from "./Participants/Main";
 import EventList from "./Events/EventList";
+
 import Login2 from "./Landing/Landing2";
 import Reset from "./User/Reset";
 import ResetPass from "./User/ResetPass";
@@ -29,7 +30,7 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
       />
       <Routes>
         <Route path="*" element={<NotFound />} />
