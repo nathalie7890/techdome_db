@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import moment from "moment/moment";
 
 export const register = async (user) => {
   try {
@@ -19,6 +20,7 @@ export const register = async (user) => {
 
 export const login = async (user) => {
   try {
+    localStorage.removeItem("token");
     const res = await fetch(`http://localhost:5000/users/login`, {
       method: "POST",
       headers: {
@@ -44,10 +46,13 @@ export const logout = () => {
 };
 
 export const checkAuth = () => {
-  let isAuth = localStorage.getItem("token") ? true : false;
+  const now = moment().valueOf();
   let user = localStorage.getItem("token")
     ? jwt_decode(localStorage.getItem("token"))
     : null;
+
+  let isAuth =
+    localStorage.getItem("token") && now < moment.unix(user.exp) ? true : false;
 
   let isAdmin = user && user.data.isAdmin ? true : false;
   return { isAuth, user, isAdmin };

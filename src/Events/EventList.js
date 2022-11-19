@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import EventTable from "./EventTable";
-import LoadingBar from "../Participants/LoadingBar";
+import LoadingBar from "../LoadingBar/LoadingBar";
 import { getEvents } from "../api/events";
 import SideNav from "./SideNav";
 

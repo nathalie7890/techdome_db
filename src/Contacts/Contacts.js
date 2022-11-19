@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { getUsers } from "../api/users";
 import ContactTable from "./ContactTable";
 import SideNav from "../Events/SideNav";
-import LoadingBar from "../Participants/LoadingBar";
+import LoadingBar from "../LoadingBar/LoadingBar";
 
 export default function Contacts() {
   const [filters, setFilters] = useState({

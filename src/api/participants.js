@@ -1,78 +1,82 @@
-export const getAllParticipants = async () => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}`);
-  if (!res.ok) throw new Error("Cannot get all participants");
-  const data = await res.json();
-  return data;
-};
-
+//fetch participants
 export const getAll = async (filters) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants/all`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(filters),
-  });
-
-  if (!res.ok) throw new Error("Cannot fetch participants");
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URI}/participants/all`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(filters),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
-export const AddParticipant = async (participant) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(participant),
-  });
-  if (!res.ok) throw new Error("Cannot add participant");
-  const data = await res.json();
-  return data;
-};
-
+//delete one participant
 export const deleteParticipant = async (id) => {
-  const res = await fetch(
-    `${process.env.REACT_APP_API_URI}/participants/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URI}/participants/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
 
-  if (!res.ok) console.error(`Failed to delete participant ${id}`);
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
-export const editParticipant = async (participant, id) => {
-  const res = await fetch(
-    `${process.env.REACT_APP_API_URI}/participants/${id}`,
-    {
-      method: "PUT",
+//delete many participants
+export const deleteMany = async (name, participants) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify(participant),
-    }
-  );
+      body: JSON.stringify({ name: name, id: participants }),
+    });
 
-  if (!res.ok) console.error(`Failed to edit participant ${id}`);
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
-export const deleteMany = async (name, participants) => {
-  console.log(name, participants);
-  const res = await fetch(`${process.env.REACT_APP_API_URI}/participants`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name: name, id: participants }),
-  });
+//edit participant
+export const editParticipant = async (participant, id) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URI}/participants/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(participant),
+      }
+    );
 
-  if (!res.ok) console.error("Failed to delete participants");
-  const data = await res.json();
-  return data;
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };

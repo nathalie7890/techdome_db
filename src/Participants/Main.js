@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Table from "./Table/Table";
-import LoadingBar from "./LoadingBar";
+import LoadingBar from "../LoadingBar/LoadingBar";
 import SideNav from "../Events/SideNav";
 import { getAll } from "../api/participants";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -27,10 +27,18 @@ const Main = () => {
     nameSort: "",
   });
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, error, isError, } = useQuery(
     ["participants", filters],
     async () => await getAll(filters)
   );
+
+  if (isError) {
+    return (
+      <div>
+        <h1>{error}</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex min-h-screen bg-white">

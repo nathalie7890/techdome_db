@@ -37,7 +37,7 @@ export default function EditEvent({
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
       return;
     }
@@ -51,7 +51,7 @@ export default function EditEvent({
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: "light",
     });
   });
 

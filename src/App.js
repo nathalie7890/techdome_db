@@ -1,10 +1,8 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Home from "./Home";
 import Main from "./Participants/Main";
 import EventList from "./Events/EventList";
-
-import Login2 from "./Landing/Landing2";
+import Login from "./Landing/Login";
 import Reset from "./User/Reset";
 import ResetPass from "./User/ResetPass";
 import Contacts from "./Contacts/Contacts";
@@ -19,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <div className="min-h-[100vh] bg-blue-200 text-black">
+    <div className="min-h-[100vh] bg-blue-800 text-black">
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -32,11 +30,12 @@ function App() {
         pauseOnHover
         theme="light"
       />
+
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route element={<GuestRoutes />}>
-          <Route path="/login" element={<Login2 />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/resetpass/:token" element={<ResetPass />} />
         </Route>

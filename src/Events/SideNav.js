@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { FiUsers, FiLogOut, FiUser } from "react-icons/fi";
+import { FiLogOut, FiUser } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
 import { CgUserList } from "react-icons/cg";
 import { checkAuth } from "../api/users";
 
 export default function SideNav({ editOpen }) {
   const { user, isAdmin } = checkAuth();
+
   const initials = (name) => {
     name = name.split(" ");
     if (name.length < 2) return name[0].slice(0, 2);
@@ -14,6 +15,7 @@ export default function SideNav({ editOpen }) {
   };
 
   const navigate = useNavigate();
+
   const logoutHandler = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -26,9 +28,6 @@ export default function SideNav({ editOpen }) {
   const activeStyle = `bg-white/20 flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
     !editOpen.visible ? "justify-start " : "justify-center"
   } `;
-
-  const adminInactiveStyle = inactiveStyle + `${isAdmin ? "flex" : "hidden"}`;
-  const adminActiveStyle = activeStyle + `${isAdmin ? "flex" : "hidden"}`;
 
   return (
     <div

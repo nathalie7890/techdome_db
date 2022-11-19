@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { login as loginFn } from "../api/users";
+import { styles } from "./Login.styles";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import logo from "../public/images/techdome_logo.png";
 
 export default function Login() {
   const [hidePw, setHidePw] = useState(true);
+  const [loginFail, setLoginFail] = useState(false);
   const [user, setUser] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -14,62 +18,84 @@ export default function Login() {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    await loginFn(user);
+    const res = await loginFn(user);
+
+    if (res.status === 400 || res.status === 228) {
+      setLoginFail(true);
+      return;
+    }
     navigate("/events");
   };
 
   const loginOnChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    setLoginFail(false);
   };
 
   return (
-    <div className="flex justify-end w-full h-screen bg-center bg-cover bg-homepage">
-      <div className="flex flex-col items-center justify-center w-1/2 px-48 w-100">
-        <div className="flex flex-col items-center justify-center w-full space-y-8">
-          <form className="w-full space-y-8" onSubmit={loginSubmit}>
-            <h1 className="text-2xl text-left text-white uppercase">login</h1>
+    <div className={styles.mainContainer}>
+      <div className={styles.logoContainer}>
+        <img src={logo} alt="" className={styles.logoImg} />
+        <h1 className={styles.logoCaption}>Tech Dome Penang</h1>
+      </div>
+      <div className={styles.leftContainer}>
+        <div className={styles.formContainer}>
+          <div className={styles.captionContainer}>
+            <h1 className={styles.title}>Dashboard</h1>
+            <h1 className={styles.subTitle}>
+              <span className={styles.subtitleSpan}>Hello</span>, login to your
+              account.
+            </h1>
+          </div>
+          <form onSubmit={loginSubmit} className={styles.form}>
             <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={user.email}
-              className="w-full text-white bg-transparent border-0 border-b border-white placeholder:text-gray-300 focus:ring-0 focus:border-b-white"
+              type="text"
+              name="username"
+              value={user.username}
               onChange={loginOnChange}
+              className={styles.emailInput}
+              placeholder="Email"
+              required
             />
-            <div className="flex w-full border-0 border-b border-white">
+            <div className={styles.pwInputContainer}>
               <input
                 type={hidePw ? "password" : "text"}
                 placeholder="Password"
                 name="password"
                 value={user.password}
-                className="w-4/5 text-white bg-transparent border-none rounded-full focus:border-none focus:ring-0 placeholder:text-gray-300"
                 onChange={loginOnChange}
+                className={styles.pwInput}
+                required
               />
-              <div className="flex flex-col items-center justify-center w-1/5">
+              <div className={styles.eyeContainer}>
                 {hidePw ? (
                   <FiEye
-                    className="text-xl text-gray-300 hover:text-white hover:cursor-pointer"
+                    className={styles.eyeOpen}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 ) : (
                   <FiEyeOff
-                    className="text-xl text-gray-300 hover:text-white hover:cursor-pointer"
+                    className={styles.eyeClose}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 )}
               </div>
             </div>
-            <button
-              className="w-full py-2.5 rounded-full bg-transparent border-white border text-white"
-              type="submit"
-            >
+            {loginFail ? (
+              <div className={styles.loginErrorContainer}>
+                <AiOutlineExclamationCircle className="inline" />
+                <h1>Did you enter the correct username and password?</h1>
+              </div>
+            ) : null}
+            <button type="submit" className={styles.submitBtn}>
               Login
             </button>
           </form>
-          <Link to="/register" className="my-6 text-gray-400 text-start">
-            Don't have an account? Click here to{" "}
-            <span className="text-yellow-300">Register.</span>
-          </Link>
+          <div className="my-6">
+            <Link to="/reset" className={styles.forgotPw}>
+              Forgot Password?
+            </Link>
+          </div>
         </div>
       </div>
     </div>

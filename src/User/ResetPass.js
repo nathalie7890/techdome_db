@@ -15,6 +15,7 @@ export default function ResetPass() {
     password: "",
   });
   const [hidePw, setHidePw] = useState(true);
+  
   const { token } = useParams();
 
   useEffect(() => {

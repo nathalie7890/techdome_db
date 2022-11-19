@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { CSVLink } from "react-csv";
-import Add from "../AddParticipant";
 import Filter from "../Filter/Filter";
 import DeleteMany from "./DeleteMany";
 import { checkAuth } from "../../api/users";
 import EditParticipant from "../EditParticipant";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
+import { IoAdd } from "react-icons/io5";
 import { BsDownload } from "react-icons/bs";
+import AddPart from "../AddPart";
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const { isAdmin } = checkAuth();
   const [selected, setSelected] = useState([]);
+  const [addPart, setAddPart] = useState({
+    visible: false,
+    name: event,
+  });
   const [fileName, setFileName] = useState("participants.csv");
 
   const [deleteMany, setDeleteMany] = useState({
@@ -32,9 +37,6 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
     address: "",
   });
 
-  const [add, setAdd] = useState({
-    visible: false,
-  });
 
   const handleChange = (e, data) => {
     const { name, checked } = e.target;
@@ -82,7 +84,13 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
               {selected.length > 0 ? `${selected.length} selected` : null}
             </h1>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 mb-8">
+            <button
+              className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+              onClick={() => setAddPart({ ...addPart, visible: true })}
+            >
+              <IoAdd className="text-lg font-bold text-white" />
+            </button>
             {selected.length > 0 ? (
               <>
                 <CSVLink
@@ -246,7 +254,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           setEdit={setEdit}
         />
       ) : null}
-      <Add add={add} setAdd={setAdd} edit={edit} setEdit={setEdit} />
+      <AddPart addPart={addPart} setAddPart={setAddPart} />
     </div>
   );
 };

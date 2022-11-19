@@ -31,14 +31,14 @@ export default function Reset() {
         <img src={logo} alt="" className="w-8 h-8 animate-pulse" />
         <h1 className="text-lg text-blue-200 uppercase">Tech Dome Penang</h1>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen lg:w-1/2">
-        <div className="px-6 py-16 shadow-xl md:px-8 xl:px-12 lg:w-2/3 rounded-xl h-fit bg-black/40 shadow-black/50">
-          <div className="mb-16 space-y-4">
+      <div className="flex flex-col items-center justify-center h-screen px-8 lg:w-1/2 lg:px-0">
+        <div className="w-full px-6 py-6 shadow-xl md:py-16 sm:w-1/2 md:px-8 xl:px-12 lg:w-2/3 rounded-xl h-fit bg-black/40 shadow-black/50">
+          <div className="mb-10 lg:mb-16 sm:space-y-4">
             <h1 className="text-4xl font-bold text-yellow-200 md:text-5xl xl:text-6xl">
               Forgot Password?
             </h1>
 
-            <h1 className="p-1 text-xl text-blue-100">
+            <h1 className="p-1 mb-10 text-lg text-blue-100 sm:text-xl xl:text-3xl">
               Enter your registered email to receive password reset instruction.
             </h1>
           </div>
@@ -73,7 +73,7 @@ export default function Reset() {
             {!sent ? (
               <button
                 type="submit"
-                className={`mt-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 py-2.5 text-white ${
+                className={`py-2 mt-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 sm:py-2.5 text-white ${
                   isLoading ? "pointer-events-none" : ""
                 }`}
               >
