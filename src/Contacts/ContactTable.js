@@ -4,6 +4,7 @@ import ContactFilter from "./ContactFilter";
 import ContactSearch from "./ContactSearch";
 import AddContact from "./AddContact";
 import DeleteMany from "./DeleteMany";
+import { checkAuth } from "../api/users";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
@@ -15,6 +16,7 @@ export default function ContactTable({
   filters,
   setFilters,
 }) {
+  const { user } = checkAuth();
   const [selected, setSelected] = useState([]);
   const [addUser, setAddUser] = useState(false);
   const [deleteMany, setDeleteMany] = useState({ visible: false });
@@ -24,12 +26,14 @@ export default function ContactTable({
     if (checked) {
       if (name === "allSelect") {
         setSelected([]);
-        data.map((event) =>
-          setSelected((selected) => [
-            ...selected,
-            { id: event._id, parts: event.parts, name: event.name },
-          ])
-        );
+        data
+          .filter((person) => person._id !== user.data._id)
+          .map((event) =>
+            setSelected((selected) => [
+              ...selected,
+              { id: event._id, parts: event.parts, name: event.name },
+            ])
+          );
       } else {
         setSelected([
           ...selected,
@@ -58,7 +62,7 @@ export default function ContactTable({
           <ContactSearch filters={filters} setFilters={setFilters} />
           <div className="flex items-end justify-between">
             <ContactFilter filters={filters} setFilters={setFilters} />
-            <div className="flex space-x-2">
+            <div className="hidden space-x-2 md:flex">
               <button
                 onClick={() => setAddUser(true)}
                 className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
@@ -77,19 +81,25 @@ export default function ContactTable({
             </div>
           </div>
         </div>
+        <div className="flex mb-2">
+          <h1>Showing {data.length} result</h1>
+          <h1 className="mx-4 italic font-medium text-blue-600">
+            {selected.length > 0 ? `${selected.length} selected` : null}
+          </h1>
+        </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="hidden px-6 py-3 md:block">
                   <input
                     type="checkbox"
                     name="allSelect"
-                    checked={selected.length === data.length}
+                    checked={selected.length === data.length - 1}
                     onChange={(e) => selectOnChange(e, data)}
                   />
                 </th>
-                <th scope="col" className="flex px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -104,61 +114,87 @@ export default function ContactTable({
                 <th scope="col" className="px-6 py-3">
                   Last Login
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="hidden px-6 py-3 md:block">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data.map((user, i) => {
-                return (
-                  <tr
-                    key={user._id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        name="singleSelect"
-                        checked={selected.some((e) => e?.id === user._id)}
-                        onChange={(e) => selectOnChange(e, user)}
-                      />
-                    </td>
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {user.name}
-                    </th>
-                    <td className="px-6 py-4">{user.username}</td>
-                    <td className="px-6 py-4">{user.email}</td>
-                    <td
-                      className={`px-6 py-4 font-semibold ${
-                        user.isAdmin ? "text-blue-500 " : "text-green-400"
-                      }`}
-                    >
-                      {user.isAdmin ? "Admin" : "Non-Admin"}
-                    </td>
-                    <td className="px-6 py-4">
-                      {user.date.toString().slice(0, 10)}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        className="font-medium text-blue-600 hover:underline"
-                        onClick={() => {
-                          setEditOpen({ visible: true, name: user.name });
-                          setRoleChange({
-                            id: user._id,
-                            role: user.isAdmin,
-                          });
-                        }}
+              {data
+                .filter((person) => person._id === user.data._id)
+                .map((person) => {
+                  return (
+                    <tr className="border-b bg-sky-100/70" key={person._id}>
+                      <td className="px-6 py-4"></td>
+                      <th
+                        scope="row"lo
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       >
-                        <AiOutlineEdit className="text-gray-500" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+                        {person.name}
+                      </th>
+                      <td className="px-6 py-4">{person.username}</td>
+                      <td className="px-6 py-4">{person.email}</td>
+                      <td className="px-6 py-4 font-semibold text-blue-500">
+                        {person.isAdmin ? "Admin" : "Non-Admin"}
+                      </td>
+                      <td className="px-6 py-4">
+                        {person.date.toString().slice(0, 10)}
+                      </td>
+                      <td className="px-6 py-4"></td>
+                    </tr>
+                  );
+                })}
+              {data
+                .filter((person) => person._id !== user.data._id)
+                .map((person) => {
+                  return (
+                    <tr
+                      key={person._id}
+                      className="bg-white border-b hover:bg-gray-50"
+                    >
+                      <td className="hidden px-6 py-4 md:block">
+                        <input
+                          type="checkbox"
+                          name="singleSelect"
+                          checked={selected.some((e) => e?.id === person._id)}
+                          onChange={(e) => selectOnChange(e, person)}
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {person.name}
+                      </th>
+                      <td className="px-6 py-4">{person.username}</td>
+                      <td className="px-6 py-4">{person.email}</td>
+                      <td
+                        className={`px-6 py-4 font-semibold ${
+                          person.isAdmin ? "text-blue-500 " : "text-green-400"
+                        }`}
+                      >
+                        {person.isAdmin ? "Admin" : "Non-Admin"}
+                      </td>
+                      <td className="px-6 py-4">
+                        {person.date.toString().slice(0, 10)}
+                      </td>
+                      <td className="hidden px-6 py-4 text-right md:block">
+                        <button
+                          className="font-medium text-blue-600 hover:underline"
+                          onClick={() => {
+                            setEditOpen({ visible: true, name: person.name });
+                            setRoleChange({
+                              id: person._id,
+                              role: person.isAdmin,
+                            });
+                          }}
+                        >
+                          <AiOutlineEdit className="text-gray-500" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

@@ -1,17 +1,16 @@
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Main from "./Participants/Main";
-import EventList from "./Events/EventList";
 import Login from "./Landing/Login";
 import Reset from "./User/Reset";
 import ResetPass from "./User/ResetPass";
+import EventList from "./Events/EventList";
+import Main from "./Participants/Main";
 import Contacts from "./Contacts/Contacts";
 import Profile from "./User/Profile";
 import NotFound from "./404";
 import GuestRoutes from "./Routes/GuestRoutes";
 import UserRoutes from "./Routes/UserRoutes";
 import AdminRoutes from "./Routes/AdminRoutes";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

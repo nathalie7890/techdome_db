@@ -1,9 +1,10 @@
 import jwt_decode from "jwt-decode";
 import moment from "moment/moment";
+import { useQuery } from "react-query";
 
 export const register = async (user) => {
   try {
-    const res = await fetch(`http://localhost:5000/users/register`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/register`, {
       method: "POST",
       headers: {
         "x-auth-token": localStorage.getItem("token"),
@@ -21,7 +22,7 @@ export const register = async (user) => {
 export const login = async (user) => {
   try {
     localStorage.removeItem("token");
-    const res = await fetch(`http://localhost:5000/users/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,17 +61,21 @@ export const checkAuth = () => {
 
 export const getUser = async () => {
   try {
-    const res = await fetch(`http://localhost:5000/users/single`, {
-      headers: {
-        "x-auth-token": localStorage.getItem("token"),
-      },
-    });
+    const user = localStorage.getItem("token")
+      ? jwt_decode(localStorage.getItem("token"))
+      : null;
+
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URI}/${user.data._id}`,
+      {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
     const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw new Error(data.message);
-    }
+    return data;
   } catch (err) {
     throw new Error(err.message);
   }
@@ -78,7 +83,7 @@ export const getUser = async () => {
 
 export const getUsers = async (filters) => {
   try {
-    const res = await fetch(`http://localhost:5000/users/`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +105,7 @@ export const getUsers = async (filters) => {
 
 export const changeRole = async (id, role) => {
   try {
-    const res = await fetch(`http://localhost:5000/users/role`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/role`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +127,7 @@ export const changeRole = async (id, role) => {
 export const deleteOne = async (id) => {
   console.log(id);
   try {
-    const res = await fetch(`http://localhost:5000/users/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": localStorage.getItem("token"),
@@ -144,7 +149,7 @@ export const deleteMany = async (users) => {
       id.push(i.id);
     }
 
-    const res = await fetch(`http://localhost:5000/users`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -154,8 +159,7 @@ export const deleteMany = async (users) => {
     });
 
     const data = await res.json();
-    if (res.ok) return data;
-    else return data.msg;
+    return data;
   } catch (e) {
     throw new Error(e);
   }
@@ -163,7 +167,7 @@ export const deleteMany = async (users) => {
 
 export const updateUser = async (user) => {
   try {
-    const res = await fetch("http://localhost:5000/users/edit", {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/edit`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -173,9 +177,7 @@ export const updateUser = async (user) => {
     });
 
     const data = await res.json();
-
-    if (res.ok) return data;
-    else return data.message;
+    return data;
   } catch (e) {
     throw new Error(e);
   }
@@ -183,7 +185,7 @@ export const updateUser = async (user) => {
 
 export const updatePassword = async (pass) => {
   try {
-    const res = await fetch("http://localhost:5000/users/pass", {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/pass`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -193,8 +195,7 @@ export const updatePassword = async (pass) => {
     });
 
     const data = await res.json();
-    if (res.ok) return data;
-    else return data.message;
+    return data;
   } catch (e) {
     throw new Error();
   }
@@ -202,7 +203,9 @@ export const updatePassword = async (pass) => {
 
 export const getWithToken = async (token) => {
   try {
-    const res = await fetch(`http://localhost:5000/users/token/${token}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URI}/users/token/${token}`
+    );
     const data = await res.json();
     return data;
   } catch (e) {
@@ -212,17 +215,20 @@ export const getWithToken = async (token) => {
 
 export const sendResetEmail = async (email) => {
   try {
-    const findUser = await fetch("http://localhost:5000/users/email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
+    const findUser = await fetch(
+      `${process.env.REACT_APP_API_URI}/users/email`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
 
     if (findUser.status === 404) return 404;
 
-    const res = await fetch("http://localhost:5000/users/reset", {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/reset`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -242,7 +248,7 @@ export const sendResetEmail = async (email) => {
 export const resetPassword = async (id, password) => {
   try {
     const res = await fetch(
-      `http://localhost:5000/users/resetpass/636e4a4f5863ebbd3b549583`,
+      `${process.env.REACT_APP_API_URI}/users/resetpass/${id}`,
       {
         method: "PUT",
         headers: {

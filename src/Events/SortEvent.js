@@ -22,7 +22,7 @@ export default function SortEvent({ filters, setFilters }) {
     <div className="flex space-x-4">
       <button
         onClick={nameSort}
-        className="font-semibold text-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-400 hover:text-white "
+        className="font-semibold text-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-400 hover:text-white"
       >
         <span className="flex items-center justify-center gap-1 px-6 py-1">
           Event

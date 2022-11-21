@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import EventTable from "./EventTable";
-import LoadingBar from "../LoadingBar/LoadingBar";
+import LoadingBar from "../Partials/LoadingBar";
 import { getEvents } from "../api/events";
 import SideNav from "./SideNav";
+import BottomNav from "../Partials/BottomNav";
 
 export default function EventList() {
   const [filters, setFilters] = useState({
@@ -34,36 +35,28 @@ export default function EventList() {
     );
   } else
     return (
-      <div className="relative flex w-full min-h-screen">
-        <div
-          className={`${
-            editOpen.visible ? "w-16" : "w-3/12"
-          } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0`}
-        >
-          <SideNav editOpen={editOpen} />
-        </div>
-        <div className="w-full bg-white">
-          <EventTable
-            data={data}
+      <div className="relative flex flex-col">
+        <div className="relative flex w-full min-h-screen bg-cyan-400">
+          <div
+            className={`${
+              editOpen.visible ? "w-16" : "w-3/12"
+            } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0 hidden md:block`}
+          >
+            <SideNav editOpen={editOpen} />
+          </div>
+          <div className="w-full bg-white">
+            <EventTable
+              data={data}
             filters={filters}
-            setFilters={setFilters}
-            editOpen={editOpen}
-            setEditOpen={setEditOpen}
-          />
+              setFilters={setFilters}
+              editOpen={editOpen}
+              setEditOpen={setEditOpen}
+            />
+          </div>
         </div>
-      
+        <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
+          <BottomNav />
+        </div>
       </div>
     );
 }
-
-
-/*
- <div
-        className={`${
-          editOpen.visible ? "w-16" : "w-3/12"
-        } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0`}
-      >
-        <SideNav editOpen={editOpen} />
-      </div>
-
-*/

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import DeleteOne from "./DeleteOne";
 import { editParticipant } from "../api/participants";
+import { toast } from "react-toastify";
 
 export default function EditParticipant({ edit, editOnChange, setEdit }) {
   const { name, schoolOrg, age, ic, contact, email, address } = edit;
@@ -25,8 +26,23 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
     }
   );
 
-  const editSubmit = (data, id) => {
-    editMutation.mutate({ data, id });
+  const editSubmit = async (data, id) => {
+    // editMutation.mutate({ data, id });
+    const res = await editParticipant(data, id);
+    if (res.status === 200) {
+      toast.success(`${res.message}`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    await queryClient.invalidateQueries("participants");
+    setEdit({ visible: false });
   };
 
   return (
@@ -56,7 +72,6 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
             );
           }}
         >
-          
           <div className="space-y-2.5">
             <div className="flex flex-col">
               <label className="text-sm text-white">Name</label>

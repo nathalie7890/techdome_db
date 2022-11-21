@@ -75,10 +75,10 @@ export default function EventTable({
         <h1 className="my-6 text-5xl font-semibold text-blue-400">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
-          <div className="flex items-end justify-between">
+          <div className="flex items-end justify-center sm:justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
 
-            <div className="space-x-4">
+            <div className="hidden space-x-4 md:block">
               {isAdmin ? (
                 <button
                   className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
@@ -128,20 +128,16 @@ export default function EventTable({
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
-                 
-                    <th scope="col" className="px-6 py-3">
-                      <input
-                        type="checkbox"
-                        name="allSelect"
-                        checked={selected.length === data.length}
-                        onChange={(e) => selectOnChange(e, data)}
-                      />
-                    </th>
-                 
-                  <th
-                    scope="col"
-                    className="flex px-6 py-3 hover:text-blue-500"
-                  >
+                  <th scope="col" className="hidden px-6 py-3 sm:block">
+                    <input
+                      type="checkbox"
+                      name="allSelect"
+                      checked={selected.length === data.length}
+                      onChange={(e) => selectOnChange(e, data)}
+                    />
+                  </th>
+
+                  <th scope="col" className="px-6 py-3 hover:text-blue-500">
                     Event
                   </th>
                   <th scope="col" className="px-6 py-3">
@@ -157,7 +153,10 @@ export default function EventTable({
                     Participants
                   </th>
                   {isAdmin ? (
-                    <th scope="col" className="px-6 py-3 text-right">
+                    <th
+                      scope="col"
+                      className="hidden px-6 py-3 text-right sm:block"
+                    >
                       Edit
                     </th>
                   ) : null}
@@ -170,16 +169,15 @@ export default function EventTable({
                       className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                       key={event._id}
                     >
-                     
-                        <td className="px-6 py-4">
-                          <input
-                            type="checkbox"
-                            name="singleSelect"
-                            checked={selected.some((e) => e?.id === event._id)}
-                            onChange={(e) => selectOnChange(e, event)}
-                          />
-                        </td>
-                    
+                      <td className="hidden px-6 py-4 sm:block">
+                        <input
+                          type="checkbox"
+                          name="singleSelect"
+                          checked={selected.some((e) => e?.id === event._id)}
+                          onChange={(e) => selectOnChange(e, event)}
+                        />
+                      </td>
+
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -198,7 +196,7 @@ export default function EventTable({
                       <td className="px-6 py-4">{event.uploadBy}</td>
                       <td className="px-6 py-4">{event.parts.length}</td>
                       {isAdmin ? (
-                        <td className="px-6 py-4 text-right">
+                        <td className="hidden px-6 py-4 text-right sm:block">
                           <button
                             className="font-medium text-blue-600 hover:underline"
                             onClick={() => {

@@ -31,7 +31,7 @@ export default function EditContact({
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         });
         setEditOpen(false);
       },

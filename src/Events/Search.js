@@ -18,7 +18,7 @@ export default function Search({ filters, setFilters }) {
   };
 
   return (
-    <div className="flex justify-end w-full mb-2 space-x-2">
+    <div className="flex justify-center w-full mb-2 space-x-2 sm:justify-end">
       <form
         onSubmit={searchSubmit}
         className="flex bg-white border rounded-full border-darkBlue"

@@ -37,7 +37,6 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
     address: "",
   });
 
-
   const handleChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -71,11 +70,13 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   };
 
   return (
-    <div className="flex flex-row w-[calc(100vw-80px)]">
+    <div className="flex md:w-[calc(100vw-80px)] w-[calc(100vw-1px)]">
       <div
-        className={`px-12 py-12 bg-white ${edit.visible ? "w-3/4" : "w-full"}`}
+        className={`px-8 md:px-12 py-12 bg-white ${
+          edit.visible ? "w-3/4" : "w-full"
+        }`}
       >
-        <h1 className="pageTitle">{event}</h1>
+        <h1 className="w-full pageTitle">{event}</h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
         <div className="flex items-end justify-between pt-6 pb-2 bg-white">
           <div className="flex">
@@ -86,7 +87,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           </div>
           <div className="flex gap-4 mb-8">
             <button
-              className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+              className="md:block hidden px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
               onClick={() => setAddPart({ ...addPart, visible: true })}
             >
               <IoAdd className="text-lg font-bold text-white" />

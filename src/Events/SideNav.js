@@ -33,7 +33,7 @@ export default function SideNav({ editOpen }) {
     <div
       className={`w-full ${
         !editOpen.visible ? "p-4" : "p-2"
-      } sticky top-0 right-0`}
+      } sticky top-0 left-0`}
     >
       {!editOpen.visible && isAdmin ? (
         <h1 className="flex justify-end w-full text-sm font-bold text-blue-200">

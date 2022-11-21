@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Modal, Spinner } from "flowbite-react";
 import { uploadEvent } from "../api/events";
 import { useDropzone } from "react-dropzone";
@@ -187,29 +188,34 @@ export default function UploadEvent({ upload, setUpload }) {
                   <span>Select one file to upload.</span>
                 </div>
               ) : null}
-              <div className="flex justify-end w-full space-x-2">
-                <button
-                  type="submit"
-                  className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
-                    isLoading ? "pointer-events-none" : ""
-                  }`}
-                >
-                  {isLoading ? (
-                    <Spinner
-                      color="warning"
-                      aria-label="Warning spinner example"
-                    />
-                  ) : (
-                    "Upload"
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-6 py-1.5 border border-blue-400 rounded-lg text-blue-400 hover:bg-red-400 hover:text-white hover:border-red-400"
-                >
-                  Cancel
-                </button>
+              <div className="flex items-end justify-between w-full">
+                <Link to="/sample.csv" target="_blank" download className="text-blue-500 underline">
+                  Download Sample CSV
+                </Link>
+                <div className="flex space-x-2">
+                  <button
+                    type="submit"
+                    className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
+                      isLoading ? "pointer-events-none" : ""
+                    }`}
+                  >
+                    {isLoading ? (
+                      <Spinner
+                        color="warning"
+                        aria-label="Warning spinner example"
+                      />
+                    ) : (
+                      "Upload"
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="px-6 py-1.5 border border-blue-400 rounded-lg text-blue-400 hover:bg-red-400 hover:text-white hover:border-red-400"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </form>
           </div>

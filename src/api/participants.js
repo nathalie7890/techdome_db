@@ -74,8 +74,8 @@ export const editParticipant = async (participant, id) => {
       }
     );
 
-    const data = await res.json();
-    return data;
+    const data = res.json();
+    if (res.ok) return data;
   } catch (e) {
     throw new Error(e);
   }

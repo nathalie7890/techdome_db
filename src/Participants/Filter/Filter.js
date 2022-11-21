@@ -52,29 +52,8 @@ const Filter = ({ setFilters, filters }) => {
     }
   };
 
-  // const sortOnChange = (e) => {
-  //   const { name, value } = e.target;
-  //   if (name === "ageSort") {
-  //     if (value === "asc") {
-  //       setFilters({
-  //         ...filters,
-  //         eventAlpha: "",
-  //         eventYear: "",
-  //         ageSort: "asc",
-  //       });
-  //     } else if (value === "dsc") {
-  //       setFilters({
-  //         ...filters,
-  //         eventAlpha: "",
-  //         eventYear: "",
-  //         ageSort: "dsc",
-  //       });
-  //     }
-  //   }
-  // };
-
   return (
-    <div className="pt-8 mt-8 space-y-2 bg-white rounded-t-xl">
+    <div className="pt-8 mt-8 space-y-2 rounded-t-xl">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -89,20 +68,22 @@ const Filter = ({ setFilters, filters }) => {
           });
         }}
       >
-        <div className="flex w-5/6 mb-4 space-x-1">
+        <div className="flex flex-col gap-2 mb-4 md:flex-row md:flex-wrap">
           <input
             type="text"
             name="schoolOrg"
             value={schoolOrg}
             onChange={onChangeHandler}
             placeholder="School/Organisation"
-            className="w-1/6 capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
+            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
           />
 
-          <div className="flex w-1/6 text-gray-500 border border-gray-300 rounded-full">
-            <div className="flex items-center justify-center w-1/2 text-sm font-semibold text-center rounded-l-full">
+          <div className="flex text-gray-500 border border-gray-300 rounded-full md:w-1/6">
+            <div className="flex items-center px-4 rounded-l-full md:w-1/2 md:text-center">
               <h1 className="">Age</h1>
-              <MdKeyboardArrowRight className="flex items-center justify-center text-lg text-center" />
+              <div className="flex flex-col items-center justify-center h-full">
+                <MdKeyboardArrowRight className="text-lg text-center" />
+              </div>
             </div>
             <input
               type="number"
@@ -113,10 +94,12 @@ const Filter = ({ setFilters, filters }) => {
               className="w-1/2 capitalize border-0 rounded-full focus:border-0 focus:ring-0"
             />
           </div>
-          <div className="flex w-1/6 text-gray-500 border border-gray-300 rounded-full">
-            <div className="flex items-center justify-center w-1/2 text-sm font-semibold text-center rounded-l-full">
+          <div className="flex text-gray-500 border border-gray-300 rounded-full md:w-1/6">
+            <div className="flex items-center px-4 rounded-l-full md:text-center md:w-1/2">
               <h1 className="">Age</h1>
-              <MdKeyboardArrowLeft className="flex items-center justify-center text-lg text-center" />
+              <div className="flex flex-col items-center justify-center h-full">
+                <MdKeyboardArrowLeft className="text-lg text-center" />
+              </div>
             </div>
             <input
               type="number"
@@ -131,7 +114,7 @@ const Filter = ({ setFilters, filters }) => {
           <input
             type="text"
             name="name"
-            className="w-1/6 border border-gray-300 rounded-full apitalize focus:border-blue-300 focus:ring-blue-300"
+            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
             value={name}
             placeholder="Name"
             onChange={onChangeHandler}
@@ -140,76 +123,30 @@ const Filter = ({ setFilters, filters }) => {
           <input
             type="text"
             name="ic"
-            className="w-1/6 border border-gray-300 rounded-full apitalize focus:border-blue-300 focus:ring-blue-300"
+            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
             value={ic}
             placeholder="IC Number"
             onChange={onChangeHandler}
           />
 
-          <button
-            type="submit"
-            className="px-3.5 py-3.5 text-white bg-purple-500 border rounded-full hover:shadow-md hover:bg-purple-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
-          >
-            <BsSearch />
-          </button>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="px-3.5 py-3.5 text-white bg-blue-500 border rounded-full hover:shadow-md hover:bg-blue-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
-          >
-            <IoIosRefresh />
-          </button>
-        </div>
-
-        {/* <div className="my-4">
-          <div className="flex space-x-1 w-6/6">
-            <div className="flex flex-col w-1/6">
-              <label className="text-sm text-zinc-600">
-                Sort Event Alpabetically
-              </label>
-              <select
-                name="eventAlpha"
-                value={eventAlpha}
-                onChange={sortOnChange}
-                className="bg-gray-100 border-gray-600 filterInput"
-              >
-                <option value="">Select</option>
-                <option value="asc">A-Z</option>
-                <option value="dsc">Z-A</option>
-              </select>
-            </div>
-            <div className="flex flex-col w-1/6">
-              <label className="text-sm text-zinc-600">
-                Sort Event By Year
-              </label>
-              <select
-                name="eventYear"
-                value={eventYear}
-                onChange={sortOnChange}
-                className="bg-gray-100 border-gray-600 filterInput"
-              >
-                <option value="">Select</option>
-                <option value="asc">Latest</option>
-                <option value="dsc">Oldest</option>
-              </select>
-            </div>
-            <div className="flex flex-col w-1/6">
-              <label className="text-sm text-zinc-600">
-                Sort Participant By Age
-              </label>
-              <select
-                name="ageSort"
-                value={ageSort}
-                onChange={sortOnChange}
-                className="bg-gray-100 border-gray-600 filterInput"
-              >
-                <option value="">Select</option>
-                <option value="asc">Youngest</option>
-                <option value="dsc">Oldest</option>
-              </select>
-            </div>
+          <div className="flex space-x-2">
+            <button
+              type="submit"
+              className="lg:px-3.5 px-8 lg:py-3.5 py-2 text-white bg-purple-500 border rounded-full hover:shadow-md hover:bg-purple-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
+            >
+              <span className="lg:hidden">Search</span>
+              <BsSearch className="hidden lg:block" />
+            </button>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="lg:px-3.5 px-8  lg:py-3.5 py-2 text-white bg-blue-500 border rounded-full hover:shadow-md hover:bg-blue-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
+            >
+              <span className="lg:hidden">Reset</span>
+              <IoIosRefresh className="hidden lg:block" />
+            </button>
           </div>
-        </div> */}
+        </div>
 
         <div className="space-x-2">
           <button
@@ -223,7 +160,7 @@ const Filter = ({ setFilters, filters }) => {
           </button>
           <button
             onClick={sortAge}
-            className="font-semibold text-white bg-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-500 "
+            className="font-semibold text-white bg-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-500"
           >
             <span className="flex items-center justify-center gap-1 px-6 py-1">
               Age
@@ -232,7 +169,6 @@ const Filter = ({ setFilters, filters }) => {
           </button>
         </div>
       </form>
-      <div></div>
     </div>
   );
 };

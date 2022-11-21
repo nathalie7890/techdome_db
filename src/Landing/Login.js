@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login as loginFn } from "../api/users";
 import { styles } from "./Login.styles";
+import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import logo from "../public/images/techdome_logo.png";
@@ -22,9 +23,19 @@ export default function Login() {
 
     if (res.status === 400 || res.status === 228) {
       setLoginFail(true);
-      return;
+    } else {
+      toast.success("Welcome back!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      navigate("/events");
     }
-    navigate("/events");
   };
 
   const loginOnChange = (e) => {
@@ -54,7 +65,7 @@ export default function Login() {
               value={user.username}
               onChange={loginOnChange}
               className={styles.emailInput}
-              placeholder="Email"
+              placeholder="Username"
               required
             />
             <div className={styles.pwInputContainer}>

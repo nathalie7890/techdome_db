@@ -3,7 +3,8 @@ import { useQuery } from "react-query";
 import { getUsers } from "../api/users";
 import ContactTable from "./ContactTable";
 import SideNav from "../Events/SideNav";
-import LoadingBar from "../LoadingBar/LoadingBar";
+import BottomNav from "../Partials/BottomNav";
+import LoadingBar from "../Partials/LoadingBar";
 
 export default function Contacts() {
   const [filters, setFilters] = useState({
@@ -36,21 +37,26 @@ export default function Contacts() {
     );
   } else {
     return (
-      <div className="flex w-full min-h-screen">
-        <div
-          className={`${
-            editOpen.visible ? "w-16" : "w-3/12"
-          } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0`}
-        >
-          <SideNav editOpen={editOpen} />
+      <div className="relative flex flex-col">
+        <div className="flex w-full min-h-screen">
+          <div
+            className={`${
+              editOpen.visible ? "w-16" : "w-3/12"
+            } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0 hidden md:block`}
+          >
+            <SideNav editOpen={editOpen} />
+          </div>
+          <ContactTable
+            data={data}
+            editOpen={editOpen}
+            setEditOpen={setEditOpen}
+            filters={filters}
+            setFilters={setFilters}
+          />
         </div>
-        <ContactTable
-          data={data}
-          editOpen={editOpen}
-          setEditOpen={setEditOpen}
-          filters={filters}
-          setFilters={setFilters}
-        />
+        <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
+          <BottomNav />
+        </div>
       </div>
     );
   }
