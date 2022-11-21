@@ -1,6 +1,5 @@
 import jwt_decode from "jwt-decode";
-import moment from "moment/moment";
-import { useQuery } from "react-query";
+import moment from "moment";
 
 export const register = async (user) => {
   try {
@@ -31,7 +30,7 @@ export const login = async (user) => {
     });
 
     const data = await res.json();
-    if (res.ok) {
+    if (res.ok && data.token !== undefined) {
       localStorage.setItem("token", data.token);
       return data;
     }
