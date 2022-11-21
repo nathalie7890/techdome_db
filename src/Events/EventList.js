@@ -21,6 +21,7 @@ export default function EventList() {
     async () => await getEvents(filters)
   );
 
+  if(!isLoading) console.log(data)
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
