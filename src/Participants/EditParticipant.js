@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import DeleteOne from "./DeleteOne";
 import { editParticipant } from "../api/participants";
 import { toast } from "react-toastify";
@@ -14,17 +14,6 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
   });
 
   const queryClient = useQueryClient();
-  const editMutation = useMutation(
-    async ({ data, id }) => {
-      await editParticipant(data, id);
-    },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries("participants");
-        setEdit({ visible: false });
-      },
-    }
-  );
 
   const editSubmit = async (data, id) => {
     // editMutation.mutate({ data, id });
@@ -176,7 +165,7 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
           </div>
         </form>
       </div>
-      <DeleteOne data={deleteOne} setState={setDeleteOne} setEdit={setEdit} />
+      <DeleteOne data={deleteOne} setDeleteOne={setDeleteOne} setEdit={setEdit} />
     </div>
   );
 }

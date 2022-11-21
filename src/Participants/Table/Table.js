@@ -240,12 +240,9 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
 
           <DeleteMany
             data={deleteMany}
-            setState={setDeleteMany}
+            setDeleteMany={setDeleteMany}
             setSelected={setSelected}
           />
-          {/* <EditPart part={edit}
-          editOnChange={editOnChange}
-          setEdit={setEdit} /> */}
         </div>
       </div>
       {edit.visible ? (

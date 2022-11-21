@@ -2,20 +2,35 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteEvent } from "../api/events";
 import { Modal, Button } from "flowbite-react";
-import { SlCheck, SlExclamation } from "react-icons/sl";
+import { Spinner } from "flowbite-react";
+import { toast } from "react-toastify";
+import { SlExclamation } from "react-icons/sl";
 
 export default function DeleteOne({ setEditOpen, deleteOne, setDeleteOne }) {
   const { visible, id, name } = deleteOne;
-  const [deleted, setDeleted] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const queryClient = useQueryClient();
   const mutation = useMutation(
     async (id) => {
+      setLoading(true);
       await deleteEvent(id);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("events");
-        setDeleted(true);
+        setLoading(false);
+        setDeleteOne({ visible: false });
+        setEditOpen({ visible: false });
+        toast.success("Event deleted.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       },
     }
   );
@@ -34,7 +49,7 @@ export default function DeleteOne({ setEditOpen, deleteOne, setDeleteOne }) {
       <Modal.Header />
       <Modal.Body>
         <div className="text-center">
-          {!deleted ? (
+          {!isLoading ? (
             <>
               <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
               <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
@@ -46,19 +61,11 @@ export default function DeleteOne({ setEditOpen, deleteOne, setDeleteOne }) {
               </h1>
             </>
           ) : (
-            <>
-              <SlCheck className="w-full mb-8 text-green-400 text-7xl" />
-              <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                <span className="text-xl font-semibold text-blue-600">
-                  {name}
-                </span>
-                <br /> has been deleted.
-              </h1>
-            </>
+            <Spinner />
           )}
 
           <div className="flex justify-center gap-4 mt-10">
-            {!deleted ? (
+            {!isLoading ? (
               <>
                 <Button color="failure" onClick={() => deleteHandler(id)}>
                   Confirm
@@ -70,18 +77,7 @@ export default function DeleteOne({ setEditOpen, deleteOne, setDeleteOne }) {
                   Cancel
                 </Button>
               </>
-            ) : (
-              <Button
-                color="gray"
-                onClick={() => {
-                  setDeleted(false);
-                  setDeleteOne({ visible: false });
-                  setEditOpen({ visible: false });
-                }}
-              >
-                Close
-              </Button>
-            )}
+            ) : null}
           </div>
         </div>
       </Modal.Body>

@@ -127,7 +127,8 @@ export default function ContactTable({
                     <tr className="border-b bg-sky-100/70" key={person._id}>
                       <td className="px-6 py-4"></td>
                       <th
-                        scope="row"lo
+                        scope="row"
+                        lo
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       >
                         {person.name}
@@ -214,6 +215,7 @@ export default function ContactTable({
           deleteMany={deleteMany}
           setDeleteMany={setDeleteMany}
           data={selected}
+          setSelected={setSelected}
         />
         <AddContact addUser={addUser} setAddUser={setAddUser} />
       </div>

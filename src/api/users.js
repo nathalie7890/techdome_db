@@ -3,7 +3,7 @@ import moment from "moment/moment";
 
 export const register = async (user) => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URI}/register`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URI}/users/register`, {
       method: "POST",
       headers: {
         "x-auth-token": localStorage.getItem("token"),

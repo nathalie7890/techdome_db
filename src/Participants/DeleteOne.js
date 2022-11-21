@@ -1,27 +1,42 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteParticipant } from "../api/participants";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Button, Spinner } from "flowbite-react";
+import { toast } from "react-toastify";
+import { SlExclamation } from "react-icons/sl";
 
-export default function DeleteOne({ data, setState, setEdit }) {
+export default function DeleteOne({ data, setDeleteOne, setEdit }) {
   const { visible, id, name } = data;
-
-  const [deleted, setDeleted] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const queryClient = useQueryClient();
+
   const mutation = useMutation(
     async (id) => {
+      setLoading(true);
       await deleteParticipant(id);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("participants");
-        setDeleted(true);
+        setLoading(false);
+        setDeleteOne({ vsible: false });
+        setEdit({ visible: false });
+        toast.success("Participant deleted.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       },
     }
-    );
-    
-    const deleteHandler = (id) => {
-      mutation.mutate(id);
+  );
+
+  const deleteHandler = (id) => {
+    mutation.mutate(id);
   };
 
   return (
@@ -29,42 +44,36 @@ export default function DeleteOne({ data, setState, setEdit }) {
       show={visible}
       size="md"
       popup={true}
-      onClose={() => setState({ visible: false })}
+      onClose={() => setDeleteOne({ visible: false })}
     >
       <Modal.Header />
       <Modal.Body>
-        <div className="text-center">
-          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-            {!deleted
-              ? `Are you sure you want to delete ${name}?`
-              : `${name} has been deleted.`}
-          </h3>
-          <div className="flex justify-center gap-4">
-            {!deleted ? (
-              <>
-                <Button color="failure" onClick={() => deleteHandler(id)}>
-                  Yes, I'm sure
-                </Button>
-                <Button
-                  color="gray"
-                  onClick={() => setState({ visible: false })}
-                >
-                  No, cancel
-                </Button>
-              </>
-            ) : (
+        {!isLoading ? (
+          <div className="text-center">
+            <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete {name}
+            </h3>
+          </div>
+        ) : (
+         <div className="flex justify-center h-20">
+          <Spinner/>
+         </div>
+        )}
+        <div className="flex justify-center gap-4">
+          {!isLoading ? (
+            <>
+              <Button color="failure" onClick={() => deleteHandler(id)}>
+                Yes, I'm sure
+              </Button>
               <Button
                 color="gray"
-                onClick={() => {
-                  setDeleted(false);
-                  setState({ vsible: false });
-                  setEdit({visible: false})
-                }}
+                onClick={() => setDeleteOne({ visible: false })}
               >
-                Close
+                No, cancel
               </Button>
-            )}
-          </div>
+            </>
+          ) : null}
         </div>
       </Modal.Body>
     </Modal>

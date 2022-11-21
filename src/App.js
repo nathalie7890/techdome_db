@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <div className="min-h-[100vh] bg-blue-800 text-black">
+    <div className="min-h-[100vh] bg-white text-black">
       <ToastContainer
         position="top-center"
         autoClose={2000}

@@ -1,25 +1,46 @@
 import { useState } from "react";
 import { deleteMany as deleteFn } from "../api/users";
 import { useMutation, useQueryClient } from "react-query";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Button, Spinner } from "flowbite-react";
+import { toast } from "react-toastify";
 import { SlExclamation, SlCheck } from "react-icons/sl";
 
-export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
+export default function DeleteMany({
+  deleteMany,
+  setDeleteMany,
+  data,
+  setSelected,
+}) {
   const { visible } = deleteMany;
-  const [deleted, setDeleted] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const queryClient = useQueryClient();
+
   const mutation = useMutation(
     async (data) => {
+      setLoading(true);
       await deleteFn(data);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("users");
-        setDeleted(true);
+        setLoading(false);
+        setSelected([]);
+        setDeleteMany({ visible: false });
+        toast.success("Contact deleted.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       },
     }
   );
 
+  
   const deleteHandler = (data) => {
     mutation.mutate(data);
   };
@@ -34,7 +55,7 @@ export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            {!deleted ? (
+            {!isLoading ? (
               <>
                 <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
                 <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
@@ -46,19 +67,11 @@ export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
                 </h1>
               </>
             ) : (
-              <>
-                <SlCheck className="w-full mb-8 text-green-400 text-7xl" />
-                <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  <span className="text-xl font-semibold text-blue-600">
-                    {data.length} users
-                  </span>
-                  <br /> has been deleted.
-                </h1>
-              </>
+              <Spinner />
             )}
 
             <div className="flex justify-center gap-4 mt-10">
-              {!deleted ? (
+              {!isLoading ? (
                 <>
                   <Button color="failure" onClick={() => deleteHandler(data)}>
                     Confirm
@@ -70,17 +83,7 @@ export default function DeleteMany({ deleteMany, setDeleteMany, data }) {
                     Cancel
                   </Button>
                 </>
-              ) : (
-                <Button
-                  color="gray"
-                  onClick={() => {
-                    setDeleted(false);
-                    setDeleteMany({ visible: false });
-                  }}
-                >
-                  Close
-                </Button>
-              )}
+              ) : null}
             </div>
           </div>
         </Modal.Body>
