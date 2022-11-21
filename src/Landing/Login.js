@@ -3,12 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { login as loginFn } from "../api/users";
 import { styles } from "./Login.styles";
 import { toast } from "react-toastify";
+import { Spinner } from "flowbite-react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import logo from "../public/images/techdome_logo.png";
 
 export default function Login() {
   const [hidePw, setHidePw] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
   const [user, setUser] = useState({
     username: "",
@@ -19,11 +21,13 @@ export default function Login() {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await loginFn(user);
 
     if (res.status === 400 || res.status === 228) {
       setLoginFail(true);
     } else {
+      setLoading(false);
       toast.success("Welcome back!", {
         position: "top-center",
         autoClose: 3000,
@@ -98,8 +102,12 @@ export default function Login() {
                 <h1>Did you enter the correct username and password?</h1>
               </div>
             ) : null}
-            <button type="submit" className={styles.submitBtn}>
-              Login
+            <button type="submit" className={`${styles.submitBtn} + ${isLoading} ? "pointer-events-none" : ""`}>
+              {isLoading ? (
+                <Spinner color="warning" aria-label="Warning spinner example" />
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
           <div className="my-6">
