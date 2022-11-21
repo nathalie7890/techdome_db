@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import moment from "moment";
+import moment from "moment/moment";
 
 export const register = async (user) => {
   try {
