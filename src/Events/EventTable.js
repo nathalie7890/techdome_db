@@ -180,7 +180,7 @@ export default function EventTable({
 
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-normal dark:text-white"
                       >
                         <Link
                           to={"/participants"}
@@ -189,14 +189,14 @@ export default function EventTable({
                           {event.name}
                         </Link>
                       </th>
-                      <td className="px-6 py-4">{event.name.slice(-4)}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 break-all">{event.name.slice(-4)}</td>
+                      <td className="px-6 py-4 break-all">
                         {event.createdAt.slice(0, 10)}
                       </td>
-                      <td className="px-6 py-4">{event.uploadBy}</td>
-                      <td className="px-6 py-4">{event.parts.length}</td>
+                      <td className="px-6 py-4 break-all">{event.uploadBy}</td>
+                      <td className="px-6 py-4 break-all">{event.parts.length}</td>
                       {isAdmin ? (
-                        <td className="hidden px-6 py-4 text-right sm:block">
+                        <td className="hidden px-6 py-4 text-right break-all sm:block">
                           <button
                             className="font-medium text-blue-600 hover:underline"
                             onClick={() => {

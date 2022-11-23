@@ -119,6 +119,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           </div>
         </div>
         <div className="max-w-full overflow-x-auto rounded-b-lg shadow-md">
+          
           <table className="max-w-full text-sm text-left text-gray-500 bg-white">
             <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
               <tr>
@@ -195,20 +196,20 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
 
                         <th
                           scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-normal"
                         >
                           {event}
                         </th>
-                        <td className="px-6 py-4">{person.name}</td>
-                        <td className="px-6 py-4">{person.schoolOrg}</td>
-                        <td className="px-6 py-4">{person.ic}</td>
+                        <td className="px-6 py-4 break-all">{person.name}</td>
+                        <td className="px-6 py-4 break-all">{person.schoolOrg}</td>
+                        <td className="px-6 py-4 break-all">{person.ic}</td>
                         {!edit.visible ? (
                           <>
-                            <td className="px-6 py-4">{person.email}</td>
-                            <td className="px-6 py-4">{person.contact}</td>
+                            <td className="px-6 py-4 break-all">{person.email}</td>
+                            <td className="px-6 py-4 break-all">{person.contact}</td>
                           </>
                         ) : null}
-                        <td className="px-6 py-4">{person.age}</td>
+                        <td className="px-6 py-4 break-all">{person.age}</td>
                         {isAdmin ? (
                           <td className="px-6 py-4">
                             <button

@@ -129,19 +129,19 @@ export default function ContactTable({
                       <th
                         scope="row"
                         lo
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                        className="px-6 py-4 font-medium text-gray-900 break-all"
                       >
                         {person.name}
                       </th>
-                      <td className="px-6 py-4">{person.username}</td>
-                      <td className="px-6 py-4">{person.email}</td>
-                      <td className="px-6 py-4 font-semibold text-blue-500">
+                      <td className="px-6 py-4 break-all">{person.username}</td>
+                      <td className="px-6 py-4 break-all">{person.email}</td>
+                      <td className="px-6 py-4 font-semibold text-blue-500 break-all">
                         {person.isAdmin ? "Admin" : "Non-Admin"}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 break-all">
                         {person.date.toString().slice(0, 10)}
                       </td>
-                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4 break-all"></td>
                     </tr>
                   );
                 })}

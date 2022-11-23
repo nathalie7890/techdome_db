@@ -22,7 +22,7 @@ export default function DeleteOne({ setEditOpen, deleteOne, setDeleteOne }) {
         setDeleteOne({ visible: false });
         setEditOpen({ visible: false });
         toast.success("Event deleted.", {
-          position: "top-center",
+          position: "top-center", 
           autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
