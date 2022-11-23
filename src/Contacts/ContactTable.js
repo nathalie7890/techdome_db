@@ -125,23 +125,22 @@ export default function ContactTable({
                 .map((person) => {
                   return (
                     <tr className="border-b bg-sky-100/70" key={person._id}>
-                      <td className="px-6 py-4"></td>
+                      <td className="hidden px-6 py-4 md:block"></td>
                       <th
                         scope="row"
-                        lo
-                        className="px-6 py-4 font-medium text-gray-900 break-all"
+                        className="px-6 py-4 font-medium text-gray-900 md:break-all"
                       >
                         {person.name}
                       </th>
-                      <td className="px-6 py-4 break-all">{person.username}</td>
-                      <td className="px-6 py-4 break-all">{person.email}</td>
-                      <td className="px-6 py-4 font-semibold text-blue-500 break-all">
+                      <td className="px-6 py-4 md:break-all">{person.username}</td>
+                      <td className="px-6 py-4 md:break-all">{person.email}</td>
+                      <td className="px-6 py-4 font-semibold text-blue-500 md:break-all">
                         {person.isAdmin ? "Admin" : "Non-Admin"}
                       </td>
-                      <td className="px-6 py-4 break-all">
+                      <td className="px-6 py-4 md:break-all">
                         {person.date.toString().slice(0, 10)}
                       </td>
-                      <td className="px-6 py-4 break-all"></td>
+                      <td className="hidden px-6 py-4 md:block"></td>
                     </tr>
                   );
                 })}
@@ -163,20 +162,20 @@ export default function ContactTable({
                       </td>
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-6 py-4 font-medium text-gray-900 md:break-all"
                       >
                         {person.name}
                       </th>
-                      <td className="px-6 py-4">{person.username}</td>
-                      <td className="px-6 py-4">{person.email}</td>
+                      <td className="px-6 py-4 md:break-all">{person.username}</td>
+                      <td className="px-6 py-4 md:break-all">{person.email}</td>
                       <td
-                        className={`px-6 py-4 font-semibold ${
+                        className={`px-6 py-4 font-semibold md:break-all ${
                           person.isAdmin ? "text-blue-500 " : "text-green-400"
                         }`}
                       >
                         {person.isAdmin ? "Admin" : "Non-Admin"}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 md:break-all">
                         {person.date.toString().slice(0, 10)}
                       </td>
                       <td className="hidden px-6 py-4 text-right md:block">

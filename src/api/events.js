@@ -51,7 +51,6 @@ export const updateEvent = async (file, name) => {
       body: formData,
     });
 
-    console.log(res);
     const data = await res.json();
     return data;
   } catch (e) {

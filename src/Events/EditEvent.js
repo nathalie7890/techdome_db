@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { editEvent as edit } from "../api/events";
 import DeleteOne from "./DeleteOne";
 import { toast } from "react-toastify";
+import { Spinner } from "flowbite-react";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function EditEvent({
@@ -11,6 +12,7 @@ export default function EditEvent({
   editOpen,
   setEditOpen,
 }) {
+  const [isLoading, setLoading] = useState(false);
   const { id, name } = editEvent;
   const [eventName, setEventName] = useState(name);
   const [invalid, setInvalid] = useState(false);
@@ -24,11 +26,11 @@ export default function EditEvent({
     setEventName(name);
   }, [id]);
 
-
   const queryClient = useQueryClient();
   const editMutation = useMutation(async ({ id, name }) => {
     const res = await edit(id, name);
     if (res === "409") {
+      setLoading(false);
       toast.error("Event name already exists.", {
         position: "top-center",
         autoClose: 5000,
@@ -42,6 +44,7 @@ export default function EditEvent({
       return;
     }
     await queryClient.invalidateQueries("events");
+    setLoading(false);
     setEditOpen(false);
     toast.success("Event name changed.", {
       position: "top-center",
@@ -56,10 +59,12 @@ export default function EditEvent({
   });
 
   const editSubmit = (id, name) => {
+    setLoading(true);
     if (
       isNaN(name.slice(-5)) ||
       name.split(" ").slice(-1).toString().length > 4
     ) {
+      setLoading(false);
       setInvalid(true);
       return;
     }
@@ -113,9 +118,11 @@ export default function EditEvent({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 text-white bg-blue-800 rounded-lg w-fit hover:bg-blue-900"
+              className={`px-6 py-2 text-white bg-blue-800 rounded-lg w-fit hover:bg-blue-90 ${
+                isLoading ? "pointer-events-none" : ""
+              }`}
             >
-              Save
+              {isLoading ? <Spinner /> : "Save"}
             </button>
           </div>
         </form>

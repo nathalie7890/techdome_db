@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CSVLink } from "react-csv";
 import Filter from "../Filter/Filter";
+import AddPart from "../AddPart";
 import DeleteMany from "./DeleteMany";
 import { checkAuth } from "../../api/users";
 import EditParticipant from "../EditParticipant";
@@ -8,7 +9,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
 import { BsDownload } from "react-icons/bs";
-import AddPart from "../AddPart";
+import no_result from "../../public/images/spaceguy.gif";
+
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const { isAdmin } = checkAuth();
@@ -119,125 +121,144 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           </div>
         </div>
         <div className="max-w-full overflow-x-auto rounded-b-lg shadow-md">
-          
-          <table className="max-w-full text-sm text-left text-gray-500 bg-white">
-            <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  {data.length > 0 ? (
-                    <input
-                      type="checkbox"
-                      name="allSelect"
-                      checked={selected.length === data.length}
-                      onChange={(e) => handleChange(e, data)}
-                    />
-                  ) : null}
-                </th>
-
-                <th scope="col" className="px-6 py-3">
-                  Event
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  School/Organisation
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  IC Number
-                </th>
-                {!edit.visible ? (
-                  <>
-                    <th scope="col" className="px-6 py-3">
-                      Email
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Contact Number
-                    </th>
-                  </>
-                ) : null}
-                <th scope="col" className="px-6 py-3">
-                  Age
-                </th>
-                {isAdmin ? (
-                  <th scope="col" className="px-6 py-3">
-                    Edit
-                  </th>
-                ) : null}
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {data.length <= 0 ? (
+          {data.length <= 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
+              <img src={no_result} alt="" className="h-80" />
+              <h1 className="text-xl text-blue-500">No result :( </h1>
+              <p>Maybe try searching with different keyword instead?</p>
+            </div>
+          ) : (
+            <table className="max-w-full text-sm text-left text-gray-500 bg-white">
+              <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
                 <tr>
-                  <td></td>
-                  <td>
-                    <h1 className="w-full py-4 text-3xl">No Participant</h1>
-                  </td>
-                </tr>
-              ) : (
-                <>
-                  {data.map((person) => {
-                    return (
-                      <tr
-                        className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
-                        key={person._id}
-                      >
-                        <td className="px-6 py-4">
-                          <input
-                            key={person._id}
-                            type="checkbox"
-                            name={person._id}
-                            checked={selected.some(
-                              (item) => item?._id === person._id
-                            )}
-                            onChange={(e) => handleChange(e, person)}
-                          />
-                        </td>
+                  <th scope="col" className="px-6 py-3">
+                    {data.length > 0 ? (
+                      <input
+                        type="checkbox"
+                        name="allSelect"
+                        checked={selected.length === data.length}
+                        onChange={(e) => handleChange(e, data)}
+                      />
+                    ) : null}
+                  </th>
 
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-normal"
+                  <th scope="col" className="px-6 py-3">
+                    Event
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Name
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    School/Organisation
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    IC Number
+                  </th>
+                  {!edit.visible ? (
+                    <>
+                      <th scope="col" className="px-6 py-3">
+                        Email
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Contact Number
+                      </th>
+                    </>
+                  ) : null}
+                  <th scope="col" className="px-6 py-3">
+                    Age
+                  </th>
+                  {isAdmin ? (
+                    <th scope="col" className="px-6 py-3">
+                      Edit
+                    </th>
+                  ) : null}
+                </tr>
+              </thead>
+              <tbody className="bg-white">
+                {data.length <= 0 ? (
+                  <tr>
+                    <td></td>
+                    <td>
+                      <h1 className="w-full py-4 text-3xl">No Participant</h1>
+                    </td>
+                  </tr>
+                ) : (
+                  <>
+                    {data.map((person) => {
+                      return (
+                        <tr
+                          className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
+                          key={person._id}
                         >
-                          {event}
-                        </th>
-                        <td className="px-6 py-4 break-all">{person.name}</td>
-                        <td className="px-6 py-4 break-all">{person.schoolOrg}</td>
-                        <td className="px-6 py-4 break-all">{person.ic}</td>
-                        {!edit.visible ? (
-                          <>
-                            <td className="px-6 py-4 break-all">{person.email}</td>
-                            <td className="px-6 py-4 break-all">{person.contact}</td>
-                          </>
-                        ) : null}
-                        <td className="px-6 py-4 break-all">{person.age}</td>
-                        {isAdmin ? (
                           <td className="px-6 py-4">
-                            <button
-                              onClick={() =>
-                                setEdit({
-                                  visible: true,
-                                  id: person._id,
-                                  name: person.name,
-                                  schoolOrg: person.schoolOrg,
-                                  age: person.age,
-                                  ic: person.ic,
-                                  contact: person.contact,
-                                  email: person.email,
-                                  address: person.address,
-                                })
-                              }
-                            >
-                              <AiOutlineEdit />
-                            </button>
+                            <input
+                              key={person._id}
+                              type="checkbox"
+                              name={person._id}
+                              checked={selected.some(
+                                (item) => item?._id === person._id
+                              )}
+                              onChange={(e) => handleChange(e, person)}
+                            />
                           </td>
-                        ) : null}
-                      </tr>
-                    );
-                  })}
-                </>
-              )}
-            </tbody>
-          </table>
+
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-normal"
+                          >
+                            {event}
+                          </th>
+                          <td className="px-6 py-4 md:break-all">
+                            {person.name}
+                          </td>
+                          <td className="px-6 py-4 md:break-all">
+                            {person.schoolOrg}
+                          </td>
+                          <td className="px-6 py-4 md:break-all">
+                            {person.ic}
+                          </td>
+                          {!edit.visible ? (
+                            <>
+                              <td className="px-6 py-4 md:break-all">
+                                {person.email}
+                              </td>
+                              <td className="px-6 py-4 md:break-all">
+                                {person.contact}
+                              </td>
+                            </>
+                          ) : null}
+                          <td className="px-6 py-4 md:break-all">
+                            {person.age}
+                          </td>
+                          {isAdmin ? (
+                            <td className="px-6 py-4">
+                              <button
+                                onClick={() =>
+                                  setEdit({
+                                    visible: true,
+                                    id: person._id,
+                                    name: person.name,
+                                    schoolOrg: person.schoolOrg,
+                                    age: person.age,
+                                    ic: person.ic,
+                                    contact: person.contact,
+                                    email: person.email,
+                                    address: person.address,
+                                  })
+                                }
+                              >
+                                <AiOutlineEdit />
+                              </button>
+                            </td>
+                          ) : null}
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
+              </tbody>
+            </table>
+          )}
 
           <DeleteMany
             data={deleteMany}

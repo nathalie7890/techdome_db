@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { useQueryClient } from "react-query";
 import SideNav from "../Events/SideNav";
 import BottomNav from "../Partials/BottomNav";
-import { checkAuth, getUser, updateUser, updatePassword } from "../api/users";
+import { checkAuth, updateUser, updatePassword } from "../api/users";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Alert } from "flowbite-react";
+import { Alert, Spinner } from "flowbite-react";
 import "./profile.css";
 
 export default function Profile() {
   const { user } = checkAuth();
   const navigate = useNavigate();
+
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [passLoading, setPassLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
 
   const [editOpen, setEditOpen] = useState({
@@ -47,17 +49,23 @@ export default function Profile() {
 
   const profileSubmit = async (e) => {
     e.preventDefault();
+    setSubmitLoading(true);
 
     const res = await updateUser(profile);
-    console.log(res);
+
     if (res.status === 400) {
-      if (profile.name.trim().length < 3)
+      if (profile.name.trim().length < 3) {
+        setSubmitLoading(false);
         setInvalidInput({ state: true, error: "name", message: res.message });
-      else
+      } else {
+        setSubmitLoading(false);
         setInvalidInput({ state: true, error: "email", message: res.message });
-    } else if (res.status === 403)
+      }
+    } else if (res.status === 403) {
+      setSubmitLoading(false);
       setInvalidInput({ state: true, error: 403, message: res.message });
-    else {
+    } else {
+      setSubmitLoading(false);
       setUpdated(true);
       toast.success("Profile updated.", {
         position: "top-center",
@@ -80,13 +88,17 @@ export default function Profile() {
 
   const updatePassSubmit = async (e) => {
     e.preventDefault();
+    setPassLoading(true);
 
     const res = await updatePassword(password);
     if (res.status === 409) {
+      setPassLoading(false);
       setInvalidPass({ state: true, error: 409, message: res.message });
     } else if (res.status === 400) {
+      setPassLoading(false);
       setInvalidPass({ state: true, error: 400, message: res.message });
     } else {
+      setPassLoading(false);
       toast.success("Password updated.", {
         position: "top-center",
         autoClose: 3000,
@@ -197,8 +209,13 @@ export default function Profile() {
                 </Alert>
               ) : null}
               <div className="">
-                <button type="submit" className="mediumBlueBtn">
-                  Save
+                <button
+                  type="submit"
+                  className={`mediumBlueBtn ${
+                    submitLoading ? "pointer-events-none" : ""
+                  }`}
+                >
+                  {submitLoading ? <Spinner /> : "Save"}
                 </button>
               </div>
             </form>
@@ -239,9 +256,11 @@ export default function Profile() {
               <div className="flex">
                 <button
                   type="submit"
-                  className="px-6 py-1.5 text-white bg-purple-500 rounded-lg md:my-6 hover:bg-purple-700"
+                  className={`px-6 py-1.5 text-white bg-purple-500 rounded-lg md:my-6 hover:bg-purple-700 ${
+                    passLoading ? "pointer-events-none" : ""
+                  }`}
                 >
-                  Update Password
+                  {passLoading ? <Spinner /> : "Update Password"}
                 </button>
               </div>
             </form>

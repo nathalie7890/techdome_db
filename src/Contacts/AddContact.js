@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { register } from "../api/users";
-import { Modal, Alert } from "flowbite-react";
+import { Modal, Alert, Spinner } from "flowbite-react";
 import { toast } from "react-toastify";
 
 export default function AddContact({ addUser, setAddUser }) {
@@ -14,6 +14,7 @@ export default function AddContact({ addUser, setAddUser }) {
     isAdmin: false,
   });
 
+  const [isLoading, setLoading] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [addFail, setAddFail] = useState(false);
   const [hidePw, setHidePw] = useState(true);
@@ -24,14 +25,17 @@ export default function AddContact({ addUser, setAddUser }) {
 
   const queryClient = useQueryClient();
   const registerSubmit = async () => {
+    setLoading(true);
     const res = await register(user);
     await queryClient.invalidateQueries("users");
     if (res.status === 409) {
+      setLoading(false);
       setAddFail(true);
       return;
     }
 
     if (res.status === 400) {
+      setLoading(false);
       setInvalid(true);
       return;
     }
@@ -55,6 +59,7 @@ export default function AddContact({ addUser, setAddUser }) {
       progress: undefined,
       theme: "light",
     });
+    setLoading(false);
     return;
   };
 
@@ -187,9 +192,11 @@ export default function AddContact({ addUser, setAddUser }) {
           <div className="flex justify-end w-full space-x-2">
             <button
               onClick={registerSubmit}
-              className="px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500"
+              className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
+                isLoading ? "pointer-events-none" : ""
+              }`}
             >
-              Save
+              {isLoading ? <Spinner /> : "Save"}
             </button>
             <button
               onClick={onClose}

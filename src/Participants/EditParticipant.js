@@ -3,10 +3,12 @@ import { useQueryClient } from "react-query";
 import DeleteOne from "./DeleteOne";
 import { editParticipant } from "../api/participants";
 import { toast } from "react-toastify";
+import { Spinner } from "flowbite-react";
 
 export default function EditParticipant({ edit, editOnChange, setEdit }) {
   const { name, schoolOrg, age, ic, contact, email, address } = edit;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [deleteOne, setDeleteOne] = useState({
     visible: false,
     id: "",
@@ -16,9 +18,10 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
   const queryClient = useQueryClient();
 
   const editSubmit = async (data, id) => {
-    // editMutation.mutate({ data, id });
+    setIsLoading(true);
     const res = await editParticipant(data, id);
     if (res.status === 200) {
+      setIsLoading(false);
       toast.success(`${res.message}`, {
         position: "top-center",
         autoClose: 3000,
@@ -148,10 +151,12 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
           </div>
           <div className="flex justify-end space-x-2">
             <button
-              className="px-6 py-1.5 text-white bg-blue-800 rounded-md w-fit hover:bg-blue-900 "
+              className={`px-6 py-1.5 text-white bg-blue-800 rounded-md w-fit hover:bg-blue-900 ${
+                isLoading ? "pointer-events-none" : ""
+              }`}
               type="submit"
             >
-              Save
+              {isLoading ? <Spinner /> : "Save"}
             </button>
             <button
               className="px-6 py-1.5 text-white bg-red-400 rounded-md w-fit hover:bg-red-500"
@@ -165,7 +170,11 @@ export default function EditParticipant({ edit, editOnChange, setEdit }) {
           </div>
         </form>
       </div>
-      <DeleteOne data={deleteOne} setDeleteOne={setDeleteOne} setEdit={setEdit} />
+      <DeleteOne
+        data={deleteOne}
+        setDeleteOne={setDeleteOne}
+        setEdit={setEdit}
+      />
     </div>
   );
 }

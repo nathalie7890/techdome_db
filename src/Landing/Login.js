@@ -25,6 +25,7 @@ export default function Login() {
     const res = await loginFn(user);
 
     if (res.status === 400 || res.status === 228) {
+      setLoading(false)
       setLoginFail(true);
     } else {
       setLoading(false);
