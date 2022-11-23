@@ -124,7 +124,6 @@ export const changeRole = async (id, role) => {
 };
 
 export const deleteOne = async (id) => {
-  console.log(id);
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/${id}`, {
       method: "DELETE",
