@@ -27,12 +27,12 @@ export default function MobileNav() {
   return (
     <div
       ref={navRef}
-      className="sticky top-0 z-10 flex flex-col w-screen px-6 py-4 bg-white shadow-md overflow-y-clip shadow-zinc-300 md:hidden"
+      className="sticky top-0 z-10 flex flex-col w-screen px-6 py-4 bg-white shadow-sm overflow-y-clip shadow-zinc-300 md:hidden"
     >
       <div className="flex justify-between">
         <div className="flex items-end space-x-2">
           <img src={logo} alt="" className="w-8 h-8" />
-          <h1 className="text-lg text-blue-500 uppercase">Tech Dome Penang</h1>
+          <h1 className="text-blue-500 uppercase ">Tech Dome Penang</h1>
         </div>
         <button onClick={onClickHandler}>
           <AiOutlineMenu className="text-3xl text-zinc-600" />

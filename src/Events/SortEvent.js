@@ -22,7 +22,7 @@ export default function SortEvent({ filters, setFilters }) {
     <div className="flex space-x-4">
       <button
         onClick={nameSort}
-        className="font-semibold text-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-400 hover:text-white"
+        className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
       >
         <span className="flex items-center justify-center gap-1 px-6 py-1">
           Event
@@ -31,7 +31,7 @@ export default function SortEvent({ filters, setFilters }) {
       </button>
       <button
         onClick={yearSort}
-        className="font-semibold text-white bg-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-500 "
+        className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
       >
         <span className="flex items-center justify-center gap-1 px-6 py-1">
           Year

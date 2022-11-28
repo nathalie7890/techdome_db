@@ -25,7 +25,7 @@ const Main = () => {
     name: "",
     ic: "",
     ageSort: "",
-    nameSort: "",
+    nameSort: "asc",
   });
 
   const { data, isLoading, error, isError } = useQuery(

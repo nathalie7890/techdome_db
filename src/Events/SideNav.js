@@ -4,6 +4,7 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
 import { CgUserList } from "react-icons/cg";
 import { checkAuth } from "../api/users";
+import logo from "../public/images/techdome_logo.png";
 
 export default function SideNav({ editOpen }) {
   const { user, isAdmin } = checkAuth();

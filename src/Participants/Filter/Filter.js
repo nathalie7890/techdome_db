@@ -53,7 +53,7 @@ const Filter = ({ setFilters, filters }) => {
   };
 
   return (
-    <div className="pt-8 space-y-2 rounded-t-xl">
+    <div className="pt-8 mb-4 space-y-2 rounded-t-xl md:mt-0">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -68,7 +68,7 @@ const Filter = ({ setFilters, filters }) => {
           });
         }}
       >
-        <div className="flex flex-col gap-2 mb-4 md:flex-row md:flex-wrap">
+        <div className="flex flex-col gap-2 p-4 mb-4 border shadow-md rounded-xl sm:flex-row sm:flex-wrap md:border-0 md:shadow-none md:p-0">
           <input
             type="text"
             name="schoolOrg"
@@ -129,10 +129,10 @@ const Filter = ({ setFilters, filters }) => {
             onChange={onChangeHandler}
           />
 
-          <div className="flex space-x-2">
+          <div className="flex justify-end mt-4 space-x-2 md:mt-0">
             <button
               type="submit"
-              className="lg:px-3.5 px-8 lg:py-3.5 py-2 text-white bg-purple-500 border rounded-full hover:shadow-md hover:bg-purple-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
+              className="lg:px-3.5 px-8 lg:py-3.5 py-1.5 text-white bg-purple-500 border rounded-full hover:shadow-md hover:bg-purple-600 shadow-md"
             >
               <span className="lg:hidden">Search</span>
               <BsSearch className="hidden lg:block" />
@@ -140,7 +140,7 @@ const Filter = ({ setFilters, filters }) => {
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="lg:px-3.5 px-8  lg:py-3.5 py-2 text-white bg-blue-500 border rounded-full hover:shadow-md hover:bg-blue-600 drop-shadow-[0_3px_7px_rgba(0,0,0,0.1)]"
+              className="lg:px-3.5 px-8  lg:py-3.5 py-1.5 text-white bg-blue-500 border rounded-full hover:shadow-md hover:bg-blue-600 shadow-md"
             >
               <span className="lg:hidden">Reset</span>
               <IoIosRefresh className="hidden lg:block" />
@@ -148,10 +148,10 @@ const Filter = ({ setFilters, filters }) => {
           </div>
         </div>
 
-        <div className="space-x-2">
+        <div className="mt-10 space-x-2">
           <button
             onClick={sortName}
-            className="font-semibold text-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-400 hover:text-white "
+            className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
           >
             <span className="flex items-center justify-center gap-1 px-6 py-1">
               Name
@@ -160,7 +160,7 @@ const Filter = ({ setFilters, filters }) => {
           </button>
           <button
             onClick={sortAge}
-            className="font-semibold text-white bg-blue-400 border-2 border-blue-400 rounded-full hover:bg-blue-500"
+            className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
           >
             <span className="flex items-center justify-center gap-1 px-6 py-1">
               Age

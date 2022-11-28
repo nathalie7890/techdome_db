@@ -90,7 +90,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   return (
     <div className="flex md:w-[calc(100vw-80px)] w-[calc(100vw-1px)]">
       <div
-        className={`px-8 md:px-12 py-12 bg-white ${
+        className={`px-8 md:px-12 py-8 bg-white ${
           edit.visible ? "w-3/4" : "w-full"
         }`}
       >
@@ -98,7 +98,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           {event}
         </h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
-        <div className="flex items-end justify-between pt-6 pb-2 bg-white">
+        <div className="flex items-end justify-between pb-2 bg-white">
           <div className="flex">
             <h1>Showing {data.length} result</h1>
             <h1 className="mx-4 italic font-medium text-blue-600">
@@ -107,7 +107,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           </div>
           <div className="flex gap-4 mb-8">
             <button
-              className="md:block hidden px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+              className="hidden px-3 py-3 text-center bg-blue-500 rounded-full shadow-md md:block hover:bg-blue-600"
               onClick={() => setAddPart({ ...addPart, visible: true })}
             >
               <IoAdd className="text-lg font-bold text-white" />
@@ -138,7 +138,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             ) : null}
           </div>
         </div>
-        <div className="max-w-full overflow-x-auto rounded-b-lg shadow-md">
+        <div className="max-w-full overflow-x-auto border-t rounded-t-lg rounded-b-lg shadow-md">
           {data.length <= 0 ? (
             <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
               <img src={no_result} alt="" className="h-80" />
@@ -147,7 +147,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             </div>
           ) : (
             <table className="max-w-full text-sm text-left text-gray-500 bg-white">
-              <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
+              <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
                   <th
                     scope="col"

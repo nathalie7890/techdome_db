@@ -73,7 +73,7 @@ export default function ContactTable({
   return (
     <div className="flex w-full min-h-screen bg-white">
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className="my-6 text-5xl font-semibold text-blue-400">Users</h1>
+        <h1 className="mb-6 text-4xl font-semibold text-blue-400 sm:text-5xl">Users</h1>
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <ContactSearch filters={filters} setFilters={setFilters} />
           <div className="flex items-end justify-between">
@@ -81,14 +81,14 @@ export default function ContactTable({
             <div className="hidden space-x-2 md:flex">
               <button
                 onClick={() => setAddUser(true)}
-                className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+                className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
               >
                 <IoAdd className="text-lg font-bold text-white" />
               </button>
 
               {selected.length > 0 ? (
                 <button
-                  className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                  className="px-3 py-3 bg-red-500 rounded-full shadow-md hover:bg-red-600"
                   onClick={() => setDeleteMany({ visible: true })}
                 >
                   <FiTrash2 className="text-white" />

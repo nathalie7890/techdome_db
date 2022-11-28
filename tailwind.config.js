@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '450px',
+      },
       backgroundImage: {
         landing: "url(/public/2682640.jpg)",
         homepage: "url(/public/papercutbackground.png)",

@@ -121,7 +121,7 @@ export default function Profile() {
           <SideNav editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
         <div className="w-full p-8 px-12 space-y-4">
-          <h1 className="my-12 pageTitle">Edit Profile</h1>
+          <h1 className="mb-12 text-4xl font-semibold text-blue-400 sm:text-5xl sm:md-6">Edit Profile</h1>
           <div className="md:w-2/3">
             {updated ? (
               <Alert

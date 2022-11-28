@@ -88,16 +88,16 @@ export default function EventTable({
   return (
     <div className="flex w-full min-h-screen">
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className="my-6 text-5xl font-semibold text-blue-400">Events</h1>
+        <h1 className="mb-8 text-4xl font-semibold text-blue-400 sm:text-5xl">Events</h1>
         <Search filters={filters} setFilters={setFilters} />
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
-          <div className="flex items-end justify-center sm:justify-between">
+          <div className="flex items-end justify-start sm:justify-between">
             <SortEvent filters={filters} setFilters={setFilters} />
 
             <div className="hidden space-x-4 md:block">
               {isAdmin ? (
                 <button
-                  className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+                  className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
                   onClick={() => setUpload({ visible: true })}
                 >
                   <IoAdd className="text-lg font-bold text-white" />

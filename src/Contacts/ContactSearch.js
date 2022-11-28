@@ -20,7 +20,7 @@ export default function ContactSearch({ filters, setFilters }) {
     <div className="flex justify-end w-full space-x-2">
       <form
         onSubmit={searchSubmit}
-        className="flex bg-white border rounded-full border-darkBlue"
+        className="flex justify-between w-full bg-white border rounded-full shadow-sm xs:max-w-fit"
       >
         <input
           type="text"
@@ -35,7 +35,7 @@ export default function ContactSearch({ filters, setFilters }) {
       </form>
 
       <button
-        className="px-3 py-3 bg-blue-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-blue-600 text-center border border-gray-400"
+        className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
         onClick={reset}
       >
         <IoIosRefresh className="text-white" />
