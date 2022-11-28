@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { getUsers } from "../api/users";
 import ContactTable from "./ContactTable";
 import SideNav from "../Events/SideNav";
-import BottomNav from "../Partials/BottomNav";
+import MobileNav from "../Partials/MobileNav";
 import LoadingBar from "../Partials/LoadingBar";
 
 export default function Contacts() {
@@ -38,6 +38,7 @@ export default function Contacts() {
   } else {
     return (
       <div className="relative flex flex-col">
+        <MobileNav />
         <div className="flex w-full min-h-screen">
           <div
             className={`${
@@ -53,9 +54,6 @@ export default function Contacts() {
             filters={filters}
             setFilters={setFilters}
           />
-        </div>
-        <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
-          <BottomNav />
         </div>
       </div>
     );

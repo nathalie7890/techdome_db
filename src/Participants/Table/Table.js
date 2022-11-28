@@ -11,7 +11,6 @@ import { IoAdd } from "react-icons/io5";
 import { BsDownload } from "react-icons/bs";
 import no_result from "../../public/images/spaceguy.gif";
 
-
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const { isAdmin } = checkAuth();
   const [selected, setSelected] = useState([]);
@@ -78,7 +77,9 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           edit.visible ? "w-3/4" : "w-full"
         }`}
       >
-        <h1 className="w-full pageTitle">{event}</h1>
+        <h1 className="text-2xl font-semibold text-blue-400 sm:text-5xl sm:my-6">
+          {event}
+        </h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
         <div className="flex items-end justify-between pt-6 pb-2 bg-white">
           <div className="flex">
@@ -131,7 +132,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             <table className="max-w-full text-sm text-left text-gray-500 bg-white">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="hidden px-6 py-3 sm:block">
                     {data.length > 0 ? (
                       <input
                         type="checkbox"
@@ -168,7 +169,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                     Age
                   </th>
                   {isAdmin ? (
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="hidden px-6 py-3 sm:block">
                       Edit
                     </th>
                   ) : null}
@@ -190,7 +191,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                           className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                           key={person._id}
                         >
-                          <td className="px-6 py-4">
+                          <td className="hidden px-6 py-4 sm:block">
                             <input
                               key={person._id}
                               type="checkbox"
@@ -231,7 +232,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                             {person.age}
                           </td>
                           {isAdmin ? (
-                            <td className="px-6 py-4">
+                            <td className="hidden px-6 py-4 sm:block">
                               <button
                                 onClick={() =>
                                   setEdit({

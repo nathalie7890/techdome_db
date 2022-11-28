@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import Table from "./Table/Table";
 import LoadingBar from "../Partials/LoadingBar";
 import SideNav from "../Events/SideNav";
-import BottomNav from "../Partials/BottomNav";
+import MobileNav from "../Partials/MobileNav";
 import { getAll } from "../api/participants";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -48,6 +48,7 @@ const Main = () => {
   } else
     return (
       <div className="relative flex flex-col">
+        <MobileNav />
         <div className="relative flex min-h-screen bg-white">
           <div
             className={`${
@@ -65,9 +66,6 @@ const Main = () => {
               event={event}
             />
           </div>
-        </div>
-        <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
-          <BottomNav />
         </div>
       </div>
     );

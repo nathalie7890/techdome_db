@@ -4,7 +4,7 @@ import EventTable from "./EventTable";
 import LoadingBar from "../Partials/LoadingBar";
 import { getEvents } from "../api/events";
 import SideNav from "./SideNav";
-import BottomNav from "../Partials/BottomNav";
+import MobileNav from "../Partials/MobileNav";
 
 export default function EventList() {
   const [filters, setFilters] = useState({
@@ -36,6 +36,7 @@ export default function EventList() {
   } else
     return (
       <div className="relative flex flex-col">
+        <MobileNav />
         <div className="relative flex w-full min-h-screen bg-cyan-400">
           <div
             className={`${
@@ -47,15 +48,12 @@ export default function EventList() {
           <div className="w-full bg-white">
             <EventTable
               data={data}
-            filters={filters}
+              filters={filters}
               setFilters={setFilters}
               editOpen={editOpen}
               setEditOpen={setEditOpen}
             />
           </div>
-        </div>
-        <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
-          <BottomNav />
         </div>
       </div>
     );

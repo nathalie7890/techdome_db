@@ -53,7 +53,7 @@ const Filter = ({ setFilters, filters }) => {
   };
 
   return (
-    <div className="pt-8 mt-8 space-y-2 rounded-t-xl">
+    <div className="pt-8 space-y-2 rounded-t-xl">
       <form
         onSubmit={(e) => {
           e.preventDefault();

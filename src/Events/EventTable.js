@@ -137,7 +137,7 @@ export default function EventTable({
                     />
                   </th>
 
-                  <th scope="col" className="px-6 py-3 hover:text-blue-500">
+                  <th scope="col" className="px-6 py-3">
                     Event
                   </th>
                   <th scope="col" className="px-6 py-3">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SideNav from "../Events/SideNav";
-import BottomNav from "../Partials/BottomNav";
+import MobileNav from "../Partials/MobileNav";
 import { checkAuth, updateUser, updatePassword } from "../api/users";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -115,6 +115,7 @@ export default function Profile() {
 
   return (
     <div className="relative flex flex-col">
+      <MobileNav />
       <div className="flex w-full min-h-screen bg-left bg-cover bg-profile">
         <div className="sticky top-0 hidden w-3/12 bg-gradient-to-tr from-blue-800 to-purple-500 md:block">
           <SideNav editOpen={editOpen} setEditOpen={setEditOpen} />
@@ -266,9 +267,6 @@ export default function Profile() {
             </form>
           </div>
         </div>
-      </div>
-      <div className="sticky bottom-0 h-16 bg-gradient-to-tr from-[#3f51b5] to-purple-500 md:hidden">
-        <BottomNav />
       </div>
     </div>
   );
