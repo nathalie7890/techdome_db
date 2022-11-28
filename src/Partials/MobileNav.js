@@ -27,7 +27,7 @@ export default function MobileNav() {
   return (
     <div
       ref={navRef}
-      className="sticky top-0 z-10 flex flex-col w-screen px-6 py-4 bg-white shadow-md shadow-zinc-300 md:hidden"
+      className="sticky top-0 z-10 flex flex-col w-screen px-6 py-4 bg-white shadow-md overflow-y-clip shadow-zinc-300 md:hidden"
     >
       <div className="flex justify-between">
         <div className="flex items-end space-x-2">

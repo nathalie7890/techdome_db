@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditContact from "./EditContact";
 import ContactFilter from "./ContactFilter";
 import ContactSearch from "./ContactSearch";
@@ -16,6 +16,22 @@ export default function ContactTable({
   filters,
   setFilters,
 }) {
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  function getWindowSize() {
+    return window.innerHeight;
+  }
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowHeight(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
   const { user } = checkAuth();
   const [selected, setSelected] = useState([]);
   const [addUser, setAddUser] = useState(false);
@@ -91,7 +107,12 @@ export default function ContactTable({
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="hidden px-6 py-3 md:block">
+                <th
+                  scope="col"
+                  className={`hidden px-6 py-3 ${
+                    windowHeight < 500 ? "hidden" : "sm:block"
+                  }`}
+                >
                   <input
                     type="checkbox"
                     name="allSelect"
@@ -114,7 +135,12 @@ export default function ContactTable({
                 <th scope="col" className="px-6 py-3">
                   Last Login
                 </th>
-                <th scope="col" className="hidden px-6 py-3 md:block">
+                <th
+                  scope="col"
+                  className={`hidden px-6 py-3 ${
+                    windowHeight < 500 ? "hidden" : "sm:block"
+                  }`}
+                >
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
@@ -125,14 +151,20 @@ export default function ContactTable({
                 .map((person) => {
                   return (
                     <tr className="border-b bg-sky-100/70" key={person._id}>
-                      <td className="hidden px-6 py-4 md:block"></td>
+                      <td
+                        className={`hidden px-6 py-4 ${
+                          windowHeight < 500 ? "hidden" : "sm:block"
+                        }`}
+                      ></td>
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 md:break-all"
                       >
                         {person.name}
                       </th>
-                      <td className="px-6 py-4 md:break-all">{person.username}</td>
+                      <td className="px-6 py-4 md:break-all">
+                        {person.username}
+                      </td>
                       <td className="px-6 py-4 md:break-all">{person.email}</td>
                       <td className="px-6 py-4 font-semibold text-blue-500 md:break-all">
                         {person.isAdmin ? "Admin" : "Non-Admin"}
@@ -152,7 +184,11 @@ export default function ContactTable({
                       key={person._id}
                       className="bg-white border-b hover:bg-gray-50"
                     >
-                      <td className="hidden px-6 py-4 md:block">
+                      <td
+                        className={`hidden px-6 py-4 ${
+                          windowHeight < 500 ? "hidden" : "sm:block"
+                        }`}
+                      >
                         <input
                           type="checkbox"
                           name="singleSelect"
@@ -166,7 +202,9 @@ export default function ContactTable({
                       >
                         {person.name}
                       </th>
-                      <td className="px-6 py-4 md:break-all">{person.username}</td>
+                      <td className="px-6 py-4 md:break-all">
+                        {person.username}
+                      </td>
                       <td className="px-6 py-4 md:break-all">{person.email}</td>
                       <td
                         className={`px-6 py-4 font-semibold md:break-all ${
@@ -178,7 +216,11 @@ export default function ContactTable({
                       <td className="px-6 py-4 md:break-all">
                         {person.date.toString().slice(0, 10)}
                       </td>
-                      <td className="hidden px-6 py-4 text-right md:block">
+                      <td
+                        className={`hidden px-6 py-4 text-right ${
+                          windowHeight < 500 ? "hidden" : "sm:block"
+                        }`}
+                      >
                         <button
                           className="font-medium text-blue-600 hover:underline"
                           onClick={() => {

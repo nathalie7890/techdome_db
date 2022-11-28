@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
 import Filter from "../Filter/Filter";
 import AddPart from "../AddPart";
@@ -12,13 +12,30 @@ import { BsDownload } from "react-icons/bs";
 import no_result from "../../public/images/spaceguy.gif";
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  function getWindowSize() {
+    return window.innerHeight;
+  }
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowHeight(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
   const { isAdmin } = checkAuth();
   const [selected, setSelected] = useState([]);
+  const [fileName, setFileName] = useState("participants.csv");
+
   const [addPart, setAddPart] = useState({
     visible: false,
     name: event,
   });
-  const [fileName, setFileName] = useState("participants.csv");
 
   const [deleteMany, setDeleteMany] = useState({
     visible: false,
@@ -132,7 +149,12 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             <table className="max-w-full text-sm text-left text-gray-500 bg-white">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50 ">
                 <tr>
-                  <th scope="col" className="hidden px-6 py-3 sm:block">
+                  <th
+                    scope="col"
+                    className={`hidden px-6 py-3 ${
+                      windowHeight < 500 ? "hidden" : "sm:block"
+                    }`}
+                  >
                     {data.length > 0 ? (
                       <input
                         type="checkbox"
@@ -169,7 +191,12 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                     Age
                   </th>
                   {isAdmin ? (
-                    <th scope="col" className="hidden px-6 py-3 sm:block">
+                    <th
+                      scope="col"
+                      className={`hidden px-6 py-3 ${
+                        windowHeight < 500 ? "hidden" : "sm:block"
+                      }`}
+                    >
                       Edit
                     </th>
                   ) : null}
@@ -191,7 +218,11 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                           className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                           key={person._id}
                         >
-                          <td className="hidden px-6 py-4 sm:block">
+                          <td
+                            className={`hidden px-6 py-4 ${
+                              windowHeight < 500 ? "hidden" : "sm:block"
+                            }`}
+                          >
                             <input
                               key={person._id}
                               type="checkbox"
@@ -232,7 +263,11 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                             {person.age}
                           </td>
                           {isAdmin ? (
-                            <td className="hidden px-6 py-4 sm:block">
+                            <td
+                              className={`hidden px-6 py-4 ${
+                                windowHeight < 500 ? "hidden" : "sm:block"
+                              }`}
+                            >
                               <button
                                 onClick={() =>
                                   setEdit({

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import UploadEvent from "./UploadEvent";
@@ -20,6 +20,22 @@ export default function EventTable({
   setEditOpen,
   filters,
 }) {
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  function getWindowSize() {
+    return window.innerHeight;
+  }
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowHeight(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
+
   const [selected, setSelected] = useState([]);
   const [editEvent, setEditEvent] = useState({ id: "", name: "" });
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
@@ -128,7 +144,12 @@ export default function EventTable({
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-blue-50">
                 <tr>
-                  <th scope="col" className="hidden px-6 py-3 sm:block">
+                  <th
+                    scope="col"
+                    className={`hidden px-6 py-3 ${
+                      windowHeight < 500 ? "hidden" : "sm:block"
+                    }`}
+                  >
                     <input
                       type="checkbox"
                       name="allSelect"
@@ -155,7 +176,9 @@ export default function EventTable({
                   {isAdmin ? (
                     <th
                       scope="col"
-                      className="hidden px-6 py-3 text-right sm:block"
+                      className={`hidden px-6 py-3 text-right ${
+                        windowHeight < 500 ? "hidden" : "sm:block"
+                      }`}
                     >
                       Edit
                     </th>
@@ -169,7 +192,11 @@ export default function EventTable({
                       className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
                       key={event._id}
                     >
-                      <td className="hidden px-6 py-4 sm:block">
+                      <td
+                        className={`hidden px-6 py-4 ${
+                          windowHeight < 500 ? "hidden" : "sm:block"
+                        }`}
+                      >
                         <input
                           type="checkbox"
                           name="singleSelect"
@@ -189,14 +216,24 @@ export default function EventTable({
                           {event.name}
                         </Link>
                       </th>
-                      <td className="px-6 py-4 md:break-all">{event.name.slice(-4)}</td>
+                      <td className="px-6 py-4 md:break-all">
+                        {event.name.slice(-4)}
+                      </td>
                       <td className="px-6 py-4 md:break-all">
                         {event.createdAt.slice(0, 10)}
                       </td>
-                      <td className="px-6 py-4 md:break-all">{event.uploadBy}</td>
-                      <td className="px-6 py-4 md:break-all">{event.parts.length}</td>
+                      <td className="px-6 py-4 md:break-all">
+                        {event.uploadBy}
+                      </td>
+                      <td className="px-6 py-4 md:break-all">
+                        {event.parts.length}
+                      </td>
                       {isAdmin ? (
-                        <td className="hidden px-6 py-4 text-right md:break-all sm:block">
+                        <td
+                          className={`hidden px-6 py-4 text-right md:break-all ${
+                            windowHeight < 500 ? "hidden" : "sm:block"
+                          }`}
+                        >
                           <button
                             className="font-medium text-blue-600 hover:underline"
                             onClick={() => {
