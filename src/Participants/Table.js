@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
-import Filter from "../Filter/Filter";
-import AddPart from "../AddPart";
+import Filter from "./Filter";
+import AddPart from "./AddPart";
 import DeleteMany from "./DeleteMany";
-import { checkAuth } from "../../api/users";
-import EditParticipant from "../EditParticipant";
+import { checkAuth } from "../api/users";
+import EditParticipant from "./EditParticipant";
 import { AiOutlineEdit } from "react-icons/ai";
-import { FiTrash2 } from "react-icons/fi";
-import { IoAdd } from "react-icons/io5";
-import { BsDownload } from "react-icons/bs";
-import no_result from "../../public/images/spaceguy.gif";
+import { FiTrash2, FiPlus, FiDownload } from "react-icons/fi";
+import no_result from "../public/images/spaceguy.gif";
+import { style } from "./styles/Table.styles";
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -88,29 +87,33 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   };
 
   return (
-    <div className="flex md:w-[calc(100vw-80px)] w-[calc(100vw-1px)]">
+    <div className={style.mainContainer}>
       <div
         className={`px-8 md:px-12 py-8 bg-white ${
           edit.visible ? "w-3/4" : "w-full"
         }`}
       >
-        <h1 className="text-2xl font-semibold text-blue-400 sm:text-5xl sm:my-6">
-          {event}
-        </h1>
+        <h1 className={style.eventName}>{event}</h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
+
+        
         <div className="flex items-end justify-between pb-2 bg-white">
-          <div className="flex">
+          {/* participants length and selected length */}
+          <div className="flex gap-4">
             <h1>Showing {data.length} result</h1>
-            <h1 className="mx-4 italic font-medium text-blue-600">
+            <h1 className="italic font-semibold text-blue-500">
               {selected.length > 0 ? `${selected.length} selected` : null}
             </h1>
           </div>
+          {/*end of participants length and selected length */}
+
+          {/* add, download and delete */}
           <div className="flex gap-4 mb-8">
             <button
-              className="hidden px-3 py-3 text-center bg-blue-500 rounded-full shadow-md md:block hover:bg-blue-600"
+              className={style.addBtn}
               onClick={() => setAddPart({ ...addPart, visible: true })}
             >
-              <IoAdd className="text-lg font-bold text-white" />
+              <FiPlus className="text-white" />
             </button>
             {selected.length > 0 ? (
               <>
@@ -119,17 +122,17 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                   onClick={downloadHandler}
                   asyncOnClick={true}
                   filename={`${fileName}`}
-                  className="px-3.5 py-3.5 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
+                  className={style.downloadBtn}
                 >
                   {" "}
-                  <BsDownload className="text-white" />
+                  <FiDownload className="text-white" />
                 </CSVLink>{" "}
                 {isAdmin ? (
                   <button
                     onClick={() =>
                       setDeleteMany({ visible: true, selected, event })
                     }
-                    className="px-3.5 py-3.5 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                    className={style.deleteBtn}
                   >
                     <FiTrash2 className="text-white" />
                   </button>
@@ -137,17 +140,20 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
               </>
             ) : null}
           </div>
+          {/* end of add, download and delete */}
         </div>
-        <div className="max-w-full overflow-x-auto border-t rounded-t-lg rounded-b-lg shadow-md">
+
+        {/* table */}
+        <div className={style.tableContainer}>
           {data.length <= 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
+            <div className={style.noResult}>
               <img src={no_result} alt="" className="h-80" />
               <h1 className="text-xl text-blue-500">No result :( </h1>
               <p>Maybe try searching with different keyword instead?</p>
             </div>
           ) : (
-            <table className="max-w-full text-sm text-left text-gray-500 bg-white">
-              <thead className="text-xs text-gray-700 uppercase bg-blue-50">
+            <table className={style.table}>
+              <thead className={style.tHead}>
                 <tr>
                   <th
                     scope="col"
@@ -214,10 +220,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                   <>
                     {data.map((person) => {
                       return (
-                        <tr
-                          className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
-                          key={person._id}
-                        >
+                        <tr className={style.tr} key={person._id}>
                           <td
                             className={`hidden px-6 py-4 ${
                               windowHeight < 500 ? "hidden" : "sm:block"
@@ -234,10 +237,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                             />
                           </td>
 
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-normal"
-                          >
+                          <th scope="row" className={style.th}>
                             {event}
                           </th>
                           <td className="px-6 py-4 md:break-all">
@@ -302,6 +302,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
             setSelected={setSelected}
           />
         </div>
+        {/* end of table */}
       </div>
       {edit.visible ? (
         <EditParticipant

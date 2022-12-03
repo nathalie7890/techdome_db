@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { getUsers } from "../api/users";
 import ContactTable from "./ContactTable";
-import SideNav from "../Events/SideNav";
+import SideNav from "../Partials/SideNav";
 import MobileNav from "../Partials/MobileNav";
 import LoadingBar from "../Partials/LoadingBar";
 

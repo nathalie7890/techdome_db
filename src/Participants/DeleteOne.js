@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteParticipant } from "../api/participants";
 import { Modal, Button, Spinner } from "flowbite-react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
+import { style } from "./styles/DeleteOne.styles";
 
 export default function DeleteOne({ data, setDeleteOne, setEdit }) {
   const { visible, id, name } = data;
@@ -21,16 +22,7 @@ export default function DeleteOne({ data, setDeleteOne, setEdit }) {
         setLoading(false);
         setDeleteOne({ vsible: false });
         setEdit({ visible: false });
-        toast.success("Participant deleted.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Participant deleted.");
       },
     }
   );
@@ -50,15 +42,15 @@ export default function DeleteOne({ data, setDeleteOne, setEdit }) {
       <Modal.Body>
         {!isLoading ? (
           <div className="text-center">
-            <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            <SlExclamation className={style.exclamationIcon} />
+            <h3 className={style.title}>
               Are you sure you want to delete {name}
             </h3>
           </div>
         ) : (
-         <div className="flex justify-center h-20">
-          <Spinner/>
-         </div>
+          <div className="flex justify-center h-20">
+            <Spinner />
+          </div>
         )}
         <div className="flex justify-center gap-4">
           {!isLoading ? (

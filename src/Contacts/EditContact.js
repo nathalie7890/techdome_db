@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { changeRole } from "../api/users";
 import DeleteOne from "./DeleteOne";
-import { toast } from "react-toastify";
-import { AiOutlineClose } from "react-icons/ai";
+import { FiX } from "react-icons/fi";
+import toast from "react-hot-toast";
+import { style } from "./styles/EditContact.styles";
 
 export default function EditContact({
   editOpen,
@@ -23,16 +24,7 @@ export default function EditContact({
     {
       onSuccess: async () => {
         await queryClient.invalidateQueries("users");
-        toast.success("User role changed", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("User role changed");
         setEditOpen(false);
       },
     }
@@ -43,15 +35,15 @@ export default function EditContact({
   };
 
   return (
-    <div className="sticky top-0 right-0 flex flex-col h-screen p-8">
+    <div className={style.mainContainer}>
       <div className="flex justify-end">
-        <AiOutlineClose
-          className="text-2xl text-white rounded-md hover:text-yellow-200"
+        <FiX
+          className={style.closeIcon}
           onClick={() => setEditOpen({ visible: false })}
         />
       </div>
       <div>
-        <h1 className="my-24 text-4xl font-semibold text-white">{name}</h1>
+        <h1 className={style.contactName}>{name}</h1>
       </div>
       <div className="flex flex-col h-full">
         <form
@@ -65,7 +57,7 @@ export default function EditContact({
             <label className="text-sm text-white">Role</label>
             <select
               type="text"
-              className="mt-2 mb-6 text-white bg-transparent border-white rounded-md focus:border-white focus:ring-white"
+              className={style.roleSelect}
               name="role"
               value={role}
               onChange={(e) =>
@@ -82,7 +74,7 @@ export default function EditContact({
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
-              className="flex justify-start font-semibold text-yellow-200 w-fit hover:text-red-400"
+              className={style.deleteBtn}
             >
               Delete User
             </button>
@@ -90,7 +82,7 @@ export default function EditContact({
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 text-white bg-blue-800 rounded-md w-fit hover:bg-blue-900"
+              className={style.saveBtn}
             >
               Save
             </button>

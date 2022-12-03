@@ -14,9 +14,9 @@ export const styles = {
   //login form container and caption
   formContainer:
     "w-full px-6 py-8 shadow-xl sm:py-16 xl:px-12 lg:w-2/3 rounded-xl h-fit bg-black/40 shadow-black/50 sm:w-1/2",
-  captionContainer: "mb-10 sm:space-y-4 lg:mb-16",
+  titleContainer: "mb-10 sm:space-y-4 lg:mb-16",
   title: "text-4xl font-bold text-blue-500 md:text-5xl xl:text-6xl",
-  subTitle: "p-1 mb-10 text-lg text-blue-100 sm:text-xl xl:text-3xl",
+  subtitle: "p-1 mb-10 text-lg text-blue-100 sm:text-xl xl:text-3xl",
   subtitleSpan: "font-bold text-yellow-200",
 
   //login form
@@ -40,5 +40,3 @@ export const styles = {
   //forgot password button
   forgotPw: "text-yellow-300 text-start",
 };
-
-

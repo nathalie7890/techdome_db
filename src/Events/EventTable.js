@@ -8,10 +8,9 @@ import DeleteMany from "./DeleteMany";
 import { convertArrayToCSV } from "convert-array-to-csv";
 import no_result from "../public/images/spaceguy.gif";
 import { AiOutlineEdit } from "react-icons/ai";
-import { IoAdd } from "react-icons/io5";
-import { FiTrash2 } from "react-icons/fi";
-import { BsDownload } from "react-icons/bs";
+import { FiTrash2, FiPlus, FiDownload } from "react-icons/fi";
 import { checkAuth } from "../api/users";
+import { styles } from "./styles/EventTable.styles";
 
 export default function EventTable({
   data,
@@ -20,6 +19,8 @@ export default function EventTable({
   setEditOpen,
   filters,
 }) {
+  const { isAdmin } = checkAuth();
+
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   function getWindowSize() {
     return window.innerHeight;
@@ -41,7 +42,6 @@ export default function EventTable({
   const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
   const [upload, setUpload] = useState({ visible: false });
 
-  const { isAdmin } = checkAuth();
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -86,35 +86,37 @@ export default function EventTable({
   };
 
   return (
-    <div className="flex w-full min-h-screen">
+    <div className={styles.mainContainer}>
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className="mb-8 text-4xl font-semibold text-blue-400 sm:text-5xl">Events</h1>
+        <h1 className={styles.pageTitle}>Events</h1>
         <Search filters={filters} setFilters={setFilters} />
-        <div className="py-6 space-y-6 bg-white rounded-t-lg">
-          <div className="flex items-end justify-start sm:justify-between">
+
+        {/* Sort, Add, Delete */}
+        <div className={styles.sortContainer}>
+          <div className={styles.sortInnerContainer}>
             <SortEvent filters={filters} setFilters={setFilters} />
 
             <div className="hidden space-x-4 md:block">
               {isAdmin ? (
                 <button
-                  className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
+                  className={styles.addBtn}
                   onClick={() => setUpload({ visible: true })}
                 >
-                  <IoAdd className="text-lg font-bold text-white" />
+                  <FiPlus className="text-white" />
                 </button>
               ) : null}
 
               {selected.length > 0 ? (
                 <>
                   <button
-                    className="px-3 py-3 bg-purple-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-purple-600 border border-gray-400"
+                    className={styles.downloadBtn}
                     onClick={() => downloadHandler(selected)}
                   >
-                    <BsDownload className="text-white" />
+                    <FiDownload className="text-white" />
                   </button>
                   {isAdmin ? (
                     <button
-                      className="px-3 py-3 bg-red-500 rounded-full drop-shadow-[0_3px_7px_rgba(0,0,0,0.15)] hover:bg-red-600 border border-gray-400"
+                      className={styles.deleteBtn}
                       onClick={() => setDeleteMany({ visible: true })}
                     >
                       <FiTrash2 className="text-white" />
@@ -125,24 +127,28 @@ export default function EventTable({
             </div>
           </div>
         </div>
-        <div className="flex mb-2">
+        {/* End of Sort, Add, Delete */}
+
+        {/* event length and selected event */}
+        <div className="flex gap-4 mb-2">
           <h1>Showing {data.length} result</h1>
-          <h1 className="mx-4 italic font-medium text-blue-600">
+          <h1 className="italic font-medium text-blue-600">
             {selected.length > 0 ? `${selected.length} selected` : null}
           </h1>
         </div>
-        <div
-          className={`relative overflow-x-auto shadow-md rounded-b-lg bg-white max-w-full`}
-        >
+        {/* end of event length and selected event */}
+
+        {/* event table */}
+        <div className={styles.tableContainer}>
           {data.length <= 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md">
+            <div className={styles.noResult}>
               <img src={no_result} alt="" className="h-80" />
               <h1 className="text-xl text-blue-500">No result :( </h1>
               <p>Maybe try searching with different keyword instead?</p>
             </div>
           ) : (
-            <table className="w-full text-sm text-left text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-blue-50">
+            <table className={styles.table}>
+              <thead className={styles.tHead}>
                 <tr>
                   <th
                     scope="col"
@@ -188,10 +194,7 @@ export default function EventTable({
               <tbody>
                 {data.map((event) => {
                   return (
-                    <tr
-                      className="border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50"
-                      key={event._id}
-                    >
+                    <tr className={styles.tr} key={event._id}>
                       <td
                         className={`hidden px-6 py-4 ${
                           windowHeight < 500 ? "hidden" : "sm:block"
@@ -205,10 +208,7 @@ export default function EventTable({
                         />
                       </td>
 
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-normal"
-                      >
+                      <th scope="row" className={styles.th}>
                         <Link
                           to={"/participants"}
                           state={{ event: event.name }}
@@ -235,7 +235,7 @@ export default function EventTable({
                           }`}
                         >
                           <button
-                            className="font-medium text-blue-600 hover:underline"
+                            className={styles.editBtn}
                             onClick={() => {
                               setEditOpen({ visible: true });
                               setEditEvent({
@@ -255,11 +255,14 @@ export default function EventTable({
             </table>
           )}
         </div>
+        {/* end of event table */}
       </div>
+
+      {/* right drawer edit event */}
       <div
         className={`${
           editOpen.visible ? "w-1/4" : "hidden"
-        } bg-gradient-to-br from-[#3f51b5]  to-purple-500 shadow-lg `}
+        } ${styles.rightDrawer} `}
       >
         <EditEvent
           editEvent={editEvent}
@@ -268,6 +271,7 @@ export default function EventTable({
           setEditOpen={setEditOpen}
         />
       </div>
+      {/* end of right drawer edit event */}
 
       <DeleteMany
         deleteMany={deleteMany}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRefresh } from "react-icons/io";
+import { styles } from "./styles/SearchEvent.styles";
 
 export default function Search({ filters, setFilters }) {
   const [input, setInput] = useState("");
@@ -18,16 +19,13 @@ export default function Search({ filters, setFilters }) {
   };
 
   return (
-    <div className="flex justify-center w-full mb-2 space-x-2 xs:justify-end">
-      <form
-        onSubmit={searchSubmit}
-        className="flex justify-between w-full bg-white border rounded-full shadow-sm xs:w-fit"
-      >
+    <div className={styles.mainContainer}>
+      <form onSubmit={searchSubmit} className={styles.searchForm}>
         <input
           type="text"
           onChange={(e) => setInput(e.target.value)}
           value={input}
-          className="border-none rounded-full focus:border-none focus:ring-0"
+          className={styles.searchInput}
           placeholder="Search"
         />
         <button type="submit" className="px-4 ">
@@ -35,11 +33,8 @@ export default function Search({ filters, setFilters }) {
         </button>
       </form>
 
-      <button
-        className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
-        onClick={reset}
-      >
-        <IoIosRefresh className="text-white"/>
+      <button className={styles.refreshBtn} onClick={reset}>
+        <IoIosRefresh className="text-white" />
       </button>
     </div>
   );

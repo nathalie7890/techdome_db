@@ -8,6 +8,7 @@ import { checkAuth } from "../api/users";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
+import { style } from "./styles/ContactTable.styles";
 
 export default function ContactTable({
   data,
@@ -71,24 +72,23 @@ export default function ContactTable({
   });
 
   return (
-    <div className="flex w-full min-h-screen bg-white">
+    <div className={style.mainContainer}>
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className="mb-6 text-4xl font-semibold text-blue-400 sm:text-5xl">Users</h1>
+        <h1 className={style.pageTitle}>Users</h1>
+
+        {/* search, add, delete */}
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
           <ContactSearch filters={filters} setFilters={setFilters} />
           <div className="flex items-end justify-between">
             <ContactFilter filters={filters} setFilters={setFilters} />
             <div className="hidden space-x-2 md:flex">
-              <button
-                onClick={() => setAddUser(true)}
-                className="px-3 py-3 text-center bg-blue-500 rounded-full shadow-md hover:bg-blue-600"
-              >
-                <IoAdd className="text-lg font-bold text-white" />
+              <button onClick={() => setAddUser(true)} className={style.addBtn}>
+                <IoAdd className={style.addIcon} />
               </button>
 
               {selected.length > 0 ? (
                 <button
-                  className="px-3 py-3 bg-red-500 rounded-full shadow-md hover:bg-red-600"
+                  className={style.deleteBtn}
                   onClick={() => setDeleteMany({ visible: true })}
                 >
                   <FiTrash2 className="text-white" />
@@ -97,15 +97,19 @@ export default function ContactTable({
             </div>
           </div>
         </div>
+        {/* end of search, add, delete */}
+
         <div className="flex mb-2">
           <h1>Showing {data.length} result</h1>
           <h1 className="mx-4 italic font-medium text-blue-600">
             {selected.length > 0 ? `${selected.length} selected` : null}
           </h1>
         </div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+        {/* table */}
+        <div className={style.tableContainer}>
+          <table className={style.table}>
+            <thead className={style.tHead}>
               <tr>
                 <th
                   scope="col"
@@ -156,10 +160,7 @@ export default function ContactTable({
                           windowHeight < 500 ? "hidden" : "sm:block"
                         }`}
                       ></td>
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 md:break-all"
-                      >
+                      <th scope="row" className={style.th}>
                         {person.name}
                       </th>
                       <td className="px-6 py-4 md:break-all">
@@ -196,10 +197,7 @@ export default function ContactTable({
                           onChange={(e) => selectOnChange(e, person)}
                         />
                       </td>
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 md:break-all"
-                      >
+                      <th scope="row" className={style.th}>
                         {person.name}
                       </th>
                       <td className="px-6 py-4 md:break-all">
@@ -222,7 +220,7 @@ export default function ContactTable({
                         }`}
                       >
                         <button
-                          className="font-medium text-blue-600 hover:underline"
+                          className={style.editBtn}
                           onClick={() => {
                             setEditOpen({ visible: true, name: person.name });
                             setRoleChange({
@@ -240,11 +238,12 @@ export default function ContactTable({
             </tbody>
           </table>
         </div>
+        {/* end of table */}
       </div>
       <div
         className={`${
           editOpen.visible ? "w-1/4" : "hidden"
-        } bg-gradient-to-br from-[#3f51b5]  to-purple-500 shadow-lg`}
+        } ${style.rightDrawerContainer}`}
       >
         <EditContact
           editOpen={editOpen}

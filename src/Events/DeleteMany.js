@@ -3,8 +3,9 @@ import { deleteManyEvent } from "../api/events";
 import { useMutation, useQueryClient } from "react-query";
 import { Modal, Button } from "flowbite-react";
 import { Spinner } from "flowbite-react";
-import { toast } from "react-toastify";
-import { SlExclamation} from "react-icons/sl";
+import toast from "react-hot-toast";
+import { SlExclamation } from "react-icons/sl";
+import { styles } from "./styles/DeleteMany.styles";
 
 export default function DeleteMany({
   deleteMany,
@@ -32,16 +33,7 @@ export default function DeleteMany({
         setSelected([]);
         setLoading(false);
         setDeleteMany({ visible: false });
-        toast.success("Event deleted.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Event deleted.");
       },
     },
     {
@@ -62,11 +54,11 @@ export default function DeleteMany({
           <div className="text-center">
             {!isLoading ? (
               <>
-                <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
-                <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                <SlExclamation className={styles.exclamationIcon} />
+                <h1 className={styles.title}>
                   You are about to delete
                   <br />
-                  <span className="text-xl font-semibold text-blue-600">
+                  <span className={styles.titleSpan}>
                     {data.length} events.
                   </span>
                 </h1>
@@ -75,7 +67,7 @@ export default function DeleteMany({
               <Spinner />
             )}
 
-            <div className="flex justify-center gap-4 mt-10">
+            <div className={styles.btnContainer}>
               {!isLoading ? (
                 <>
                   <Button color="failure" onClick={() => deleteHandler(data)}>

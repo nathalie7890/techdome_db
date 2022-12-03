@@ -3,6 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import { IoIosRefresh } from "react-icons/io";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { style } from "./styles/Filter.styles";
 
 const Filter = ({ setFilters, filters }) => {
   const [filter, setFilter] = useState({
@@ -53,7 +54,7 @@ const Filter = ({ setFilters, filters }) => {
   };
 
   return (
-    <div className="pt-8 mb-4 space-y-2 rounded-t-xl md:mt-0">
+    <div className={style.mainContainer}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -68,20 +69,20 @@ const Filter = ({ setFilters, filters }) => {
           });
         }}
       >
-        <div className="flex flex-col gap-2 p-4 mb-4 border shadow-md rounded-xl sm:flex-row sm:flex-wrap md:border-0 md:shadow-none md:p-0">
+        <div className={style.inputContainer}>
           <input
             type="text"
             name="schoolOrg"
             value={schoolOrg}
             onChange={onChangeHandler}
             placeholder="School/Organisation"
-            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
+            className={style.input}
           />
 
-          <div className="flex text-gray-500 border border-gray-300 rounded-full md:w-1/6">
-            <div className="flex items-center px-4 rounded-l-full md:w-1/2 md:text-center">
+          <div className={style.ageFromContainer}>
+            <div className={style.ageFrom}>
               <h1 className="">Age</h1>
-              <div className="flex flex-col items-center justify-center h-full">
+              <div className={style.ageRangeIconContainer}>
                 <MdKeyboardArrowRight className="text-lg text-center" />
               </div>
             </div>
@@ -91,13 +92,13 @@ const Filter = ({ setFilters, filters }) => {
               name="ageFrom"
               value={ageFrom}
               onChange={onChangeHandler}
-              className="w-1/2 capitalize border-0 rounded-full focus:border-0 focus:ring-0"
+              className={style.ageInput}
             />
           </div>
-          <div className="flex text-gray-500 border border-gray-300 rounded-full md:w-1/6">
-            <div className="flex items-center px-4 rounded-l-full md:text-center md:w-1/2">
+          <div className={style.ageToContainer}>
+            <div className={style.ageTo}>
               <h1 className="">Age</h1>
-              <div className="flex flex-col items-center justify-center h-full">
+              <div className={style.ageRangeIconContainer}>
                 <MdKeyboardArrowLeft className="text-lg text-center" />
               </div>
             </div>
@@ -107,14 +108,14 @@ const Filter = ({ setFilters, filters }) => {
               name="ageTo"
               value={ageTo}
               onChange={onChangeHandler}
-              className="w-1/2 border-0 rounded-full focus:border-0 focus:ring-0"
+              className={style.ageInput}
             />
           </div>
 
           <input
             type="text"
             name="name"
-            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
+            className={style.input}
             value={name}
             placeholder="Name"
             onChange={onChangeHandler}
@@ -123,51 +124,46 @@ const Filter = ({ setFilters, filters }) => {
           <input
             type="text"
             name="ic"
-            className="capitalize border border-gray-300 rounded-full focus:border-blue-300 focus:ring-blue-300"
+            className={style.input}
             value={ic}
             placeholder="IC Number"
             onChange={onChangeHandler}
           />
 
-          <div className="flex justify-end mt-4 space-x-2 md:mt-0">
-            <button
-              type="submit"
-              className="lg:px-3.5 px-8 lg:py-3.5 py-1.5 text-white bg-purple-500 border rounded-full hover:shadow-md hover:bg-purple-600 shadow-md"
-            >
+          {/* search */}
+          <div className={style.searchContainer}>
+            <button type="submit" className={style.searchBtn}>
               <span className="lg:hidden">Search</span>
               <BsSearch className="hidden lg:block" />
             </button>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="lg:px-3.5 px-8  lg:py-3.5 py-1.5 text-white bg-blue-500 border rounded-full hover:shadow-md hover:bg-blue-600 shadow-md"
+              className={style.refreshBtn}
             >
               <span className="lg:hidden">Reset</span>
               <IoIosRefresh className="hidden lg:block" />
             </button>
           </div>
         </div>
+        {/* end of search */}
 
+        {/* name and age filter */}
         <div className="mt-10 space-x-2">
-          <button
-            onClick={sortName}
-            className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
-          >
-            <span className="flex items-center justify-center gap-1 px-6 py-1">
+          <button onClick={sortName} className={style.nameAgeFilter}>
+            <span className={style.nameAgeSpan}>
               Name
               <RiArrowUpDownFill />
             </span>
           </button>
-          <button
-            onClick={sortAge}
-            className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
-          >
-            <span className="flex items-center justify-center gap-1 px-6 py-1">
+          <button onClick={sortAge} className={style.nameAgeFilter}>
+            <span className={style.nameAgeSpan}>
               Age
               <RiArrowUpDownFill />
             </span>
           </button>
         </div>
+        {/* end of name and age filter */}
       </form>
     </div>
   );

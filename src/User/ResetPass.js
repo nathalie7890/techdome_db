@@ -4,6 +4,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { getWithToken, resetPassword } from "../api/users";
 import logo from "../public/images/techdome_logo.png";
 import NotFound from "../404";
+import { style } from "./styles/ResetPass.styles";
 
 export default function ResetPass() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +16,7 @@ export default function ResetPass() {
     password: "",
   });
   const [hidePw, setHidePw] = useState(true);
-  
+
   const { token } = useParams();
 
   useEffect(() => {
@@ -52,18 +53,19 @@ export default function ResetPass() {
     return <NotFound />;
   } else
     return (
-      <div className="relative flex flex-col items-center justify-center h-screen bg-cover lg:bg-right bg-resetPass">
-        <div className="absolute flex items-end space-x-2 top-5 left-10 ">
-          <img src={logo} alt="" className="w-8 h-8 animate-pulse" />
-          <h1 className="text-lg text-blue-200 uppercase">Tech Dome Penang</h1>
+      <div className={style.mainContainer}>
+        <div className={style.logoContainer}>
+          <img src={logo} alt="" className={style.logoImg} />
+          <h1 className={style.logoCaption}>Tech Dome Penang</h1>
         </div>
 
-        <div className="flex flex-col items-center justify-center xl:w-1/4">
+        {/* reset password form */}
+        <div className={style.formContainer}>
           <div className="mb-16 text-center">
-            <h1 className="text-5xl font-bold text-yellow-200">
+            <h1 className={style.hasResetCaption}>
               {reset ? "Your password has been reset!" : "Welcome back."}
             </h1>
-            <h1 className="text-2xl text-blue-100">
+            <h1 className={style.enterPwCaption}>
               {reset ? "" : "Enter your new password below."}
             </h1>
           </div>
@@ -72,33 +74,33 @@ export default function ResetPass() {
               onClick={() => {
                 navigate("/");
               }}
-              className="rounded-full bg-gradient-to-r from-purple-500 to-blue-500 py-2.5 text-white w-full"
+              className={style.loginBtn}
             >
               Login
             </button>
           ) : (
             <form onSubmit={newPassSubmit} className="w-full">
-              <div className="flex my-1 border border-white rounded-full">
+              <div className={style.inputContainer}>
                 <input
                   type={hidePw ? "password" : "text"}
                   placeholder="Password"
                   name="password"
                   value={newPass.password}
-                  className="w-5/6 text-white bg-transparent border-none rounded-full focus:border-none focus:ring-0 placeholder:text-gray-400"
+                  className={style.pwInput}
                   onChange={(e) => {
                     setNewPass({ ...newPass, password: e.target.value });
                     setInvalid(false);
                   }}
                 />
-                <div className="flex flex-col items-center justify-center w-1/5 ">
+                <div className={style.eyeIconContainer}>
                   {hidePw ? (
                     <FiEye
-                      className="text-xl text-gray-300 hover:text-white hover:cursor-pointer"
+                      className={style.eyeIcon}
                       onClick={() => setHidePw(!hidePw)}
                     />
                   ) : (
                     <FiEyeOff
-                      className="text-xl text-gray-300 hover:text-white hover:cursor-pointer"
+                      className={style.eyeIcon}
                       onClick={() => setHidePw(!hidePw)}
                     />
                   )}
@@ -109,15 +111,13 @@ export default function ResetPass() {
                   Password must contain at least 8 characters.
                 </p>
               ) : null}
-              <button
-                type="submit"
-                className="rounded-full bg-gradient-to-r from-purple-500 to-blue-500 py-2.5 text-white w-full my-6"
-              >
+              <button type="submit" className={style.saveBtn}>
                 Save
               </button>
             </form>
           )}
         </div>
+        {/*end of reset password form */}
       </div>
     );
 }

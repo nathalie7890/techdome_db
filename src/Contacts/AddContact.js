@@ -3,7 +3,8 @@ import { useQueryClient } from "react-query";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { register } from "../api/users";
 import { Modal, Alert, Spinner } from "flowbite-react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+import { style } from "./styles/AddContact.styles";
 
 export default function AddContact({ addUser, setAddUser }) {
   const [user, setUser] = useState({
@@ -49,16 +50,7 @@ export default function AddContact({ addUser, setAddUser }) {
     });
 
     setAddUser(false);
-    toast.success("New user added.", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.success("New user added.");
     setLoading(false);
     return;
   };
@@ -80,14 +72,14 @@ export default function AddContact({ addUser, setAddUser }) {
       <Modal show={addUser} size="lg" onClose={onClose}>
         <Modal.Header>New User</Modal.Header>
         <Modal.Body>
-          <form className="flex flex-col w-full space-y-2 text-black">
+          <form className={style.form}>
             <input
               type="text"
               name="name"
               value={user.name}
               onChange={registerOnChange}
               placeholder="Name"
-              className="border border-gray-500 rounded-lg focus:ring-blue-400"
+              className={style.input}
             />
 
             <input
@@ -96,7 +88,7 @@ export default function AddContact({ addUser, setAddUser }) {
               value={user.username}
               onChange={registerOnChange}
               placeholder="Username"
-              className="border border-gray-500 rounded-lg focus:ring-blue-400"
+              className={style.input}
             />
 
             <input
@@ -105,27 +97,27 @@ export default function AddContact({ addUser, setAddUser }) {
               value={user.email}
               onChange={registerOnChange}
               placeholder="Email"
-              className="border border-gray-500 rounded-lg focus:ring-blue-400"
+              className={style.input}
             />
 
-            <div className="flex border border-gray-500 rounded-lg">
+            <div className={style.pwInputContainer}>
               <input
                 type={hidePw ? "password" : "text"}
                 name="password"
                 value={user.password}
                 onChange={registerOnChange}
                 placeholder="Password"
-                className="w-10/12 bg-transparent border-0 rounded-full focus:ring-0 focus:border-none"
+                className={style.pwInput}
               />
-              <div className="flex flex-col items-center justify-center w-2/12">
+              <div className={style.eyeIconContainer}>
                 {hidePw ? (
                   <FiEye
-                    className="text-xl text-gray-500 hover:text-black hover:cursor-pointer"
+                    className={style.eyeIcon}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 ) : (
                   <FiEyeOff
-                    className="text-xl text-gray-500 hover:text-black hover:cursor-pointer"
+                    className={style.eyeIcon}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 )}
@@ -138,7 +130,7 @@ export default function AddContact({ addUser, setAddUser }) {
                 name="isAdmin"
                 value={user.isAdmin}
                 onChange={registerOnChange}
-                className="text-purple-500 bg-purple-100 border-2 border-purple-500 rounded-lg focus:border-purple-500 focus:ring-purple-500"
+                className={style.adminSelect}
               >
                 <option value="true" className="bg-white">
                   Admin
@@ -189,19 +181,16 @@ export default function AddContact({ addUser, setAddUser }) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <div className="flex justify-end w-full space-x-2">
+          <div className={style.footer}>
             <button
               onClick={registerSubmit}
-              className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
+              className={`${style.submitBtn} ${
                 isLoading ? "pointer-events-none" : ""
               }`}
             >
               {isLoading ? <Spinner /> : "Save"}
             </button>
-            <button
-              onClick={onClose}
-              className="px-6 py-1.5 border border-blue-400 rounded-lg text-blue-400 hover:bg-red-400 hover:text-white hover:border-red-400"
-            >
+            <button onClick={onClose} className={style.cancelBtn}>
               Cancel
             </button>
           </div>

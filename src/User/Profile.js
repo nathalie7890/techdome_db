@@ -1,11 +1,11 @@
 import { useState } from "react";
-import SideNav from "../Events/SideNav";
+import SideNav from "../Partials/SideNav";
 import MobileNav from "../Partials/MobileNav";
 import { checkAuth, updateUser, updatePassword } from "../api/users";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { Alert, Spinner } from "flowbite-react";
-import "./profile.css";
+import { style } from "./styles/Profile.style";
 
 export default function Profile() {
   const { user } = checkAuth();
@@ -67,17 +67,7 @@ export default function Profile() {
     } else {
       setSubmitLoading(false);
       setUpdated(true);
-      toast.success("Profile updated.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        className: "toast-message",
-        theme: "light",
-      });
+      toast.success("Profile updated.");
     }
   };
 
@@ -99,36 +89,29 @@ export default function Profile() {
       setInvalidPass({ state: true, error: 400, message: res.message });
     } else {
       setPassLoading(false);
-      toast.success("Password updated.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Password updated.");
       setPassword({ oldPass: "", newPass: "" });
     }
   };
 
   return (
-    <div className="relative flex flex-col">
+    <div className={style.mainContainer}>
       <MobileNav />
-      <div className="flex w-full min-h-screen bg-left bg-cover bg-profile">
-        <div className="sticky top-0 hidden w-3/12 bg-gradient-to-tr from-blue-800 to-purple-500 md:block">
+      <div className={style.secondContainer}>
+        <div className={style.sideNavContainer}>
           <SideNav editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
         <div className="w-full p-8 px-12 space-y-4">
-          <h1 className="mb-12 text-4xl font-semibold text-blue-400 sm:text-5xl sm:md-6">Edit Profile</h1>
+          <h1 className={style.pageTitle}>Edit Profile</h1>
+
+          {/* alert */}
           <div className="md:w-2/3">
             {updated ? (
               <Alert
                 color="info"
                 additionalContent={
                   <>
-                    <div className="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">
+                    <div className={style.alertCaption}>
                       Login again to see your recent changes.
                     </div>
                     <div className="flex">
@@ -138,14 +121,14 @@ export default function Profile() {
                           navigate("/");
                         }}
                         type="button"
-                        className="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-800 dark:hover:bg-blue-900"
+                        className={style.alertLogoutBtn}
                       >
                         Logout Now
                       </button>
                       <button
                         onClick={() => setUpdated(false)}
                         type="button"
-                        className="rounded-lg border border-blue-700 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-blue-700 hover:bg-blue-800 hover:text-white focus:ring-4 focus:ring-blue-300 dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                        className={style.alertLaterBtn}
                       >
                         Later
                       </button>
@@ -153,17 +136,14 @@ export default function Profile() {
                   </>
                 }
               >
-                <h3 className="text-lg font-medium text-blue-700 dark:text-blue-800">
-                  Profile updated.
-                </h3>
+                <h3 className={style.alertTitle}>Profile updated.</h3>
               </Alert>
             ) : null}
           </div>
+          {/* end of alert */}
           <div className="md:space-x-6 md:flex">
-            <form
-              className="mb-8 space-y-4 md:w-1/3 md:mb-0"
-              onSubmit={profileSubmit}
-            >
+            {/* profile form */}
+            <form className={style.profileForm} onSubmit={profileSubmit}>
               <div className="flex flex-col">
                 <label>Name</label>
                 <input
@@ -185,7 +165,7 @@ export default function Profile() {
                   disabled
                   type="text"
                   name="username"
-                  className="italic bg-blue-100 border border-gray-400 rounded-lg"
+                  className={style.nameInput}
                   value={user.data.username}
                 />
               </div>
@@ -220,6 +200,9 @@ export default function Profile() {
                 </button>
               </div>
             </form>
+            {/* end of profile form */}
+
+            {/* password form */}
             <form className="space-y-4 md:w-1/3" onSubmit={updatePassSubmit}>
               <div className="flex flex-col">
                 <label>Current Password</label>
@@ -257,7 +240,7 @@ export default function Profile() {
               <div className="flex">
                 <button
                   type="submit"
-                  className={`px-6 py-1.5 text-white bg-purple-500 rounded-lg md:my-6 hover:bg-purple-700 ${
+                  className={`${style.updatePwBtn} ${
                     passLoading ? "pointer-events-none" : ""
                   }`}
                 >
@@ -265,6 +248,7 @@ export default function Profile() {
                 </button>
               </div>
             </form>
+            {/* end of password form */}
           </div>
         </div>
       </div>

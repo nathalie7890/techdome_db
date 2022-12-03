@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { editEvent as edit } from "../api/events";
 import DeleteOne from "./DeleteOne";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { Spinner } from "flowbite-react";
-import { AiOutlineClose } from "react-icons/ai";
+import { FiX } from "react-icons/fi";
+import { styles } from "./styles/EditEvent.styles";
 
 export default function EditEvent({
   editEvent,
@@ -31,31 +32,13 @@ export default function EditEvent({
     const res = await edit(id, name);
     if (res === "409") {
       setLoading(false);
-      toast.error("Event name already exists.", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Event name already exists.");
       return;
     }
     await queryClient.invalidateQueries("events");
     setLoading(false);
     setEditOpen(false);
-    toast.success("Event name changed.", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.success("Event name changed.");
   });
 
   const editSubmit = (id, name) => {
@@ -73,16 +56,21 @@ export default function EditEvent({
   };
 
   return (
-    <div className="sticky top-0 right-0 flex flex-col h-screen p-8">
+    <div className={styles.mainContainer}>
+      {/* close icon */}
       <div className="flex justify-end">
-        <AiOutlineClose
-          className="text-2xl text-white rounded-md hover:text-yellow-200"
+        <FiX
+          className={styles.closeIcon}
           onClick={() => setEditOpen({ visible: false })}
         />
       </div>
+      {/* end of close icon */}
+
       <div>
-        <h1 className="my-24 text-4xl font-semibold text-white">{eventName}</h1>
+        <h1 className={styles.eventName}>{eventName}</h1>
       </div>
+
+      {/* change event name form */}
       <div className="flex flex-col h-full">
         <form
           onSubmit={(e) => {
@@ -95,7 +83,7 @@ export default function EditEvent({
             <label className="text-sm text-white">Event Name</label>
             <input
               type="text"
-              className={`mt-2 text-white rounded-md focus:border-white focus:ring-white border-white bg-transparent border-1 ${
+              className={`${styles.eventNameInput} ${
                 invalid ? "border-red-300 border-2" : ""
               }`}
               name="name"
@@ -110,7 +98,7 @@ export default function EditEvent({
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
-              className="flex justify-start mt-6 font-semibold text-yellow-200 w-fit hover:text-red-400"
+              className={styles.deleteBtn}
             >
               Delete Event
             </button>
@@ -118,7 +106,7 @@ export default function EditEvent({
           <div className="flex justify-end">
             <button
               type="submit"
-              className={`px-6 py-2 text-white bg-blue-800 rounded-lg w-fit hover:bg-blue-90 ${
+              className={`${styles.saveBtn} ${
                 isLoading ? "pointer-events-none" : ""
               }`}
             >
@@ -127,6 +115,7 @@ export default function EditEvent({
           </div>
         </form>
       </div>
+      {/* end of change event name form */}
       <DeleteOne
         setEditOpen={setEditOpen}
         deleteOne={deleteOne}

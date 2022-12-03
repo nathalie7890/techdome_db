@@ -7,17 +7,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer utilities {
-}
-
-@layer components {
-  .mediumBlueBtn {
-    @apply px-6 py-1.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600;
-  }
-
-  .pageTitle {
-    @apply text-5xl font-semibold text-blue-400;
-  }
-
-}

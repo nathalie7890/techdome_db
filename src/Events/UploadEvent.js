@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { Modal, Spinner } from "flowbite-react";
 import { uploadEvent } from "../api/events";
 import { useDropzone } from "react-dropzone";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { toast } from "react-toastify";
 import { useQueryClient, useMutation } from "react-query";
+import toast from "react-hot-toast";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { styles } from "./styles/UploadEvent.styles";
 
 export default function UploadEvent({ upload, setUpload }) {
   const { visible } = upload;
@@ -53,45 +54,18 @@ export default function UploadEvent({ upload, setUpload }) {
       await queryClient.invalidateQueries("events");
 
       if (res.status === 200) {
-        toast.success("New event uploaded.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("New event uploaded.");
         setUploadFile([]);
         setNewEvent({ ...newEvent, name: "" });
         setUpload({ visible: false });
       }
 
       if (res.status === 409) {
-        toast.error("Event name already exist.", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Event name already exist.");
       }
 
       if (res.status !== 200 && res.status !== 409) {
-        toast.error("Something went wrong. Try again later", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Something went wrong. Try again later");
       }
     },
     {
@@ -130,18 +104,15 @@ export default function UploadEvent({ upload, setUpload }) {
     <>
       <Modal show={visible} size="xl" popup={true} onClose={onClose}>
         <Modal.Header />
-
         <Modal.Body>
-          <div className="">
-            <h1 className="mb-4 text-2xl font-semibold text-gray-600">
-              Upload New Event
-            </h1>
-            <hr className="h-px mb-6 bg-gray-200 border-0 dark:bg-gray-700" />
+          <h1 className={styles.title}>Upload New Event</h1>
+          <div>
+            <hr className={styles.hr} />
             <form
               encType="multipart/form-data"
               method="post"
               onSubmit={uploadSubmit}
-              className="flex flex-col items-start w-full"
+              className={styles.formContainer}
             >
               <input
                 type="text"
@@ -163,10 +134,10 @@ export default function UploadEvent({ upload, setUpload }) {
                 </p>
               ) : null}
 
+              {/* drag and drop input */}
               <div
                 {...getRootProps({
-                  className:
-                    "dropzone w-full border-dashed border-2 border-blue-300 rounded-lg h-60 flex flex-col justify-center items-center space-y-4 my-6",
+                  className: styles.dragNDrop,
                 })}
               >
                 <AiOutlineCloudUpload className="text-blue-500 text-7xl" />
@@ -183,19 +154,28 @@ export default function UploadEvent({ upload, setUpload }) {
                   )}
                 </div>
               </div>
+              {/* end of drag and drop input */}
+
               {invalid.file ? (
-                <div className="w-full px-2 py-2 mb-4 text-red-500 bg-red-200 border border-red-500 rounded-md">
+                <div className={styles.invalidFileWarning}>
                   <span>Select one file to upload.</span>
                 </div>
               ) : null}
-              <div className="flex items-end justify-between w-full">
-                <Link to="/sample.csv" target="_blank" download className="text-blue-500 underline">
+
+              {/* sample csv download link, submit and cancel btns */}
+              <div className={styles.footer}>
+                <Link
+                  to="/sample.csv"
+                  target="_blank"
+                  download
+                  className="text-blue-500 underline"
+                >
                   Download Sample CSV
                 </Link>
                 <div className="flex space-x-2">
                   <button
                     type="submit"
-                    className={`px-6 py-1.5 text-white bg-blue-400 rounded-lg hover:bg-blue-500 ${
+                    className={`${styles.uploadBtn} ${
                       isLoading ? "pointer-events-none" : ""
                     }`}
                   >
@@ -211,12 +191,13 @@ export default function UploadEvent({ upload, setUpload }) {
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-6 py-1.5 border border-blue-400 rounded-lg text-blue-400 hover:bg-red-400 hover:text-white hover:border-red-400"
+                    className={styles.cancelBtn}
                   >
                     Cancel
                   </button>
                 </div>
               </div>
+              {/* end of sample csv download link, submit and cancel btns */}
             </form>
           </div>
         </Modal.Body>

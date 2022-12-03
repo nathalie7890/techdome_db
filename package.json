@@ -21,6 +21,7 @@
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-hot-toast": "^2.4.0",
     "react-icons": "^4.6.0",
     "react-loader-spinner": "^5.3.4",
     "react-query": "^3.39.2",

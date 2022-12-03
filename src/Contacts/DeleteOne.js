@@ -2,8 +2,9 @@ import { useState } from "react";
 import { deleteOne as deleteFn } from "../api/users";
 import { useMutation, useQueryClient } from "react-query";
 import { Modal, Button, Spinner } from "flowbite-react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
+import { style } from "./styles/DeleteOne.styles";
 
 export default function DeleteOne({
   deleteOne,
@@ -25,16 +26,7 @@ export default function DeleteOne({
         setLoading(false);
         setDeleteOne({ visible: false });
         setEditOpen({ visible: false });
-        toast.success("Contact deleted.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Contact deleted.");
       },
     }
   );
@@ -55,20 +47,18 @@ export default function DeleteOne({
           <div className="text-center">
             {!isLoading ? (
               <>
-                <SlExclamation className="w-full mb-8 text-red-500 text-7xl" />
-                <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                <SlExclamation className={style.exclamationIcon} />
+                <h1 className={style.title}>
                   You are about to delete
                   <br />
-                  <span className="text-xl font-semibold text-blue-600">
-                    {name}
-                  </span>
+                  <span className={style.titleSpan}>{name}</span>
                 </h1>
               </>
             ) : (
               <Spinner />
             )}
 
-            <div className="flex justify-center gap-4 mt-10">
+            <div className={style.footer}>
               {!isLoading ? (
                 <>
                   <Button color="failure" onClick={() => deleteHandler(id)}>

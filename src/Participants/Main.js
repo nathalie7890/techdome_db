@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import Table from "./Table/Table";
+import Table from "./Table";
 import LoadingBar from "../Partials/LoadingBar";
-import SideNav from "../Events/SideNav";
+import SideNav from "../Partials/SideNav";
 import MobileNav from "../Partials/MobileNav";
 import { getAll } from "../api/participants";
 import { useLocation, useNavigate } from "react-router-dom";
+import { style } from "./styles/Main.styles";
 
 const Main = () => {
   const location = useLocation();
@@ -35,7 +36,7 @@ const Main = () => {
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className={style.errorPage}>
         <h1>{error}</h1>
       </div>
     );
@@ -51,9 +52,9 @@ const Main = () => {
         <MobileNav />
         <div className="relative flex min-h-screen bg-white">
           <div
-            className={`${
-              editOpen.visible ? "w-16" : "w-3/12"
-            } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0 left-0 hidden md:block`}
+            className={`${editOpen.visible ? "w-16" : "w-3/12"} ${
+              style.sideNavContainer
+            }`}
           >
             <SideNav editOpen={editOpen} />
           </div>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login as loginFn } from "../api/users";
-import { styles } from "./Login.styles";
-import { toast } from "react-toastify";
+import { styles } from "./styles/Login.styles";
+import toast from "react-hot-toast";
 import { Spinner } from "flowbite-react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
@@ -25,20 +25,11 @@ export default function Login() {
     const res = await loginFn(user);
 
     if (res.status === 400 || res.status === 228) {
-      setLoading(false)
+      setLoading(false);
       setLoginFail(true);
     } else {
       setLoading(false);
-      toast.success("Welcome back!", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Welcome back!");
       navigate("/events");
     }
   };
@@ -50,15 +41,19 @@ export default function Login() {
 
   return (
     <div className={styles.mainContainer}>
+      {/* Tech Dome logo */}
       <div className={styles.logoContainer}>
         <img src={logo} alt="" className={styles.logoImg} />
         <h1 className={styles.logoCaption}>Tech Dome Penang</h1>
       </div>
+      {/* End of Tech Dome logo */}
+
+      {/* login form */}
       <div className={styles.leftContainer}>
         <div className={styles.formContainer}>
-          <div className={styles.captionContainer}>
+          <div className={styles.titleContainer}>
             <h1 className={styles.title}>Dashboard</h1>
-            <h1 className={styles.subTitle}>
+            <h1 className={styles.subtitle}>
               <span className={styles.subtitleSpan}>Hello</span>, login to your
               account.
             </h1>
@@ -103,7 +98,10 @@ export default function Login() {
                 <h1>Did you enter the correct username and password?</h1>
               </div>
             ) : null}
-            <button type="submit" className={`${styles.submitBtn} + ${isLoading} ? "pointer-events-none" : ""`}>
+            <button
+              type="submit"
+              className={`${styles.submitBtn} + ${isLoading} ? "pointer-events-none" : ""`}
+            >
               {isLoading ? (
                 <Spinner color="warning" aria-label="Warning spinner example" />
               ) : (
@@ -118,6 +116,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {/* End of login form */}
     </div>
   );
 }

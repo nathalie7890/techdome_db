@@ -3,8 +3,9 @@ import { useQuery } from "react-query";
 import EventTable from "./EventTable";
 import LoadingBar from "../Partials/LoadingBar";
 import { getEvents } from "../api/events";
-import SideNav from "./SideNav";
+import SideNav from "../Partials/SideNav";
 import MobileNav from "../Partials/MobileNav";
+import { styles } from "./styles/EventList.styles";
 
 export default function EventList() {
   const [filters, setFilters] = useState({
@@ -23,7 +24,7 @@ export default function EventList() {
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className={styles.errorPage}>
         <h1>{error}</h1>
       </div>
     );
@@ -35,17 +36,17 @@ export default function EventList() {
     );
   } else
     return (
-      <div className="relative flex flex-col">
+      <div className={styles.mainContainer}>
         <MobileNav />
-        <div className="relative flex w-full min-h-screen bg-cyan-400">
+        <div className={styles.eventContainer}>
           <div
-            className={`${
+            className={`${styles.sideNav} ${
               editOpen.visible ? "w-16" : "w-3/12"
-            } bg-gradient-to-tr from-[#3f51b5]  to-purple-500 sticky top-0 hidden md:block`}
+            }`}
           >
             <SideNav editOpen={editOpen} />
           </div>
-          <div className="w-full bg-white">
+          <div className={styles.eventTable}>
             <EventTable
               data={data}
               filters={filters}

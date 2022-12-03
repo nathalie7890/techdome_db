@@ -1,5 +1,6 @@
 import React from "react";
 import { RiArrowUpDownFill } from "react-icons/ri";
+import { styles } from "./styles/SortEvent.styles";
 
 export default function SortEvent({ filters, setFilters }) {
   const nameSort = () => {
@@ -20,20 +21,14 @@ export default function SortEvent({ filters, setFilters }) {
 
   return (
     <div className="flex space-x-4">
-      <button
-        onClick={nameSort}
-        className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
-      >
-        <span className="flex items-center justify-center gap-1 px-6 py-1">
+      <button onClick={nameSort} className={styles.nameSort}>
+        <span className={styles.nameSortSpan}>
           Event
           <RiArrowUpDownFill />
         </span>
       </button>
-      <button
-        onClick={yearSort}
-        className="font-semibold text-blue-500 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white"
-      >
-        <span className="flex items-center justify-center gap-1 px-6 py-1">
+      <button onClick={yearSort} className={styles.yearSort}>
+        <span className={styles.yearSortSpan}>
           Year
           <RiArrowUpDownFill />
         </span>
