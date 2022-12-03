@@ -20,5 +20,5 @@ export const style = {
   emailInput:
     "my-1 bg-transparent border-white rounded-full placeholder:text-white focus:border-yellow-200 focus:ring-yellow-200",
   sendBtn:
-    "my-1 bg-transparent border-white rounded-full placeholder:text-white focus:border-yellow-200 focus:ring-yellow-200",
+    "py-2 mt-6 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 sm:py-2.5 text-white",
 };
