@@ -8,7 +8,7 @@ import { checkAuth } from "../api/users";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2 } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
-import { style } from "./styles/ContactTable.styles";
+import { styles } from "./styles/ContactTable.styles";
 
 export default function ContactTable({
   data,
@@ -72,9 +72,9 @@ export default function ContactTable({
   });
 
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       <div className={`${editOpen.visible ? "w-3/4" : "w-full"} p-8`}>
-        <h1 className={style.pageTitle}>Users</h1>
+        <h1 className={styles.pageTitle}>Users</h1>
 
         {/* search, add, delete */}
         <div className="py-6 space-y-6 bg-white rounded-t-lg">
@@ -82,13 +82,13 @@ export default function ContactTable({
           <div className="flex items-end justify-between">
             <ContactFilter filters={filters} setFilters={setFilters} />
             <div className="hidden space-x-2 md:flex">
-              <button onClick={() => setAddUser(true)} className={style.addBtn}>
-                <IoAdd className={style.addIcon} />
+              <button onClick={() => setAddUser(true)} className={styles.addBtn}>
+                <IoAdd className={styles.addIcon} />
               </button>
 
               {selected.length > 0 ? (
                 <button
-                  className={style.deleteBtn}
+                  className={styles.deleteBtn}
                   onClick={() => setDeleteMany({ visible: true })}
                 >
                   <FiTrash2 className="text-white" />
@@ -107,9 +107,9 @@ export default function ContactTable({
         </div>
 
         {/* table */}
-        <div className={style.tableContainer}>
-          <table className={style.table}>
-            <thead className={style.tHead}>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead className={styles.tHead}>
               <tr>
                 <th
                   scope="col"
@@ -160,7 +160,7 @@ export default function ContactTable({
                           windowHeight < 500 ? "hidden" : "sm:block"
                         }`}
                       ></td>
-                      <th scope="row" className={style.th}>
+                      <th scope="row" className={styles.th}>
                         {person.name}
                       </th>
                       <td className="px-6 py-4 md:break-all">
@@ -197,7 +197,7 @@ export default function ContactTable({
                           onChange={(e) => selectOnChange(e, person)}
                         />
                       </td>
-                      <th scope="row" className={style.th}>
+                      <th scope="row" className={styles.th}>
                         {person.name}
                       </th>
                       <td className="px-6 py-4 md:break-all">
@@ -220,7 +220,7 @@ export default function ContactTable({
                         }`}
                       >
                         <button
-                          className={style.editBtn}
+                          className={styles.editBtn}
                           onClick={() => {
                             setEditOpen({ visible: true, name: person.name });
                             setRoleChange({
@@ -241,9 +241,9 @@ export default function ContactTable({
         {/* end of table */}
       </div>
       <div
-        className={`${
-          editOpen.visible ? "w-1/4" : "hidden"
-        } ${style.rightDrawerContainer}`}
+        className={`${editOpen.visible ? "w-1/4" : "hidden"} ${
+          styles.rightDrawerContainer
+        }`}
       >
         <EditContact
           editOpen={editOpen}

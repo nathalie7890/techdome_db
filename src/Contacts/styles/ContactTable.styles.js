@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "flex w-full min-h-screen bg-white",
   pageTitle: "mb-6 text-4xl font-semibold text-blue-400 sm:text-5xl",
 

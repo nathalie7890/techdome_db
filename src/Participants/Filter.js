@@ -3,7 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import { IoIosRefresh } from "react-icons/io";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import { style } from "./styles/Filter.styles";
+import { styles } from "./styles/Filter.styles";
 
 const Filter = ({ setFilters, filters }) => {
   const [filter, setFilter] = useState({
@@ -54,7 +54,7 @@ const Filter = ({ setFilters, filters }) => {
   };
 
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -69,20 +69,20 @@ const Filter = ({ setFilters, filters }) => {
           });
         }}
       >
-        <div className={style.inputContainer}>
+        <div className={styles.inputContainer}>
           <input
             type="text"
             name="schoolOrg"
             value={schoolOrg}
             onChange={onChangeHandler}
             placeholder="School/Organisation"
-            className={style.input}
+            className={styles.input}
           />
 
-          <div className={style.ageFromContainer}>
-            <div className={style.ageFrom}>
+          <div className={styles.ageFromContainer}>
+            <div className={styles.ageFrom}>
               <h1 className="">Age</h1>
-              <div className={style.ageRangeIconContainer}>
+              <div className={styles.ageRangeIconContainer}>
                 <MdKeyboardArrowRight className="text-lg text-center" />
               </div>
             </div>
@@ -92,13 +92,13 @@ const Filter = ({ setFilters, filters }) => {
               name="ageFrom"
               value={ageFrom}
               onChange={onChangeHandler}
-              className={style.ageInput}
+              className={styles.ageInput}
             />
           </div>
-          <div className={style.ageToContainer}>
-            <div className={style.ageTo}>
+          <div className={styles.ageToContainer}>
+            <div className={styles.ageTo}>
               <h1 className="">Age</h1>
-              <div className={style.ageRangeIconContainer}>
+              <div className={styles.ageRangeIconContainer}>
                 <MdKeyboardArrowLeft className="text-lg text-center" />
               </div>
             </div>
@@ -108,14 +108,14 @@ const Filter = ({ setFilters, filters }) => {
               name="ageTo"
               value={ageTo}
               onChange={onChangeHandler}
-              className={style.ageInput}
+              className={styles.ageInput}
             />
           </div>
 
           <input
             type="text"
             name="name"
-            className={style.input}
+            className={styles.input}
             value={name}
             placeholder="Name"
             onChange={onChangeHandler}
@@ -124,22 +124,22 @@ const Filter = ({ setFilters, filters }) => {
           <input
             type="text"
             name="ic"
-            className={style.input}
+            className={styles.input}
             value={ic}
             placeholder="IC Number"
             onChange={onChangeHandler}
           />
 
           {/* search */}
-          <div className={style.searchContainer}>
-            <button type="submit" className={style.searchBtn}>
+          <div className={styles.searchContainer}>
+            <button type="submit" className={styles.searchBtn}>
               <span className="lg:hidden">Search</span>
               <BsSearch className="hidden lg:block" />
             </button>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className={style.refreshBtn}
+              className={styles.refreshBtn}
             >
               <span className="lg:hidden">Reset</span>
               <IoIosRefresh className="hidden lg:block" />
@@ -150,14 +150,14 @@ const Filter = ({ setFilters, filters }) => {
 
         {/* name and age filter */}
         <div className="mt-10 space-x-2">
-          <button onClick={sortName} className={style.nameAgeFilter}>
-            <span className={style.nameAgeSpan}>
+          <button onClick={sortName} className={styles.nameAgeFilter}>
+            <span className={styles.nameAgeSpan}>
               Name
               <RiArrowUpDownFill />
             </span>
           </button>
-          <button onClick={sortAge} className={style.nameAgeFilter}>
-            <span className={style.nameAgeSpan}>
+          <button onClick={sortAge} className={styles.nameAgeFilter}>
+            <span className={styles.nameAgeSpan}>
               Age
               <RiArrowUpDownFill />
             </span>

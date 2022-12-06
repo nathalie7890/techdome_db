@@ -6,7 +6,7 @@ import SideNav from "../Partials/SideNav";
 import MobileNav from "../Partials/MobileNav";
 import { getAll } from "../api/participants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { style } from "./styles/Main.styles";
+import { styles } from "./styles/Main.styles";
 
 const Main = () => {
   const location = useLocation();
@@ -36,7 +36,7 @@ const Main = () => {
 
   if (isError) {
     return (
-      <div className={style.errorPage}>
+      <div className={styles.errorPage}>
         <h1>{error}</h1>
       </div>
     );
@@ -53,7 +53,7 @@ const Main = () => {
         <div className="relative flex min-h-screen bg-white">
           <div
             className={`${editOpen.visible ? "w-16" : "w-3/12"} ${
-              style.sideNavContainer
+              styles.sideNavContainer
             }`}
           >
             <SideNav editOpen={editOpen} />

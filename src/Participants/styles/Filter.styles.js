@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "pt-8 mb-4 space-y-2 rounded-t-xl md:mt-0",
   inputContainer:
     "flex flex-col gap-2 p-4 mb-4 border shadow-md rounded-xl sm:flex-row sm:flex-wrap md:border-0 md:shadow-none md:p-0",

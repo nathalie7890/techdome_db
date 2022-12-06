@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   title: "mb-4 text-2xl font-semibold text-gray-600",
   hr: "h-px mb-6 bg-gray-200 border-0 dark:bg-gray-700",
   eventName:

@@ -4,7 +4,7 @@ import { changeRole } from "../api/users";
 import DeleteOne from "./DeleteOne";
 import { FiX } from "react-icons/fi";
 import toast from "react-hot-toast";
-import { style } from "./styles/EditContact.styles";
+import { styles } from "./styles/EditContact.styles";
 
 export default function EditContact({
   editOpen,
@@ -35,15 +35,15 @@ export default function EditContact({
   };
 
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       <div className="flex justify-end">
         <FiX
-          className={style.closeIcon}
+          className={styles.closeIcon}
           onClick={() => setEditOpen({ visible: false })}
         />
       </div>
       <div>
-        <h1 className={style.contactName}>{name}</h1>
+        <h1 className={styles.contactName}>{name}</h1>
       </div>
       <div className="flex flex-col h-full">
         <form
@@ -57,7 +57,7 @@ export default function EditContact({
             <label className="text-sm text-white">Role</label>
             <select
               type="text"
-              className={style.roleSelect}
+              className={styles.roleSelect}
               name="role"
               value={role}
               onChange={(e) =>
@@ -74,7 +74,7 @@ export default function EditContact({
             <button
               type="button"
               onClick={() => setDeleteOne({ visible: true, id, name })}
-              className={style.deleteBtn}
+              className={styles.deleteBtn}
             >
               Delete User
             </button>
@@ -82,7 +82,7 @@ export default function EditContact({
           <div className="flex justify-end">
             <button
               type="submit"
-              className={style.saveBtn}
+              className={styles.saveBtn}
             >
               Save
             </button>

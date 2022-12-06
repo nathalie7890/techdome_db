@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { sendResetEmail } from "../api/users";
 import { Spinner } from "flowbite-react";
 import logo from "../public/images/techdome_logo.png";
-import { style } from "./styles/Reset.styles";
+import { styles } from "./styles/Reset.styles";
 
 export default function Reset() {
   const [email, setEmail] = useState("");
@@ -27,26 +27,26 @@ export default function Reset() {
     }
   };
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       {/* Tech Dome logo */}
-      <div className={style.logoContainer}>
-        <img src={logo} alt="" className={style.logoImg} />
-        <h1 className={style.logoCaption}>Tech Dome Penang</h1>
+      <div className={styles.logoContainer}>
+        <img src={logo} alt="" className={styles.logoImg} />
+        <h1 className={styles.logoCaption}>Tech Dome Penang</h1>
       </div>
       {/* end of Tech Dome logo */}
 
-      <div className={style.leftContainer}>
-        <div className={style.formContainer}>
-          <div className={style.titleContainer}>
-            <h1 className={style.title}>Forgot Password?</h1>
+      <div className={styles.leftContainer}>
+        <div className={styles.formContainer}>
+          <div className={styles.titleContainer}>
+            <h1 className={styles.title}>Forgot Password?</h1>
 
-            <h1 className={style.subtitle}>
+            <h1 className={styles.subtitle}>
               Enter your registered email to receive password reset instruction.
             </h1>
           </div>
           <form onSubmit={submitHandler} className="flex flex-col text-white">
             {sent ? (
-              <h1 className={style.resetLink}>
+              <h1 className={styles.resetLink}>
                 We've sent password reset link to your email! 🚀
                 <br />
                 <span className="text-lg">
@@ -62,7 +62,7 @@ export default function Reset() {
                   setEmail(e.target.value);
                   setInvalid(false);
                 }}
-                className={style.emailInput}
+                className={styles.emailInput}
                 placeholder="Email"
               />
             )}
@@ -75,7 +75,7 @@ export default function Reset() {
             {!sent ? (
               <button
                 type="submit"
-                className={`${style.sendBtn} ${
+                className={`${styles.sendBtn} ${
                   isLoading ? "pointer-events-none" : ""
                 }`}
               >

@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "relative w-full h-screen bg-no-repeat bg-cover bg-landing",
 
   //logo

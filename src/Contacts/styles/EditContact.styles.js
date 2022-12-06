@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "sticky top-0 right-0 flex flex-col h-screen p-8",
   closeIcon: "text-2xl text-white rounded-md hover:text-yellow-200",
   contactName: "my-24 text-4xl font-semibold text-white",

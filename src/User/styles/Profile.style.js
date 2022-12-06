@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "relative flex flex-col",
   secondContainer: "flex w-full min-h-screen bg-left bg-cover bg-profile",
   sideNavContainer:
@@ -16,8 +16,11 @@ export const style = {
   //profile form
   profileForm: "mb-8 space-y-4 md:w-1/3 md:mb-0",
   nameInput: "italic bg-blue-100 border border-gray-400 rounded-lg",
+  saveBtn: "px-6 py-1.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600",
 
   //password form
   updatePwForm:
     "px-6 py-1.5 text-white bg-purple-500 rounded-lg md:my-6 hover:bg-purple-700",
+  updatePwBtn:
+    "px-6 py-1.5 text-white bg-purple-500 rounded-lg hover:bg-purple-600",
 };

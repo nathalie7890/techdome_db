@@ -4,7 +4,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { getWithToken, resetPassword } from "../api/users";
 import logo from "../public/images/techdome_logo.png";
 import NotFound from "../404";
-import { style } from "./styles/ResetPass.styles";
+import { styles } from "./styles/ResetPass.styles";
 
 export default function ResetPass() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,19 +53,19 @@ export default function ResetPass() {
     return <NotFound />;
   } else
     return (
-      <div className={style.mainContainer}>
-        <div className={style.logoContainer}>
-          <img src={logo} alt="" className={style.logoImg} />
-          <h1 className={style.logoCaption}>Tech Dome Penang</h1>
+      <div className={styles.mainContainer}>
+        <div className={styles.logoContainer}>
+          <img src={logo} alt="" className={styles.logoImg} />
+          <h1 className={styles.logoCaption}>Tech Dome Penang</h1>
         </div>
 
         {/* reset password form */}
-        <div className={style.formContainer}>
+        <div className={styles.formContainer}>
           <div className="mb-16 text-center">
-            <h1 className={style.hasResetCaption}>
+            <h1 className={styles.hasResetCaption}>
               {reset ? "Your password has been reset!" : "Welcome back."}
             </h1>
-            <h1 className={style.enterPwCaption}>
+            <h1 className={styles.enterPwCaption}>
               {reset ? "" : "Enter your new password below."}
             </h1>
           </div>
@@ -74,33 +74,33 @@ export default function ResetPass() {
               onClick={() => {
                 navigate("/");
               }}
-              className={style.loginBtn}
+              className={styles.loginBtn}
             >
               Login
             </button>
           ) : (
             <form onSubmit={newPassSubmit} className="w-full">
-              <div className={style.inputContainer}>
+              <div className={styles.inputContainer}>
                 <input
                   type={hidePw ? "password" : "text"}
                   placeholder="Password"
                   name="password"
                   value={newPass.password}
-                  className={style.pwInput}
+                  className={styles.pwInput}
                   onChange={(e) => {
                     setNewPass({ ...newPass, password: e.target.value });
                     setInvalid(false);
                   }}
                 />
-                <div className={style.eyeIconContainer}>
+                <div className={styles.eyeIconContainer}>
                   {hidePw ? (
                     <FiEye
-                      className={style.eyeIcon}
+                      className={styles.eyeIcon}
                       onClick={() => setHidePw(!hidePw)}
                     />
                   ) : (
                     <FiEyeOff
-                      className={style.eyeIcon}
+                      className={styles.eyeIcon}
                       onClick={() => setHidePw(!hidePw)}
                     />
                   )}
@@ -111,7 +111,7 @@ export default function ResetPass() {
                   Password must contain at least 8 characters.
                 </p>
               ) : null}
-              <button type="submit" className={style.saveBtn}>
+              <button type="submit" className={styles.saveBtn}>
                 Save
               </button>
             </form>

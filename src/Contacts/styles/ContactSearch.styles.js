@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "flex justify-end w-full space-x-2",
   form: "flex justify-between w-full bg-white border rounded-full shadow-sm xs:max-w-fit",
   searchInput: "border-none rounded-full focus:border-none focus:ring-0",

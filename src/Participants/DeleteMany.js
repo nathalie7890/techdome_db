@@ -4,7 +4,7 @@ import { deleteMany } from "../api/participants";
 import { Modal, Button, Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
-import { style } from "./styles/DeleteMany.styles";
+import { styles } from "./styles/DeleteMany.styles";
 
 export default function DeleteMany({ data, setDeleteMany, setSelected }) {
   const { visible, selected, event } = data;
@@ -44,8 +44,8 @@ export default function DeleteMany({ data, setDeleteMany, setSelected }) {
       <Modal.Body>
         {!isLoading ? (
           <div className="text-center">
-            <SlExclamation className={style.exclamationIcon} />
-            <h3 className={style.title}>
+            <SlExclamation className={styles.exclamationIcon} />
+            <h3 className={styles.title}>
               {!isLoading
                 ? `Are you sure you want to delete ${selected?.length} participants?`
                 : `${selected?.length} participants have been deleted.`}

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { Modal, Button, Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
-import { style } from "./styles/DeleteMany.styles";
+import { styles } from "./styles/DeleteMany.styles";
 
 export default function DeleteMany({
   deleteMany,
@@ -48,18 +48,18 @@ export default function DeleteMany({
           <div className="text-center">
             {!isLoading ? (
               <>
-                <SlExclamation className={style.exclamationIcon} />
-                <h1 className={style.title}>
+                <SlExclamation className={styles.exclamationIcon} />
+                <h1 className={styles.title}>
                   You are about to delete
                   <br />
-                  <span className={style.titleSpan}>{data.length} users.</span>
+                  <span className={styles.titleSpan}>{data.length} users.</span>
                 </h1>
               </>
             ) : (
               <Spinner />
             )}
 
-            <div className={style.footer}>
+            <div className={styles.footer}>
               {!isLoading ? (
                 <>
                   <Button color="failure" onClick={() => deleteHandler(data)}>

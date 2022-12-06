@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   form: "flex flex-col w-full space-y-2 text-black",
   input: "border border-gray-500 rounded-lg focus:ring-blue-400",
   pwInputContainer: "flex border border-gray-500 rounded-lg",

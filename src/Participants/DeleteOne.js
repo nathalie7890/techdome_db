@@ -4,7 +4,7 @@ import { deleteParticipant } from "../api/participants";
 import { Modal, Button, Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
-import { style } from "./styles/DeleteOne.styles";
+import { styles } from "./styles/DeleteOne.styles";
 
 export default function DeleteOne({ data, setDeleteOne, setEdit }) {
   const { visible, id, name } = data;
@@ -42,8 +42,8 @@ export default function DeleteOne({ data, setDeleteOne, setEdit }) {
       <Modal.Body>
         {!isLoading ? (
           <div className="text-center">
-            <SlExclamation className={style.exclamationIcon} />
-            <h3 className={style.title}>
+            <SlExclamation className={styles.exclamationIcon} />
+            <h3 className={styles.title}>
               Are you sure you want to delete {name}
             </h3>
           </div>

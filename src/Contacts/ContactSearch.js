@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoIosRefresh } from "react-icons/io";
-import { style } from "./styles/ContactSearch.styles";
+import { styles } from "./styles/ContactSearch.styles";
 
 export default function ContactSearch({ filters, setFilters }) {
   const [input, setInput] = useState("");
@@ -18,13 +18,13 @@ export default function ContactSearch({ filters, setFilters }) {
     });
   };
   return (
-    <div className={style.mainContainer}>
-      <form onSubmit={searchSubmit} className={style.form}>
+    <div className={styles.mainContainer}>
+      <form onSubmit={searchSubmit} className={styles.form}>
         <input
           type="text"
           onChange={(e) => setInput(e.target.value)}
           value={input}
-          className={style.searchInput}
+          className={styles.searchInput}
           placeholder="Search"
         />
         <button type="submit" className="px-4 ">
@@ -32,7 +32,7 @@ export default function ContactSearch({ filters, setFilters }) {
         </button>
       </form>
 
-      <button className={style.refreshBtn} onClick={reset}>
+      <button className={styles.refreshBtn} onClick={reset}>
         <IoIosRefresh className="text-white" />
       </button>
     </div>

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { Modal, Button, Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
 import { SlExclamation } from "react-icons/sl";
-import { style } from "./styles/DeleteOne.styles";
+import { styles } from "./styles/DeleteOne.styles";
 
 export default function DeleteOne({
   deleteOne,
@@ -47,18 +47,18 @@ export default function DeleteOne({
           <div className="text-center">
             {!isLoading ? (
               <>
-                <SlExclamation className={style.exclamationIcon} />
-                <h1 className={style.title}>
+                <SlExclamation className={styles.exclamationIcon} />
+                <h1 className={styles.title}>
                   You are about to delete
                   <br />
-                  <span className={style.titleSpan}>{name}</span>
+                  <span className={styles.titleSpan}>{name}</span>
                 </h1>
               </>
             ) : (
               <Spinner />
             )}
 
-            <div className={style.footer}>
+            <div className={styles.footer}>
               {!isLoading ? (
                 <>
                   <Button color="failure" onClick={() => deleteHandler(id)}>

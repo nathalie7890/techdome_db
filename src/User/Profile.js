@@ -5,7 +5,7 @@ import { checkAuth, updateUser, updatePassword } from "../api/users";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Alert, Spinner } from "flowbite-react";
-import { style } from "./styles/Profile.style";
+import { styles } from "./styles/Profile.style";
 
 export default function Profile() {
   const { user } = checkAuth();
@@ -95,14 +95,14 @@ export default function Profile() {
   };
 
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       <MobileNav />
-      <div className={style.secondContainer}>
-        <div className={style.sideNavContainer}>
+      <div className={styles.secondContainer}>
+        <div className={styles.sideNavContainer}>
           <SideNav editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
         <div className="w-full p-8 px-12 space-y-4">
-          <h1 className={style.pageTitle}>Edit Profile</h1>
+          <h1 className={styles.pageTitle}>Edit Profile</h1>
 
           {/* alert */}
           <div className="md:w-2/3">
@@ -111,7 +111,7 @@ export default function Profile() {
                 color="info"
                 additionalContent={
                   <>
-                    <div className={style.alertCaption}>
+                    <div className={styles.alertCaption}>
                       Login again to see your recent changes.
                     </div>
                     <div className="flex">
@@ -121,14 +121,14 @@ export default function Profile() {
                           navigate("/");
                         }}
                         type="button"
-                        className={style.alertLogoutBtn}
+                        className={styles.alertLogoutBtn}
                       >
                         Logout Now
                       </button>
                       <button
                         onClick={() => setUpdated(false)}
                         type="button"
-                        className={style.alertLaterBtn}
+                        className={styles.alertLaterBtn}
                       >
                         Later
                       </button>
@@ -136,14 +136,14 @@ export default function Profile() {
                   </>
                 }
               >
-                <h3 className={style.alertTitle}>Profile updated.</h3>
+                <h3 className={styles.alertTitle}>Profile updated.</h3>
               </Alert>
             ) : null}
           </div>
           {/* end of alert */}
           <div className="md:space-x-6 md:flex">
             {/* profile form */}
-            <form className={style.profileForm} onSubmit={profileSubmit}>
+            <form className={styles.profileForm} onSubmit={profileSubmit}>
               <div className="flex flex-col">
                 <label>Name</label>
                 <input
@@ -165,7 +165,7 @@ export default function Profile() {
                   disabled
                   type="text"
                   name="username"
-                  className={style.nameInput}
+                  className={styles.nameInput}
                   value={user.data.username}
                 />
               </div>
@@ -192,7 +192,7 @@ export default function Profile() {
               <div className="">
                 <button
                   type="submit"
-                  className={`mediumBlueBtn ${
+                  className={`${styles.saveBtn} ${
                     submitLoading ? "pointer-events-none" : ""
                   }`}
                 >
@@ -240,7 +240,7 @@ export default function Profile() {
               <div className="flex">
                 <button
                   type="submit"
-                  className={`${style.updatePwBtn} ${
+                  className={`${styles.updatePwBtn} ${
                     passLoading ? "pointer-events-none" : ""
                   }`}
                 >

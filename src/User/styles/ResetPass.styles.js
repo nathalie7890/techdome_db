@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer:
     "relative flex flex-col items-center justify-center h-screen bg-cover lg:bg-right bg-resetPass",
 

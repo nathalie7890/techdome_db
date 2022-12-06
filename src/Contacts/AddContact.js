@@ -4,7 +4,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { register } from "../api/users";
 import { Modal, Alert, Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
-import { style } from "./styles/AddContact.styles";
+import { styles } from "./styles/AddContact.styles";
 
 export default function AddContact({ addUser, setAddUser }) {
   const [user, setUser] = useState({
@@ -72,14 +72,14 @@ export default function AddContact({ addUser, setAddUser }) {
       <Modal show={addUser} size="lg" onClose={onClose}>
         <Modal.Header>New User</Modal.Header>
         <Modal.Body>
-          <form className={style.form}>
+          <form className={styles.form}>
             <input
               type="text"
               name="name"
               value={user.name}
               onChange={registerOnChange}
               placeholder="Name"
-              className={style.input}
+              className={styles.input}
             />
 
             <input
@@ -88,7 +88,7 @@ export default function AddContact({ addUser, setAddUser }) {
               value={user.username}
               onChange={registerOnChange}
               placeholder="Username"
-              className={style.input}
+              className={styles.input}
             />
 
             <input
@@ -97,27 +97,27 @@ export default function AddContact({ addUser, setAddUser }) {
               value={user.email}
               onChange={registerOnChange}
               placeholder="Email"
-              className={style.input}
+              className={styles.input}
             />
 
-            <div className={style.pwInputContainer}>
+            <div className={styles.pwInputContainer}>
               <input
                 type={hidePw ? "password" : "text"}
                 name="password"
                 value={user.password}
                 onChange={registerOnChange}
                 placeholder="Password"
-                className={style.pwInput}
+                className={styles.pwInput}
               />
-              <div className={style.eyeIconContainer}>
+              <div className={styles.eyeIconContainer}>
                 {hidePw ? (
                   <FiEye
-                    className={style.eyeIcon}
+                    className={styles.eyeIcon}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 ) : (
                   <FiEyeOff
-                    className={style.eyeIcon}
+                    className={styles.eyeIcon}
                     onClick={() => setHidePw(!hidePw)}
                   />
                 )}
@@ -130,7 +130,7 @@ export default function AddContact({ addUser, setAddUser }) {
                 name="isAdmin"
                 value={user.isAdmin}
                 onChange={registerOnChange}
-                className={style.adminSelect}
+                className={styles.adminSelect}
               >
                 <option value="true" className="bg-white">
                   Admin
@@ -181,16 +181,16 @@ export default function AddContact({ addUser, setAddUser }) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <div className={style.footer}>
+          <div className={styles.footer}>
             <button
               onClick={registerSubmit}
-              className={`${style.submitBtn} ${
+              className={`${styles.submitBtn} ${
                 isLoading ? "pointer-events-none" : ""
               }`}
             >
               {isLoading ? <Spinner /> : "Save"}
             </button>
-            <button onClick={onClose} className={style.cancelBtn}>
+            <button onClick={onClose} className={styles.cancelBtn}>
               Cancel
             </button>
           </div>
