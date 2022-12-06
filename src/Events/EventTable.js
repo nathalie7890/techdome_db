@@ -194,7 +194,14 @@ export default function EventTable({
               <tbody>
                 {data.map((event) => {
                   return (
-                    <tr className={styles.tr} key={event._id}>
+                    <tr
+                      className={`${styles.tr} ${
+                        selected.some((e) => e?.id === event._id)
+                          ? "bg-blue-100"
+                          : "odd:bg-white even:bg-gray-50"
+                      }`}
+                      key={event._id}
+                    >
                       <td
                         className={`hidden px-6 py-4 ${
                           windowHeight < 500 ? "hidden" : "sm:block"
@@ -260,9 +267,9 @@ export default function EventTable({
 
       {/* right drawer edit event */}
       <div
-        className={`${
-          editOpen.visible ? "w-1/4" : "hidden"
-        } ${styles.rightDrawer} `}
+        className={`${editOpen.visible ? "w-1/4" : "hidden"} ${
+          styles.rightDrawer
+        } `}
       >
         <EditEvent
           editEvent={editEvent}

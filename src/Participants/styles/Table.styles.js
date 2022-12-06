@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   mainContainer: "flex md:w-[calc(100vw-80px)] w-[calc(100vw-1px)]",
   eventName: "text-2xl font-semibold text-blue-400 sm:text-5xl sm:my-6",
   //add, download and delete
@@ -18,6 +18,6 @@ export const style = {
 
   table: "max-w-full text-sm text-left text-gray-500 bg-white",
   tHead: "text-xs text-gray-700 uppercase bg-blue-50",
-  tr: "border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50",
+  tr: "border-b hover:bg-gray-100",
   th: "px-6 py-4 font-medium text-gray-900 whitespace-normal",
 };

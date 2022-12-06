@@ -8,7 +8,7 @@ import EditParticipant from "./EditParticipant";
 import { AiOutlineEdit } from "react-icons/ai";
 import { FiTrash2, FiPlus, FiDownload } from "react-icons/fi";
 import no_result from "../public/images/spaceguy.gif";
-import { style } from "./styles/Table.styles";
+import { styles } from "./styles/Table.styles";
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -87,16 +87,15 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   };
 
   return (
-    <div className={style.mainContainer}>
+    <div className={styles.mainContainer}>
       <div
         className={`px-8 md:px-12 py-8 bg-white ${
           edit.visible ? "w-3/4" : "w-full"
         }`}
       >
-        <h1 className={style.eventName}>{event}</h1>
+        <h1 className={styles.eventName}>{event}</h1>
         <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
 
-        
         <div className="flex items-end justify-between pb-2 bg-white">
           {/* participants length and selected length */}
           <div className="flex gap-4">
@@ -110,7 +109,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
           {/* add, download and delete */}
           <div className="flex gap-4 mb-8">
             <button
-              className={style.addBtn}
+              className={styles.addBtn}
               onClick={() => setAddPart({ ...addPart, visible: true })}
             >
               <FiPlus className="text-white" />
@@ -122,7 +121,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                   onClick={downloadHandler}
                   asyncOnClick={true}
                   filename={`${fileName}`}
-                  className={style.downloadBtn}
+                  className={styles.downloadBtn}
                 >
                   {" "}
                   <FiDownload className="text-white" />
@@ -132,7 +131,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                     onClick={() =>
                       setDeleteMany({ visible: true, selected, event })
                     }
-                    className={style.deleteBtn}
+                    className={styles.deleteBtn}
                   >
                     <FiTrash2 className="text-white" />
                   </button>
@@ -144,16 +143,16 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
         </div>
 
         {/* table */}
-        <div className={style.tableContainer}>
+        <div className={styles.tableContainer}>
           {data.length <= 0 ? (
-            <div className={style.noResult}>
+            <div className={styles.noResult}>
               <img src={no_result} alt="" className="h-80" />
               <h1 className="text-xl text-blue-500">No result :( </h1>
               <p>Maybe try searching with different keyword instead?</p>
             </div>
           ) : (
-            <table className={style.table}>
-              <thead className={style.tHead}>
+            <table className={styles.table}>
+              <thead className={styles.tHead}>
                 <tr>
                   <th
                     scope="col"
@@ -220,7 +219,12 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                   <>
                     {data.map((person) => {
                       return (
-                        <tr className={style.tr} key={person._id}>
+                        <tr
+                          className={`${selected.some(
+                            (item) => item?._id === person._id
+                          )? "bg-blue-100": "even:bg-gray-50  odd:bg-white"} ${styles.tr}`}
+                          key={person._id}
+                        >
                           <td
                             className={`hidden px-6 py-4 ${
                               windowHeight < 500 ? "hidden" : "sm:block"
@@ -237,7 +241,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                             />
                           </td>
 
-                          <th scope="row" className={style.th}>
+                          <th scope="row" className={styles.th}>
                             {event}
                           </th>
                           <td className="px-6 py-4 md:break-all">

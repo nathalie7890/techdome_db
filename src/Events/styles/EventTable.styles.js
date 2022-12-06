@@ -19,7 +19,7 @@ export const styles = {
     "flex flex-col items-center justify-center p-12 font-semibold text-center border rounded-tr-md border-t-lightBlue rounded-tl-md",
   table: "w-full text-sm text-left text-gray-500",
   tHead: "text-xs text-gray-700 uppercase bg-blue-50",
-  tr: "border-b odd:bg-white hover:bg-gray-100 even:bg-gray-50",
+  tr: "border-b hover:bg-gray-100",
   th: "px-6 py-4 font-medium text-gray-900 whitespace-normal",
   editBtn: "font-medium text-blue-600 hover:underline",
 
