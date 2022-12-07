@@ -8,7 +8,7 @@ export default function NotFound() {
     navigate("/");
   };
   return (
-    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-no-repeat bg-cover bg-notFound">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-center bg-no-repeat bg-cover bg-notFound">
       <div className="absolute flex items-end space-x-2 top-5 left-10 ">
         <img src={logo} alt="" className="w-8 h-8 animate-pulse" />
         <h1 className="text-lg text-blue-200 uppercase">Tech Dome Penang</h1>

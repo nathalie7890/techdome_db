@@ -100,7 +100,9 @@ export default function Login() {
             ) : null}
             <button
               type="submit"
-              className={`${styles.submitBtn} + ${isLoading} ? "pointer-events-none" : ""`}
+              className={`${styles.submitBtn} + ${
+                isLoading ? "pointer-events-none" : ""
+              }`}
             >
               {isLoading ? (
                 <Spinner color="warning" aria-label="Warning spinner example" />

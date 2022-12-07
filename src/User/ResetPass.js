@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { getWithToken, resetPassword } from "../api/users";
+import { Spinner } from "flowbite-react";
 import logo from "../public/images/techdome_logo.png";
+import LoadingBar from "../Partials/LoadingBar";
 import NotFound from "../404";
 import { styles } from "./styles/ResetPass.styles";
 
 export default function ResetPass() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [tokenFound, setTokenFound] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [reset, setReset] = useState(false);
 
@@ -23,33 +27,40 @@ export default function ResetPass() {
     const findUser = async (token) => {
       const res = await getWithToken(token);
       if (res.status === 404) {
-        return;
+        setPageLoading(false);
       } else {
         setNewPass({ ...newPass, id: res._id });
-        setIsLoading(false);
+        setPageLoading(false);
+        setTokenFound(true);
       }
     };
     findUser(token);
-  }, [token]);
+  }, []);
 
   const navigate = useNavigate();
   const newPassSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (newPass.password.trim().length < 8) {
       setInvalid(true);
+      setLoading(false);
       return;
     }
 
     const res = await resetPassword(newPass.id, newPass.password);
-    console.log(res);
     if (res === 400) {
       setInvalid(true);
+      setLoading(false);
       return;
+    } else {
+      setLoading(false);
+      setReset(true);
     }
-    setReset(true);
   };
 
-  if (isLoading) {
+  if (pageLoading) {
+    return <LoadingBar />;
+  } else if (!tokenFound) {
     return <NotFound />;
   } else
     return (
@@ -111,8 +122,20 @@ export default function ResetPass() {
                   Password must contain at least 8 characters.
                 </p>
               ) : null}
-              <button type="submit" className={styles.saveBtn}>
-                Save
+              <button
+                type="submit"
+                className={`${styles.saveBtn} ${
+                  isLoading ? "pointer-events-none" : ""
+                }`}
+              >
+                {isLoading ? (
+                  <Spinner
+                    color="warning"
+                    aria-label="Warning spinner example"
+                  />
+                ) : (
+                  "Save"
+                )}
               </button>
             </form>
           )}
