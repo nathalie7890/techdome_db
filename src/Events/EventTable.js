@@ -97,14 +97,12 @@ export default function EventTable({
             <SortEvent filters={filters} setFilters={setFilters} />
 
             <div className="hidden space-x-4 md:block">
-              {isAdmin ? (
-                <button
-                  className={styles.addBtn}
-                  onClick={() => setUpload({ visible: true })}
-                >
-                  <FiPlus className="text-white" />
-                </button>
-              ) : null}
+              <button
+                className={styles.addBtn}
+                onClick={() => setUpload({ visible: true })}
+              >
+                <FiPlus className="text-white" />
+              </button>
 
               {selected.length > 0 ? (
                 <>
