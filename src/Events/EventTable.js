@@ -95,15 +95,15 @@ export default function EventTable({
         <div className={styles.sortContainer}>
           <div className={styles.sortInnerContainer}>
             <SortEvent filters={filters} setFilters={setFilters} />
-
             <div className="hidden space-x-4 md:block">
-              <button
-                className={styles.addBtn}
-                onClick={() => setUpload({ visible: true })}
-              >
-                <FiPlus className="text-white" />
-              </button>
-
+              {isAdmin ? (
+                <button
+                  className={styles.addBtn}
+                  onClick={() => setUpload({ visible: true })}
+                >
+                  <FiPlus className="text-white" />
+                </button>
+              ) : null}
               {selected.length > 0 ? (
                 <>
                   <button
