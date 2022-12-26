@@ -11,13 +11,15 @@ export default function AddPart({ addPart, setAddPart }) {
   const { visible, name } = addPart;
   const queryClient = useQueryClient();
 
+
+  //invalid input
   const [invalid, setInvalid] = useState({
     name: false,
     file: false,
   });
 
-  const [isLoading, setLoading] = useState(false);
-  const [uploadFile, setUploadFile] = useState([]);
+  const [isLoading, setLoading] = useState(false);  //loader spinner for upload btn
+  const [uploadFile, setUploadFile] = useState([]); //content in drag and drop
 
   const onClose = () => {
     setUploadFile([]);

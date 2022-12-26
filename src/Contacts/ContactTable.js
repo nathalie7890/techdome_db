@@ -17,6 +17,7 @@ export default function ContactTable({
   filters,
   setFilters,
 }) {
+  //hide checkbox, add btn, delete btn and edit btn if window's height is less than 500px
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   function getWindowSize() {
     return window.innerHeight;
@@ -34,10 +35,11 @@ export default function ContactTable({
   });
 
   const { user } = checkAuth();
-  const [selected, setSelected] = useState([]);
-  const [addUser, setAddUser] = useState(false);
-  const [deleteMany, setDeleteMany] = useState({ visible: false });
+  const [selected, setSelected] = useState([]); //for checkbox
+  const [addUser, setAddUser] = useState(false); //add user pop up modal
+  const [deleteMany, setDeleteMany] = useState({ visible: false }); //delete many users pop up modal
 
+  //when a checkbox is checked
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -45,17 +47,14 @@ export default function ContactTable({
         setSelected([]);
         data
           .filter((person) => person._id !== user.data._id)
-          .map((event) =>
+          .map((item) =>
             setSelected((selected) => [
               ...selected,
-              { id: event._id, parts: event.parts, name: event.name },
+              { id: item._id, name: item.name },
             ])
           );
       } else {
-        setSelected([
-          ...selected,
-          { id: data._id, parts: data.parts, name: data.name },
-        ]);
+        setSelected([...selected, { id: data._id, name: data.name }]);
       }
     } else {
       if (name === "allSelect") setSelected([]);
@@ -66,6 +65,7 @@ export default function ContactTable({
     }
   };
 
+  //change user's role on right drawer
   const [roleChange, setRoleChange] = useState({
     id: "",
     role: "",
@@ -82,7 +82,10 @@ export default function ContactTable({
           <div className="flex items-end justify-between">
             <ContactFilter filters={filters} setFilters={setFilters} />
             <div className="hidden space-x-2 md:flex">
-              <button onClick={() => setAddUser(true)} className={styles.addBtn}>
+              <button
+                onClick={() => setAddUser(true)}
+                className={styles.addBtn}
+              >
                 <IoAdd className={styles.addIcon} />
               </button>
 
@@ -180,10 +183,15 @@ export default function ContactTable({
               {data
                 .filter((person) => person._id !== user.data._id)
                 .map((person) => {
+                  //if user is selected/checked, bg color is darker than non-selected rows
                   return (
                     <tr
                       key={person._id}
-                      className="bg-white border-b hover:bg-gray-50"
+                      className={`${
+                        selected.some((item) => item?.id === person._id)
+                          ? "bg-blue-100"
+                          : "even:bg-gray-50  odd:bg-white"
+                      } border-b hover:bg-gray-100`}
                     >
                       <td
                         className={`hidden px-6 py-4 ${

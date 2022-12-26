@@ -7,7 +7,7 @@ import EventList from "./Events/EventList";
 import Main from "./Participants/Main";
 import Contacts from "./Contacts/Contacts";
 import Profile from "./User/Profile";
-import NotFound from "./404";
+import NotFound from "./Partials/404";
 import GuestRoutes from "./Routes/GuestRoutes";
 import UserRoutes from "./Routes/UserRoutes";
 import AdminRoutes from "./Routes/AdminRoutes";

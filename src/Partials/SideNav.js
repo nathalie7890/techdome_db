@@ -4,11 +4,12 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
 import { CgUserList } from "react-icons/cg";
 import { checkAuth } from "../api/users";
-import logo from "../public/images/techdome_logo.png";
+import { styles } from "./styles/SideNav.styles";
 
 export default function SideNav({ editOpen }) {
   const { user, isAdmin } = checkAuth();
 
+  // generate user's initials
   const initials = (name) => {
     name = name.split(" ");
     if (name.length < 2) return name[0].slice(0, 2);
@@ -22,13 +23,14 @@ export default function SideNav({ editOpen }) {
     navigate("/");
   };
 
-  const inactiveStyle = `flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
-    !editOpen.visible ? "justify-start " : "justify-center"
-  }`;
-
-  const activeStyle = `bg-white/20 flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 ${
+  //class names for navlinks
+  const activeStyle = `${styles.navlinkActive} ${
     !editOpen.visible ? "justify-start " : "justify-center"
   } `;
+
+  const inactiveStyle = `${styles.navlinkInactive} ${
+    !editOpen.visible ? "justify-start " : "justify-center"
+  }`;
 
   return (
     <div
@@ -37,28 +39,28 @@ export default function SideNav({ editOpen }) {
       } sticky top-0 left-0`}
     >
       {!editOpen.visible && isAdmin ? (
-        <h1 className="flex justify-end w-full text-sm font-bold text-blue-200">
-          Admin
-        </h1>
+        <h1 className={styles.adminTitle}>Admin</h1>
       ) : null}
       <div>
+        {/* user's initials, name and email */}
         <div className="flex my-16">
           <div
-            className={`flex flex-col items-center justify-center bg-blue-900 rounded-md ${
-              !editOpen.visible ? "w-12 h-12" : "w-full h-12"
+            className={` ${!editOpen.visible ? "w-12 h-12" : "w-full h-12"} ${
+              styles.userContainer
             }`}
           >
-            <h1 className="text-2xl font-semibold text-white uppercase">
-              {initials(user?.data.name)}
-            </h1>
+            <h1 className={styles.initials}>{initials(user?.data.name)}</h1>
           </div>
           {!editOpen.visible ? (
-            <div className="flex flex-col justify-end px-2 text-sm text-gray-100">
+            <div className={styles.nameEmailContainer}>
               <h1 className="font-semibold text-white">{user?.data.name}</h1>
               <p>{user?.data.email}</p>
             </div>
           ) : null}
         </div>
+        {/*end of user's initials, name and email */}
+
+        {/* navlinks */}
         <div className="flex flex-col space-y-4">
           <NavLink
             to="/events"
@@ -95,18 +97,21 @@ export default function SideNav({ editOpen }) {
               <h1 className="flex flex-col justify-end">Profile</h1>
             ) : null}
           </NavLink>
+          {/* logout button */}
           <div
             onClick={logoutHandler}
-            className={`flex px-2 py-4 space-x-4 rounded-md text-white hover:bg-white/10 cursor-pointer ${
+            className={` ${
               !editOpen.visible ? "justify-start" : "justify-center"
-            }`}
+            } ${styles.logoutBtnContainer}`}
           >
             <FiLogOut className="text-2xl text-white" />
             {!editOpen.visible ? (
               <h1 className="flex flex-col justify-end">Logout</h1>
             ) : null}
           </div>
+          {/* end of logout button */}
         </div>
+        {/* end of navlinks */}
       </div>
     </div>
   );

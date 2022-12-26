@@ -13,11 +13,13 @@ export default function EditEvent({
   editOpen,
   setEditOpen,
 }) {
-  const [isLoading, setLoading] = useState(false);
   const { id, name } = editEvent;
+  const [isLoading, setLoading] = useState(false); //loading spinner on save btn
   const [eventName, setEventName] = useState(name);
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState(false); //invalid input
   const [deleteOne, setDeleteOne] = useState({ visible: false, id, name });
+
+  
   const editOnChange = (e) => {
     setInvalid(false);
     setEditEvent({ ...editEvent, name: e.target.value });

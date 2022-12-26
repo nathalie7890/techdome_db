@@ -10,7 +10,7 @@ import { styles } from "./styles/EditPart.styles";
 export default function EditParticipant({ edit, editOnChange, setEdit }) {
   const { name, schoolOrg, age, ic, contact, email, address } = edit;
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //loader spinner for save btn
   const [deleteOne, setDeleteOne] = useState({
     visible: false,
     id: "",

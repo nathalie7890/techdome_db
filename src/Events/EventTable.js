@@ -21,6 +21,7 @@ export default function EventTable({
 }) {
   const { isAdmin } = checkAuth();
 
+  //hide checkbox, add btn, download btn, delete btn and edit btn when window's height is less than 500px
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   function getWindowSize() {
     return window.innerHeight;
@@ -37,11 +38,12 @@ export default function EventTable({
     };
   });
 
-  const [selected, setSelected] = useState([]);
-  const [editEvent, setEditEvent] = useState({ id: "", name: "" });
-  const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" });
+  const [selected, setSelected] = useState([]); //for checkbox
+  const [editEvent, setEditEvent] = useState({ id: "", name: "" }); //edit event right drawer
+  const [deleteMany, setDeleteMany] = useState({ visible: false, data: "" }); //delete many events pop up modal
   const [upload, setUpload] = useState({ visible: false });
 
+  //when checkbox is checked
   const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
@@ -68,6 +70,7 @@ export default function EventTable({
     }
   };
 
+  //convert array to csv then download, file name is the name of event
   const downloadHandler = (data) => {
     data.map((item) => {
       const csv = convertArrayToCSV(item.parts);
@@ -139,6 +142,7 @@ export default function EventTable({
         {/* event table */}
         <div className={styles.tableContainer}>
           {data.length <= 0 ? (
+            // no event found image
             <div className={styles.noResult}>
               <img src={no_result} alt="" className="h-80" />
               <h1 className="text-xl text-blue-500">No result :( </h1>
@@ -192,6 +196,7 @@ export default function EventTable({
               <tbody>
                 {data.map((event) => {
                   return (
+                    //if event is selected/checked, bg color is darker than the non-selected rows
                     <tr
                       className={`${styles.tr} ${
                         selected.some((e) => e?.id === event._id)

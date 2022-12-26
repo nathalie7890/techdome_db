@@ -1,6 +1,7 @@
 import jwt_decode from "jwt-decode";
 import moment from "moment/moment";
 
+//register
 export const register = async (user) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/register`, {
@@ -18,6 +19,8 @@ export const register = async (user) => {
   }
 };
 
+
+//login
 export const login = async (user) => {
   try {
     localStorage.removeItem("token");
@@ -40,11 +43,15 @@ export const login = async (user) => {
   }
 };
 
+
+//logout
 export const logout = () => {
   localStorage.removeItem("token");
   return;
 };
 
+
+//user's authentication
 export const checkAuth = () => {
   const now = moment().valueOf();
   let user = localStorage.getItem("token")
@@ -58,6 +65,8 @@ export const checkAuth = () => {
   return { isAuth, user, isAdmin };
 };
 
+
+//get one user
 export const getUser = async () => {
   try {
     const user = localStorage.getItem("token")
@@ -80,6 +89,8 @@ export const getUser = async () => {
   }
 };
 
+
+//get all users
 export const getUsers = async (filters) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/`, {
@@ -102,6 +113,8 @@ export const getUsers = async (filters) => {
   }
 };
 
+
+//change user's role
 export const changeRole = async (id, role) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/role`, {
@@ -123,6 +136,8 @@ export const changeRole = async (id, role) => {
   }
 };
 
+
+//delete one user
 export const deleteOne = async (id) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/${id}`, {
@@ -140,6 +155,8 @@ export const deleteOne = async (id) => {
   }
 };
 
+
+//delete multiple users
 export const deleteMany = async (users) => {
   try {
     const id = [];
@@ -163,6 +180,8 @@ export const deleteMany = async (users) => {
   }
 };
 
+
+//update user's profile
 export const updateUser = async (user) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/edit`, {
@@ -181,6 +200,8 @@ export const updateUser = async (user) => {
   }
 };
 
+
+//update password
 export const updatePassword = async (pass) => {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URI}/users/pass`, {
@@ -199,6 +220,8 @@ export const updatePassword = async (pass) => {
   }
 };
 
+
+//get user's reset password token
 export const getWithToken = async (token) => {
   try {
     const res = await fetch(
@@ -211,6 +234,7 @@ export const getWithToken = async (token) => {
   }
 };
 
+//send reset password email
 export const sendResetEmail = async (email) => {
   try {
     const findUser = await fetch(
@@ -243,6 +267,8 @@ export const sendResetEmail = async (email) => {
   }
 };
 
+
+//reset password from reset password page
 export const resetPassword = async (id, password) => {
   try {
     const res = await fetch(

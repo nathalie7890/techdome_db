@@ -11,6 +11,7 @@ import no_result from "../public/images/spaceguy.gif";
 import { styles } from "./styles/Table.styles";
 
 const Table = ({ data, rawData, setFilters, filters, event }) => {
+  //hide checkbox, add btn, download btn, delete btn and edit btn when window's height is less than 500px
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   function getWindowSize() {
     return window.innerHeight;
@@ -28,20 +29,23 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
   });
 
   const { isAdmin } = checkAuth();
-  const [selected, setSelected] = useState([]);
-  const [fileName, setFileName] = useState("participants.csv");
+  const [selected, setSelected] = useState([]); //for checkbox
+  const [fileName, setFileName] = useState("participants.csv"); //file name for download participant csv
 
+  //add participant/upload csv pop up modal
   const [addPart, setAddPart] = useState({
     visible: false,
     name: event,
   });
 
+  //delete many participants pop up modal
   const [deleteMany, setDeleteMany] = useState({
     visible: false,
     selected: [],
     event: "",
   });
 
+  //edit participant
   const [edit, setEdit] = useState({
     visible: false,
     id: "",
@@ -54,7 +58,8 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
     address: "",
   });
 
-  const handleChange = (e, data) => {
+  //when checkbox is checked
+  const selectOnChange = (e, data) => {
     const { name, checked } = e.target;
     if (checked) {
       if (name === "allSelect") {
@@ -72,6 +77,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
     }
   };
 
+  //download selected participants as csv
   const downloadHandler = (e, done) => {
     let filename = prompt("Please enter file name:");
     if (filename === null) {
@@ -94,7 +100,8 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
         }`}
       >
         <h1 className={styles.eventName}>{event}</h1>
-        <Filter rawData={rawData} setFilters={setFilters} filters={filters} />
+        {/* filters */}
+        <Filter rawData={rawData} setFilters={setFilters} filters={filters} /> 
 
         <div className="flex items-end justify-between pb-2 bg-white">
           {/* participants length and selected length */}
@@ -165,7 +172,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                         type="checkbox"
                         name="allSelect"
                         checked={selected.length === data.length}
-                        onChange={(e) => handleChange(e, data)}
+                        onChange={(e) => selectOnChange(e, data)}
                       />
                     ) : null}
                   </th>
@@ -219,10 +226,13 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                   <>
                     {data.map((person) => {
                       return (
+                        // if participant is selected/checked, bg color is darker than non-selected rows
                         <tr
-                          className={`${selected.some(
-                            (item) => item?._id === person._id
-                          )? "bg-blue-100": "even:bg-gray-50  odd:bg-white"} ${styles.tr}`}
+                          className={`${
+                            selected.some((item) => item?._id === person._id)
+                              ? "bg-blue-100"
+                              : "even:bg-gray-50  odd:bg-white"
+                          } ${styles.tr}`}
                           key={person._id}
                         >
                           <td
@@ -237,7 +247,7 @@ const Table = ({ data, rawData, setFilters, filters, event }) => {
                               checked={selected.some(
                                 (item) => item?._id === person._id
                               )}
-                              onChange={(e) => handleChange(e, person)}
+                              onChange={(e) => selectOnChange(e, person)}
                             />
                           </td>
 

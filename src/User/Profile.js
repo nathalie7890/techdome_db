@@ -11,37 +11,42 @@ export default function Profile() {
   const { user } = checkAuth();
   const navigate = useNavigate();
 
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [passLoading, setPassLoading] = useState(false);
-  const [updated, setUpdated] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false); //loader spinner for save btn
+  const [passLoading, setPassLoading] = useState(false); //loader spinner for update pw btn
+  const [updated, setUpdated] = useState(false); //pop up msg after successful update
 
   const [editOpen, setEditOpen] = useState({
     visible: false,
   });
 
+  //name and email
   const [profile, setProfile] = useState({
     name: user.data.name,
     email: user.data.email,
   });
 
+  //password
   const [password, setPassword] = useState({
     oldPass: "",
     newPass: "",
   });
 
+  //onChange for name and email
   const onChangeHandler = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
     setUpdated(false);
     setInvalidInput({ state: false, error: "", message: "" });
   };
 
-  const [invalidPass, setInvalidPass] = useState({
+  //invalid name, email and password input
+  const [invalidInput, setInvalidInput] = useState({
     state: false,
     error: "",
     message: "",
   });
 
-  const [invalidInput, setInvalidInput] = useState({
+  //fail to update password eg: Old password is incorrect
+  const [invalidPass, setInvalidPass] = useState({
     state: false,
     error: "",
     message: "",

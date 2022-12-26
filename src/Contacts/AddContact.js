@@ -15,15 +15,17 @@ export default function AddContact({ addUser, setAddUser }) {
     isAdmin: false,
   });
 
-  const [isLoading, setLoading] = useState(false);
-  const [invalid, setInvalid] = useState(false);
-  const [addFail, setAddFail] = useState(false);
-  const [hidePw, setHidePw] = useState(true);
+  const [isLoading, setLoading] = useState(false); //loading spinner on submit button
+  const [invalid, setInvalid] = useState(false); //invalid input
+  const [addFail, setAddFail] = useState(false); //fail to register due to existing username and email
+  const [hidePw, setHidePw] = useState(true); //eye icon to display/hide password
+
   const registerOnChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
     setInvalid(false);
   };
 
+  //submit register form
   const queryClient = useQueryClient();
   const registerSubmit = async () => {
     setLoading(true);

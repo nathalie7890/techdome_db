@@ -13,6 +13,7 @@ export default function EventList() {
     eventAlpha: "",
     eventYear: "dsc",
   });
+
   const [editOpen, setEditOpen] = useState({
     visible: false,
   });

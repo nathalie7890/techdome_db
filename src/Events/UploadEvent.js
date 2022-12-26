@@ -12,17 +12,20 @@ export default function UploadEvent({ upload, setUpload }) {
   const { visible } = upload;
   const queryClient = useQueryClient();
 
+  //invalid input
   const [invalid, setInvalid] = useState({
     name: false,
     file: false,
   });
+
+  //set event name
   const [newEvent, setNewEvent] = useState({
     name: "",
   });
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false); //loader spinner for upload btn
   const { name } = newEvent;
-  const [uploadFile, setUploadFile] = useState([]);
+  const [uploadFile, setUploadFile] = useState([]); //content in drag and drop
 
   const onClose = () => {
     setNewEvent({ name: "" });
@@ -105,7 +108,7 @@ export default function UploadEvent({ upload, setUpload }) {
       <Modal show={visible} size="xl" popup={true} onClose={onClose}>
         <Modal.Header />
         <Modal.Body>
-          <h1 className={styles.title}>Upload New Event</h1>
+          <h1 className={styles.title}>Add New Event</h1>
           <div>
             <hr className={styles.hr} />
             <form
@@ -161,17 +164,21 @@ export default function UploadEvent({ upload, setUpload }) {
                   <span>Select one file to upload.</span>
                 </div>
               ) : null}
-
-              {/* sample csv download link, submit and cancel btns */}
-              <div className={styles.footer}>
+              <h1>
+                Unsure with CSV headers?{" "}
                 <Link
                   to="/sample.csv"
                   target="_blank"
                   download
-                  className="text-blue-500 underline"
+                  className="text-blue-500 "
                 >
-                  Download Sample CSV
+                  Download Template Here
                 </Link>
+              </h1>
+              {/* sample csv download link, submit and cancel btns */}
+              <div className={styles.footer}>
+                <div></div>
+
                 <div className="flex space-x-2">
                   <button
                     type="submit"

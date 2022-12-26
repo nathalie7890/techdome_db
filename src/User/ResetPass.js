@@ -5,7 +5,7 @@ import { getWithToken, resetPassword } from "../api/users";
 import { Spinner } from "flowbite-react";
 import logo from "../public/images/techdome_logo.png";
 import LoadingBar from "../Partials/LoadingBar";
-import NotFound from "../404";
+import NotFound from "../Partials/404";
 import { styles } from "./styles/ResetPass.styles";
 
 export default function ResetPass() {
