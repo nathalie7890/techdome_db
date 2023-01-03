@@ -20,7 +20,7 @@ export default function SideNav({ editOpen }) {
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
   };
 
   //class names for navlinks
